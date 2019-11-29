@@ -1,0 +1,5 @@
+! Title: AdGuard_CN for PC(Main)
+! Description: Android骚规则PC版（主规则）
+! Last modified: 2019-11-31
+! Author: emCupid
+! Homepage: http://xadg.x-boy.cn/
