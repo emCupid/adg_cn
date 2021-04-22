@@ -1,0 +1,25 @@
+! Title: ADG_emCupid
+! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
+! Last modified: 2021-04-22
+! Author: emCupid
+
+!-------爱奇艺播放广告-------
+||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"\,/\$1"\,/
+||iqiyi.com/show2?e=*$replace=/"[^"]+?\.(jpg|png|swf)"/""/
+
+!-------其他------
+ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"]
+huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
+jianshu.com##[aria-label*="-ad"]
+www.dianping.com##.bottomLayer,.J-bonus,.bottomLayer
+www.qiuziti.com##.font-item-box[style*="position"],.banner.home-banner
+588ku.com##.filter-listadBtm-box,.kouIndex-entry,.listhorAdV
+360kuai.com##.kzx__showcase
+nipic.com##div[onclick="printgif()"],.huitu-guideBox,.homeshow,.insertbdad-wrap,#ad,.advertising
+image.so.com##[data-id^="cm_display"],[data-id*="JumpAds"]
+pan.baidu.com##.phone-banner
+||statics.woozooo.com/img/p*
+||*/js/bind-phone-modal.ad*
+huaban.com##div[class*="hb-ad"]
+||ntimg.cn/*_ad.jpg
+||iqiyi.com/show2?e=*$replace=/"[^"]+?\.(jpg|png|swf)"/""/
