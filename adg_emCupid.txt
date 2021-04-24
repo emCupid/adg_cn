@@ -4,6 +4,7 @@
 ! Author: emCupid
 
 !-------全局&正则-------
+##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a[rel*="nofollow"] img[style],a.gaosu,#down_gs
 /\/ads\/\.*?\d*.*?\.js/$script
 /\/js\/ad\d+\.js/$script
 
@@ -27,3 +28,7 @@ pan.baidu.com##.phone-banner
 huaban.com##div[class*="hb-ad"]
 ||ntimg.cn/*_ad.jpg
 ||iqiyi.com/show2?e=*$replace=/"[^"]+?\.(jpg|png|swf)"/""/
+toutiao.com##div[class$="-mode"] :has(a.ad)
+www.epinv.com##.epinv_f:remove()
+www.epinv.com##*.adsbygoogle,.footbar
+youku.com##[data-adtype]
