@@ -141,7 +141,8 @@ function Fuck_ADV(){
             localStorage.setItem(getDoamin + "___hackplus_whitelist", JSON.stringify(hackplus_whitelist));
         }
     })
-})()
+})();
+
 (function () {
     var XgetSelection = window.getSelection;
     var Fuck_Tooltip = document.createElement('div');
@@ -187,5 +188,5 @@ function Fuck_ADV(){
         } else if (!text) {
             Fuck_Tooltip.style.display = 'none';
         }
-    });
+    })
 })()
