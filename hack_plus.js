@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.0.0
+// @version      1.1.0
 // @author       汝莫舞
 // @description  一些浏览器增强功能
 // @match        *://*
-// @grant        none
+// @grant        unsafeWindow
 // @grant        GM_log
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -52,12 +52,14 @@ var localStorage = {
     },
     removeItem : function (name) {
         return GM_deleteValue(name)
+    },
+    listItem : function () {
+        return GM_listValues()
     }
 };
 
 function Fuck_testDomain(arr) {
     var regex = new RegExp('^' + arr, 'i');
-    //console.log(regex);
     return regex.test(location.href.replace(/https?:\/\//i, ''))
 }
 
@@ -82,27 +84,33 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
 var broswer_UA = navigator.userAgent,
     getDoamin = window.HackPlus_getMainHost || window.location.host,
     getHostname = window.location.host,
-    XxX_MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver,
+    hackplus_whitelistJSON = localStorage.getItem(getDoamin + "___hackplus_whitelist") || "{}",
+    hackplus_whitelist = JSON.parse(hackplus_whitelistJSON);
+if (hackplus_whitelistJSON == "{}") {
+    localStorage.removeItem(getDoamin + "___hackplus_whitelist")
+}
 //--功能模块定义[end]--//
 
 
 function Fuck_ADV(){
-    [].forEach.call(document.querySelectorAll('a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
-        Fuck_removeAD(Nodeitem, 580, 1800, 40, 140, 2);
-        Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
-    });
+    if (hackplus_whitelist["unFuck_ADV"] != 1){
+        [].forEach.call(document.querySelectorAll('a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
+            Fuck_removeAD(Nodeitem, 580, 1800, 40, 140, 2);
+            Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
+        });
+    }
 }
 
 (function() {
-    //if ($$ALL_WLD.indexOf(getDoamin) == -1 && !$$ALL_WLD.some(Fuck_testDomain)) {
-        window.XxX_observer = new XxX_MutationObserver(function () {
+        window.observer = new MutationObserver(function () {
             Fuck_ADV()
         });
         window.Timer_FuckRAI = setTimeout(function () {
             Fuck_ADV();
             if (document.readyState == "complete") {
                 setTimeout(Fuck_ADV, 1e3);
-                window.XxX_observer.observe(document.body, {childList: true,subtree: true});
+                window.observer.observe(document.body, {childList: true,subtree: true});
                 clearTimeout(window.Timer_FuckRAI);
             } else {
                 setTimeout(Fuck_ADV, 500);
@@ -110,26 +118,74 @@ function Fuck_ADV(){
             }
         }, 20);
         setTimeout(function(){
-            if (window.XxX_observer && !window.XxX_observer.observe) {
+            if (window.observer && !window.observer.observe) {
                 Fuck_ADV();
-                window.XxX_observer.observe(document.body, {childList: true,subtree: true});
+                window.observer.observe(document.body, {childList: true,subtree: true});
                 clearTimeout(window.Timer_FuckRAI);
             }
         }, 2e4);
-    //}
 })();
 
-//--Disable Html5 p2p--//
-if (broswer_UA.indexOf('rv:11') == -1 && broswer_UA.indexOf('MSIE') == -1) {
-    try {
-        navigator.mediaDevices.getUserMedia =
-        navigator.webkitGetUserMedia =
-        navigator.mozGetUserMedia =
-        navigator.getUserMedia =
-        webkitRTCPeerConnection =
-        RTCPeerConnection = undefined;
-    } catch (error) {
-        webkitRTCPeerConnection =
-        RTCPeerConnection = undefined;
-    }
-}
+(function () {
+    document.addEventListener("keydown", function (event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        var unFuck_ADV_msg = "确认添加【" + getDoamin + "】banner广告白名单\n点击取消继续过滤"; 
+        if (e.keyCode == 38 && e.ctrlKey) {
+            if (confirm(unFuck_ADV_msg)==true){ 
+                hackplus_whitelist["unFuck_ADV"] = 1;
+                //console.log(hackplus_whitelist);
+            }else{ 
+                delete hackplus_whitelist["unFuck_ADV"];
+                //console.log(hackplus_whitelist);
+            }
+            localStorage.setItem(getDoamin + "___hackplus_whitelist", JSON.stringify(hackplus_whitelist));
+        }
+    })
+})()
+(function () {
+    var XgetSelection = window.getSelection;
+    var Fuck_Tooltip = document.createElement('div');
+    Fuck_Tooltip.id = 'Fuck_Tooltip';
+    Fuck_Tooltip.style.display = 'none';
+    // 鼠标事件：防止选中的文本消失
+    document.addEventListener('mousedown', function (e) {
+        if (e.target == Fuck_Tooltip || (e.target.parentNode && e.target.parentNode == Fuck_Tooltip) || (e.target.parentNode.parentNode && e.target.parentNode.parentNode == Fuck_Tooltip)) { // 点击了翻译图标
+            e.preventDefault();
+        }
+    });
+    // 选中变化事件
+    document.addEventListener("selectionchange", function () {
+        if (!XgetSelection().toString().trim()) {
+            Fuck_Tooltip.style.display = 'none';
+        }
+    });
+    // 鼠标事件：防止选中的文本消失；显示、隐藏图标
+    document.addEventListener('mouseup', function (e) {
+        if (e.target == Fuck_Tooltip || (e.target.parentNode && e.target.parentNode == Fuck_Tooltip) || (e.target.parentNode.parentNode && e.target.parentNode.parentNode == Fuck_Tooltip)) { // 点击了翻译图标
+            e.preventDefault();
+            return;
+        }
+        var text = XgetSelection().toString().trim();
+        if (text && Fuck_Tooltip.style.display == 'none' && e.ctrlKey) {
+            Fuck_Tooltip.style.top = e.pageY + 12 + 'px';
+            Fuck_Tooltip.style.left = e.pageX + 'px';
+            if(!document.querySelector('#Fuck_Tooltip')){
+                // 添加图标到 DOM
+                document.documentElement.appendChild(Fuck_Tooltip);
+            }
+            Fuck_Tooltip.style.display = 'block';
+            try {
+                if ($$customSurl && $$customStext) {
+                    var customSearch = '<a href="' + $$customSurl.replace("%s",  encodeURIComponent(text) ) + '" target="blank">' + $$customStext.trim() + '</a> | ';
+                } else {
+                    var customSearch = '';
+                }
+            } catch (e) {
+                var customSearch = '';
+            }
+            Fuck_Tooltip.innerHTML = customSearch + '<a href="https://www.baidu.com/s?wd=site%3A' + getDoamin + '%20' + encodeURIComponent(text) + '" target="_blank">本站百度</a> | <a href="https://z1.m1907.cn/?jx=' + encodeURIComponent(text) + '" target="_blank">影片搜索</a><style>#Fuck_Tooltip{padding:8px;background:rgba(3, 3 , 7, 0.7);color:#FFF;border-radius:3px;box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);font-size:13px;text-align:center;line-height:13px;position:absolute;z-index:10203040}#Fuck_Tooltip a{color:#fadfa3;text-decoration:none}</style>';
+        } else if (!text) {
+            Fuck_Tooltip.style.display = 'none';
+        }
+    });
+})()
