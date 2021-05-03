@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         去联盟广告
-// @version      1.0.0
+// @version      1.1.0504
 // @author       汝莫舞
 // @description  简单阻止一些联盟广告的加载
-// @match        *://*
+// @match        *://*/*
 // @grant        none
 // @run-at       document-start
 // @exclude      *://baike.baidu.com/*

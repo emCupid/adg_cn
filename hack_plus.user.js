@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.1.0
+// @version      1.2.0504
 // @author       汝莫舞
-// @description  一些浏览器增强功能
+// @description  一些浏览器增强功能，Ctrl+↑脚本设置。
 // @match        *://*/*
 // @grant        unsafeWindow
 // @grant        GM_log
