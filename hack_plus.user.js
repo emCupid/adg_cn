@@ -3,7 +3,7 @@
 // @version      1.1.0
 // @author       汝莫舞
 // @description  一些浏览器增强功能
-// @match        *://*
+// @match        *://*/*
 // @grant        unsafeWindow
 // @grant        GM_log
 // @grant        GM_setValue
@@ -43,20 +43,20 @@
     }
 })();
 
-//var localStorage = {
-//    getItem : function (name, defaultValue) {
-//        return GM_getValue(name, defaultValue)
-//    },
-//    setItem : function (name, value) {
-//        return GM_setValue(name, value)
-//    },
-//    removeItem : function (name) {
-//        return GM_deleteValue(name)
-//    },
-//    listItem : function () {
-//        return GM_listValues()
-//    }
-//};
+var localStorage = {
+    getItem : function (name, defaultValue) {
+        return GM_getValue(name, defaultValue)
+    },
+    setItem : function (name, value) {
+        return GM_setValue(name, value)
+    },
+    removeItem : function (name) {
+        return GM_deleteValue(name)
+    },
+    listItem : function () {
+        return GM_listValues()
+    }
+};
 
 function Fuck_testDomain(arr) {
     var regex = new RegExp('^' + arr, 'i');
