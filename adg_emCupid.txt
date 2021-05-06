@@ -1,9 +1,11 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-05-03
+! Last modified: 2021-05-06
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs
+||*@*_*.exe$redirect=empty
+||*_*@*.exe$redirect=empty
 /\/ads\/\.*?\d*.*?\.js/$script
 /\/js\/ad\d+\.js/$script
 
@@ -13,6 +15,7 @@
 !-------爱奇艺播放广告-------
 ||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"\,/\$1"\,/
 ||iqiyi.com/show2?e=*$replace=/"[^"]+?\.(jpg|png|swf)"/""/
+
 
 !-------规则------
 ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"]
