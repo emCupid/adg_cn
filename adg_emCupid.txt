@@ -40,6 +40,7 @@ www.sohu.com##div.allsee-item[id$="_"]:has(a[id])
 szhk.com##div.mt10:has(span.banner_gg)
 gucheng.com#?#.ask_topad,[class^="ask_daad"],.fenye_my_pc,.title_ad,div[class*="_gg_"],#adDiv,div[class*="_xxl_"],.right_info_pc,div.right_img>div:has(iframe),.left_list_pc>div:has(iframe)
 sina.com.cn#?#div[class]:matches-attr("/data-/"="/ad_content/")
+tv.sohu.com/s/sohuplayer/*$replace=/<\/html>/<style>iframe{display:none}<\/style><\/html>/
 !↓
 pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 423down.com##a[href^="https://app.weilian.xin/"]
