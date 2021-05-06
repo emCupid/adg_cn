@@ -81,7 +81,7 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
         }
     }
 }
-var broswer_UA = navigator.userAgent,
+var browser_UA = navigator.userAgent,
     getDoamin = window.HackPlus_getMainHost || window.location.host,
     getHostname = window.location.host,
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver,
