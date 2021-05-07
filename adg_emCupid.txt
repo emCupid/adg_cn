@@ -43,6 +43,7 @@ gucheng.com#?#.ask_topad,[class^="ask_daad"],.fenye_my_pc,.title_ad,div[class*="
 sina.com.cn#?#div[class]:matches-attr("/data-/"="/ad_content/")
 tv.sohu.com/s/sohuplayer/*$replace=/<\/html>/<style>iframe{display:none}<\/style><\/html>/
 zcool.com.cn##div[class*="-advlong-"]
+imooc.com##div[class*="-adv"]
 !↓
 pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 423down.com##a[href^="https://app.weilian.xin/"]
