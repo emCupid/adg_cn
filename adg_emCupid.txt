@@ -18,6 +18,7 @@
 
 
 !-------规则------
+58pic.com##.activitySettings-fixedBottom
 ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"]
 huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
 jianshu.com##[aria-label*="-ad"]
@@ -44,6 +45,7 @@ sina.com.cn#?#div[class]:matches-attr("/data-/"="/ad_content/")
 tv.sohu.com/s/sohuplayer/*$replace=/<\/html>/<style>iframe{display:none}<\/style><\/html>/
 zcool.com.cn##div[class*="-advlong-"]
 imooc.com##div[class*="-adv"]
+youdao.com###ads
 !↓
 pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 423down.com##a[href^="https://app.weilian.xin/"]
