@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-05-09
+! Last modified: 2021-05-10
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs
@@ -46,6 +46,8 @@ tv.sohu.com/s/sohuplayer/*$replace=/<\/html>/<style>iframe{display:none}<\/style
 zcool.com.cn##div[class*="-advlong-"]
 imooc.com##div[class*="-adv"]
 youdao.com###ads
+jb51.net##.tonglan,.softsfwtl
+jb51.net#?#.side-box:has(.blank5)
 !↓
 pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 423down.com##a[href^="https://app.weilian.xin/"]
