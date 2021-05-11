@@ -1,16 +1,13 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.2.0504
+// @version      1.3.0511
 // @author       汝莫舞
 // @description  一些浏览器增强功能，Ctrl+↑脚本设置。
 // @match        *://*/*
-// @grant        unsafeWindow
-// @grant        GM_log
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_listValues
 // @grant        GM_deleteValue
-// @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // @exclude      *://*.taobao.com*
 // @exclude      *://*.tmall.com*
@@ -84,11 +81,12 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
 var browser_UA = navigator.userAgent,
     getDoamin = window.HackPlus_getMainHost || window.location.host,
     getHostname = window.location.host,
+    iframeSRC = /(upload|player|comment|\/\/tushuo.baidu.com|\/\/zhannei.baidu.com\/|frame-vip.min.html|jiexi.php|\/\/widget.weibo.com|.china.com.cn\/node_|lanzous.com\/fn\?|\/soft|\/login|vip\.php\?url=|\/vip\/index\.php\?url=|\/index\.php\?url=https?:\/\/)/i,
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver,
-    hackplus_whitelistJSON = localStorage.getItem(getDoamin + "___hackplus_whitelist") || "{}",
+    hackplus_whitelistJSON = localStorage.getItem("$" + getDoamin + "$") || "{}",
     hackplus_whitelist = JSON.parse(hackplus_whitelistJSON);
 if (hackplus_whitelistJSON == "{}") {
-    localStorage.removeItem(getDoamin + "___hackplus_whitelist")
+    localStorage.removeItem("$" + getDoamin + "$")
 }
 //--功能模块定义[end]--//
 
@@ -98,6 +96,15 @@ function Fuck_ADV(){
         [].forEach.call(document.querySelectorAll('a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
             Fuck_removeAD(Nodeitem, 580, 1800, 40, 140, 2);
             Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
+        });
+        [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
+            if (!iframeSRC.test(Nodeitem.src) && Nodeitem.getAttribute("src") && Nodeitem.offsetWidth >= 600 && Nodeitem.offsetWidth <= 1500 && Nodeitem.offsetHeight >= 40 && Nodeitem.offsetHeight <= 180) {
+                //if (Nodeitem.parentNode.children.length <= 2) {
+                //    Nodeitem.parentNode.parentNode.removeChild(Nodeitem.parentNode);
+                //}
+                Nodeitem.parentNode.removeChild(Nodeitem);
+                console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
+            }
         });
     }
 }
@@ -129,7 +136,7 @@ function Fuck_ADV(){
 (function () {
     document.addEventListener("keydown", function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        var unFuck_ADV_msg = "确认添加【" + getDoamin + "】banner广告白名单\n点击取消继续过滤"; 
+        var unFuck_ADV_msg = "【 " + getDoamin + " 】banner&iframe广告白名单\n\n【确认】添加白名单\n【取消】删除白名单"; 
         if (e.keyCode == 38 && e.ctrlKey) {
             if (confirm(unFuck_ADV_msg)==true){ 
                 hackplus_whitelist["unFuck_ADV"] = 1;
@@ -138,7 +145,7 @@ function Fuck_ADV(){
                 delete hackplus_whitelist["unFuck_ADV"];
                 //console.log(hackplus_whitelist);
             }
-            localStorage.setItem(getDoamin + "___hackplus_whitelist", JSON.stringify(hackplus_whitelist));
+            localStorage.setItem("$" + getDoamin + "$", JSON.stringify(hackplus_whitelist));
         }
     })
 })();
