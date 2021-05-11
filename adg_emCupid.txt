@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-05-06
+! Last modified: 2021-05-11
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs
@@ -18,6 +18,7 @@
 
 
 !-------规则------
+58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row
 ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"]
 huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
 jianshu.com##[aria-label*="-ad"]
@@ -34,7 +35,8 @@ huaban.com##div[class*="hb-ad"]
 ||ntimg.cn/*_ad.jpg
 toutiao.com##div[class$="-mode"] :has(a.ad)
 www.epinv.com#?#.epinv_f,.footbar,.adsbygoogle
-youku.com##[data-adtype]
+youku.com##[data-adtype],[data-adpid],[data-adext]
+qq.com##txpdiv[data-role^="hd-ad-adapter-"]
 www.sohu.com##div.clear[data-spm-content]:matches-attr("data-spm-content"="/.{200}.*/")
 www.sohu.com##div.allsee-item[id$="_"]:has(a[id])
 szhk.com##div.mt10:has(span.banner_gg)
@@ -43,10 +45,14 @@ sina.com.cn#?#div[class]:matches-attr("/data-/"="/ad_content/")
 tv.sohu.com/s/sohuplayer/*$replace=/<\/html>/<style>iframe{display:none}<\/style><\/html>/
 zcool.com.cn##div[class*="-advlong-"]
 imooc.com##div[class*="-adv"]
+youdao.com###ads
+jb51.net##.tonglan,.softsfwtl
+jb51.net#?#.side-box:has(.blank5)
 !↓
 pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 423down.com##a[href^="https://app.weilian.xin/"]
 zhenbuka2.com#$#.col-lg-wide-75{left: 11%;width: 100%}
-zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,#yb112,#md112,.col-lg-wide-25.stui-pannel-side
-zhenbuka.com,zhenbuka3.com,zhenbuka2.com#%#//scriptlet('remove-cookie', 'vodSearchNeedVerify')
+zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
+fanyi.baidu.com##.app-side-ad
+!zhenbuka.com,zhenbuka3.com,zhenbuka2.com#%#//scriptlet('remove-cookie', 'vodSearchNeedVerify')
 !↑
