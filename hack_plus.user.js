@@ -81,7 +81,7 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
 var browser_UA = navigator.userAgent,
     getDoamin = window.HackPlus_getMainHost || window.location.host,
     getHostname = window.location.host,
-    iframeSRC = /(upload|player|comment|\/\/tushuo.baidu.com|\/\/zhannei.baidu.com\/|frame-vip.min.html|jiexi.php|\/\/widget.weibo.com|.china.com.cn\/node_|lanzous.com\/fn\?|\/soft|\/login|vip\.php\?url=|\/vip\/index\.php\?url=|\/index\.php\?url=https?:\/\/)/i,
+    iframeSRC = /(upload|player|comment|\/\/tushuo.baidu.com|\/\/zhannei.baidu.com\/|frame-vip.min.html|jiexi.php|\/\/widget.weibo.com|.china.com.cn\/node_|lanzou..com\/fn\?|\/soft|\/login|vip\.php\?url=|\/vip\/index\.php\?url=|\/index\.php\?url=https?:\/\/)/i,
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver,
     hackplus_whitelistJSON = localStorage.getItem("$" + getDoamin + "$") || "{}",
     hackplus_whitelist = JSON.parse(hackplus_whitelistJSON);
