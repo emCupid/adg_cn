@@ -15,6 +15,10 @@
 !-------爱奇艺播放广告-------
 ||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"\,/\$1"\,/
 ||iqiyi.com/show2?e=*$replace=/"[^"]+?\.(jpg|png|swf)"/""/
+!-------腾讯播放广告-------
+||vm.gtimg.cn/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
+||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
+@@||lts*.qq.com^*.ts?index=$media,domain=qq.com
 !-------三网视频去水印-------
 iqiyi.com#$?#.iqp-logo-box{ remove: true; }
 v.youku.com#$?#.logo-new{ remove: true; }
