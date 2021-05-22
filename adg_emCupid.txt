@@ -57,6 +57,12 @@ jb51.net##.tonglan,.softsfwtl
 jb51.net#?#.side-box:has(.blank5)、
 qidian.com###j-topOpBox
 !↓
+||dianying.*/statics/js/common.js$replace=/function _0x1fbaa2/function nonono/
+dianying.*##.pc,.phone,.tips-list,img[src$=".gif"],#buffer,#play-pause
+dianying.*$$div[class="pc"]
+dianying.*$$div[class="phone"]
+||dianying.*/buffer.html
+||dianying.im/statics/recommend/*.gif
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
 pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 423down.com##a[href^="https://app.weilian.xin/"]
