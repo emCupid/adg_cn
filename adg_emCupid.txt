@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-05-26
+! Last modified: 2021-05-27
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs
@@ -18,10 +18,11 @@
 !-------腾讯播放广告-------
 ||vm.gtimg.cn/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
 ||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
-!-------三网视频去水印-------
+!-------主流视频去水印-------
 iqiyi.com#$?#.iqp-logo-box{ remove: true; }
 v.youku.com#$?#.logo-new{ remove: true; }
 v.qq.com#$?#.txp_waterMark_pic{ remove: true; }
+live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo
 
 !-------规则------
