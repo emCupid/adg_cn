@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-05-24
+! Last modified: 2021-05-26
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs
@@ -22,6 +22,7 @@
 iqiyi.com#$?#.iqp-logo-box{ remove: true; }
 v.youku.com#$?#.logo-new{ remove: true; }
 v.qq.com#$?#.txp_waterMark_pic{ remove: true; }
+#?#.dplayer-logo
 
 !-------规则------
 58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
@@ -57,6 +58,8 @@ jb51.net##.tonglan,.softsfwtl
 jb51.net#?#.side-box:has(.blank5)、
 qidian.com###j-topOpBox
 !↓
+tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
+sehuatang.net$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap
 ||dianying.*/statics/js/common.js$replace=/function _0x1fbaa2/function nonono/
 dianying.*##.pc,.phone,.tips-list,img[src$=".gif"],#buffer,#play-pause
