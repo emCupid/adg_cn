@@ -18,10 +18,12 @@
 !-------腾讯播放广告-------
 ||vm.gtimg.cn/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
 ||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
-!-------三网视频去水印-------
+!-------主流视频去水印-------
 iqiyi.com#$?#.iqp-logo-box{ remove: true; }
 v.youku.com#$?#.logo-new{ remove: true; }
 v.qq.com#$?#.txp_waterMark_pic{ remove: true; }
+live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
+#?#.dplayer-logo
 
 !-------规则------
 58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
@@ -58,6 +60,8 @@ jb51.net##.tonglan,.softsfwtl
 jb51.net#?#.side-box:has(.blank5)
 qidian.com###j-topOpBox
 !↓
+tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
+sehuatang.net$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap
 ||dianying.*/statics/js/common.js$replace=/function _0x1fbaa2/function nonono/
 dianying.*##.pc,.phone,.tips-list,img[src$=".gif"],#buffer,#play-pause
