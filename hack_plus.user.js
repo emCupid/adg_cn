@@ -4,6 +4,7 @@
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告，Ctrl+↑脚本设置。
 // @match        *://*/*
+// @grant        unsafeWindow
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_listValues
@@ -54,6 +55,11 @@
 //        return GM_listValues()
 //    }
 //};
+//debug GM_Value
+//unsafeWindow.GM_getValue = GM_getValue;
+//unsafeWindow.GM_setValue = GM_setValue;
+//unsafeWindow.GM_deleteValue = GM_deleteValue;
+//unsafeWindow.GM_listValues = GM_listValues;
 
 function Fuck_testDomain(arr) {
     var regex = new RegExp('^' + arr, 'i');
