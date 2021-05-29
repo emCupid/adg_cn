@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-05-27
+! Last modified: 2021-05-29
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -26,8 +26,8 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo
 
 !-------规则------
-58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
-www.58pic.com#?#.search_poster:has(.is-advertisement)
+!58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
+!www.58pic.com#?#.search_poster:has(.is-advertisement)
 588ku.com##.advertF,#rightAdEditor,.editIndex-entry.editIndexEntry,.adfix-box,.showinfo-ad
 ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"]
 huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
