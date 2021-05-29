@@ -11,6 +11,8 @@
 
 !-------白名单-------
 @@||lts*.qq.com^*.ts?index=$media,domain=qq.com
+@@||192.168.*.*^$important
+@@192.168.*.*
 
 !-------爱奇艺播放广告-------
 ||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"\,/\$1"\,/
@@ -26,8 +28,8 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo
 
 !-------规则------
-!58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
-!www.58pic.com#?#.search_poster:has(.is-advertisement)
+58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
+www.58pic.com#?#.search_poster:has(.is-advertisement)
 588ku.com##.advertF,#rightAdEditor,.editIndex-entry.editIndexEntry,.adfix-box,.showinfo-ad
 ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"]
 huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
