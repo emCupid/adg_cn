@@ -68,6 +68,8 @@ zhihu.com#%#//scriptlet('remove-attr','style','html')
 csdn.net###passportbox,.login-mark,#csdn-shop-window-top,#csdn-shop-window,#blogColumnPayAdvert
 www.jianshu.com#?#div:has(>div[class$="-mask"])
 www.jianshu.com#%#//scriptlet('remove-attr','style','body')
+www.mypianku.net###playad
+||www.mypianku.net/*.html$replace=/(pycount) == 0/\$1/
 !↓
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.net$$div[class="show-text"]
