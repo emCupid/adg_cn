@@ -66,7 +66,7 @@ www.appinn.com###media_image-2
 www.zhihu.com##.undefined
 www.zhihu.com#%#//scriptlet('remove-attr','style','html')
 www.jianshu.com#?#div:has(>div[class$="-mask"])
-www.jianshu.com#%#//scriptlet('remove-attr','style','html')
+www.jianshu.com#%#//scriptlet('remove-attr','style','body')
 !↓
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.net$$div[class="show-text"]
