@@ -70,7 +70,7 @@ www.jianshu.com#?#div:has(>div[class$="-mask"])
 www.jianshu.com#%#//scriptlet('remove-attr','style','body')
 jianshu.com#?#div:has(>div[aria-label*="抽奖"]),div:has(div[tabindex="-1"][role="dialog"])
 mypianku.*#%#AG_defineProperty('pycount',{value:0})
-!||*pianku.*/*.html$replace=/(pycount) == 0/1/
+||*pianku.*/*.html$replace=/pycount.?==.?0/1/
 !↓
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.net$$div[class="show-text"]
