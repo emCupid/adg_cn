@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-05-30
+! Last modified: 2021-06-05
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -11,14 +11,14 @@
 
 !-------白名单-------
 @@||lts*.qq.com^*.ts?index=$media,domain=qq.com
-@@||192.168.*.*^$important
+@@||192.168.*.*$important
 @@192.168.*.*
 
 !-------爱奇艺播放广告-------
 ||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"\,/\$1"\,/
 ||iqiyi.com/show2?e=*$replace=/"[^"]+?\.(jpg|png|swf)"/""/
 !-------腾讯播放广告-------
-||vm.gtimg.cn/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
+||vm.gtimg.cn/c/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
 ||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
 !-------主流视频去水印-------
 iqiyi.com#$?#.iqp-logo-box{ remove: true; }
@@ -63,6 +63,14 @@ jb51.net#?#.side-box:has(.blank5)
 qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
 www.appinn.com###media_image-2
+zhihu.com##.undefined
+zhihu.com#%#//scriptlet('remove-attr','style','html')
+csdn.net###passportbox,.login-mark,#csdn-shop-window-top,#csdn-shop-window,#blogColumnPayAdvert
+www.jianshu.com#?#div:has(>div[class$="-mask"])
+www.jianshu.com#%#//scriptlet('remove-attr','style','body')
+jianshu.com#?#div:has(>div[aria-label*="抽奖"]),div:has(div[tabindex="-1"][role="dialog"])
+mypianku.*#%#AG_defineProperty('pycount',{value:0})
+||*pianku.*/*.html$replace=/pycount.?==.?0/1/
 !↓
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.net$$div[class="show-text"]
@@ -80,6 +88,6 @@ nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
 zhenbuka2.com#$#.col-lg-wide-75{left: 11%;width: 100%}
 zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
-fanyi.baidu.com##.app-side-ad
+fanyi.baidu.com##[class^="app-side"],#transOtherRight
 !zhenbuka.com,zhenbuka3.com,zhenbuka2.com#%#//scriptlet('remove-cookie', 'vodSearchNeedVerify')
 !↑
