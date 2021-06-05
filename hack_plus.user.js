@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.6.0528
+// @version      1.7.0605
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告，Ctrl+↑脚本设置。
 // @match        *://*/*
+// @namespace    emCupid
 // @grant        unsafeWindow
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -17,7 +18,6 @@
 // @exclude      *://*.suning.com*
 // @exclude      *://*.dangdang.com*
 // @exclude      *://*.mogu.com*
-
 // ==/UserScript==
 
 //--功能模块定义[begin]--//
@@ -56,10 +56,10 @@
 //    }
 //};
 //debug GM_Value
-//unsafeWindow.GM_getValue = GM_getValue;
-//unsafeWindow.GM_setValue = GM_setValue;
-//unsafeWindow.GM_deleteValue = GM_deleteValue;
-//unsafeWindow.GM_listValues = GM_listValues;
+unsafeWindow._GM_getValue = GM_getValue;
+unsafeWindow._GM_setValue = GM_setValue;
+unsafeWindow._GM_deleteValue = GM_deleteValue;
+unsafeWindow._GM_listValues = GM_listValues;
 
 function Fuck_testDomain(arr) {
     var regex = new RegExp('^' + arr, 'i');
@@ -93,8 +93,7 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
         }
     }
 }
-var browser_UA = navigator.userAgent,
-    getDoamin = window.HackPlus_getMainHost || window.location.host,
+var getDoamin = window.HackPlus_getMainHost || window.location.host,
     getHostname = window.location.host,
     iframeSRC = /(upload|player|comment|\/\/tushuo.baidu.com|\/\/zhannei.baidu.com\/|frame-vip.min.html|jiexi.php|\/\/widget.weibo.com|.china.com.cn\/node_|lanzou..com\/fn\?|\/soft|\/login|vip\.php\?url=|\/vip\/index\.php\?url=|\/index\.php\?url=https?:\/\/)/i,
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver,
@@ -240,7 +239,7 @@ function Fuck_XZ(event) {
     Fuck_Tooltip.style.display = 'none';
     // 鼠标事件：防止选中的文本消失
     document.addEventListener('mousedown', function (e) {
-        if (e.target == Fuck_Tooltip || (e.target.parentNode && e.target.parentNode == Fuck_Tooltip) || (e.target.parentNode.parentNode && e.target.parentNode.parentNode == Fuck_Tooltip)) { // 点击了翻译图标
+        if (e.target == Fuck_Tooltip || (e.target.parentNode && e.target.parentNode == Fuck_Tooltip) || (e.target.parentNode.parentNode && e.target.parentNode.parentNode == Fuck_Tooltip)) { // 点击了图标
             e.preventDefault();
         }
     });
@@ -252,7 +251,7 @@ function Fuck_XZ(event) {
     });
     // 鼠标事件：防止选中的文本消失；显示、隐藏图标
     document.addEventListener('mouseup', function (e) {
-        if (e.target == Fuck_Tooltip || (e.target.parentNode && e.target.parentNode == Fuck_Tooltip) || (e.target.parentNode.parentNode && e.target.parentNode.parentNode == Fuck_Tooltip)) { // 点击了翻译图标
+        if (e.target == Fuck_Tooltip || (e.target.parentNode && e.target.parentNode == Fuck_Tooltip) || (e.target.parentNode.parentNode && e.target.parentNode.parentNode == Fuck_Tooltip)) { // 点击了图标
             e.preventDefault();
             return;
         }
