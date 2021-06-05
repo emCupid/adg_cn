@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-06-02
+! Last modified: 2021-06-05
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -88,6 +88,6 @@ nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
 zhenbuka2.com#$#.col-lg-wide-75{left: 11%;width: 100%}
 zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
-fanyi.baidu.com##.app-side-ad
+fanyi.baidu.com##[class^="app-side"],#transOtherRight
 !zhenbuka.com,zhenbuka3.com,zhenbuka2.com#%#//scriptlet('remove-cookie', 'vodSearchNeedVerify')
 !↑
