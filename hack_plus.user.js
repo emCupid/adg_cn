@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.7.0605
+// @version      1.8.0607
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告，Ctrl+↑脚本设置。
 // @match        *://*/*
@@ -95,10 +95,68 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
 }
 var getDoamin = window.HackPlus_getMainHost || window.location.host,
     getHostname = window.location.host,
-    iframeSRC = /(upload|player|comment|\/\/tushuo.baidu.com|\/\/zhannei.baidu.com\/|frame-vip.min.html|jiexi.php|\/\/widget.weibo.com|.china.com.cn\/node_|lanzou..com\/fn\?|\/soft|\/login|vip\.php\?url=|\/vip\/index\.php\?url=|\/index\.php\?url=https?:\/\/)/i,
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver,
     hackplus_whitelistJSON = localStorage.getItem("$" + getDoamin + "$") || "{}",
-    hackplus_whitelist = JSON.parse(hackplus_whitelistJSON);
+    hackplus_whitelist = JSON.parse(hackplus_whitelistJSON),
+    iframeSRC_whitelist = [
+        'upload',
+        'player',
+        'comment',
+        'jiexi.php',
+        '\\/soft',
+        '\\/login',
+        'vip\\.php\\?url=',
+        '\\/vip\\/index\\.php\\?url=',
+        '\\/index\\.php\\?url=https?:\\/\\/',
+        'lanzou..com\\/fn\\?',
+        '.china.com.cn\\/node_',
+        '\\/\\/v.qq.com',
+        '\\/\\/tushuo.baidu.com',
+        '\\/\\/zhannei.baidu.com',
+        '\\/\\/widget.weibo.com'
+    ],
+    iframeSRC = new RegExp(iframeSRC_whitelist.join("|","i")),
+    scriptWRS_blacklist = [
+        'script.*src=',
+        '\\/click\\/',
+        'var hm ?= ?document\\.createElement',
+        'cpro_id',
+        'tanx-a-mm'
+    ],
+    scriptWRS_B = new RegExp(scriptWRS_blacklist.join("|","i")),
+    scriptWRS_whitelist = [
+        '[\\u4e00-\\u9fa5]',
+        'player',
+        'editor\\/',
+        'map.baidu.com',
+        '\\/api',
+        'cityjson',
+        '\\/conf',
+        'qhcs.css',
+        'qhcs.js',
+        'data.video.iqiyi.com\\/v.mp4',
+        'account\\.',
+        'letvcdn.com',
+        'jquery',
+        'swfobject',
+        'toolbar',
+        'lightbox',
+        'login',
+        'comment',
+        'all_async_search',
+        'psp_jump_white_list',
+        'bd_share',
+        'document.write',
+        'hdslide',
+        'ifengimg.com',
+        '\\/pc\\/js\\/down.js',
+        '\\/xinwen',
+        '\\/video\\/',
+        '\\/vip\\/',
+        '\\/data\\/da_default.js',
+        'BackTop'
+    ],
+    scriptWRS_W = new RegExp(scriptWRS_whitelist.join("|","i"));
 if (hackplus_whitelistJSON == "{}") {
     localStorage.removeItem("$" + getDoamin + "$")
 }
@@ -124,13 +182,9 @@ function Fuck_ADV(){
 }
 
 function Fuck_WRS() {
-    //--document.write(ln)包含匹配--//
-    var regex_S = /(script.*src=|\/click\/|var hm ?= ?document\.createElement|cpro_id|tanx-a-mm)/i;
-    //--document.write(ln)不含匹配--//
-    var regex_J = /([\u4e00-\u9fa5]|player|editor\/|\/editor|map.baidu.com|\/api|cityjson|\/conf|qhcs.css|qhcs.js|data.video.iqiyi.com\/v.mp4|account\.|letvcdn.com|jquery|swfobject|toolbar|lightbox|login|comment|all_async_search|psp_jump_white_list|bd_share|document.write|hdslide|ifengimg.com|\/pc\/js\/down.js|\/xinwen|\/video\/|\/vip\/|\/data\/da_default.js|BackTop)/i;
     document.Rwrite = document.write;
     document.write = function (str) {
-        if (!regex_S.test(str) || regex_J.test(str)) {
+        if (!scriptWRS_B.test(str) || scriptWRS_W.test(str)) {
             document.Rwrite(str);
         } else {
             console.log('%c[Block Script Write] ✂', 'border-left:5px solid #A0B;color:#A0B;padding:3px', str);
@@ -138,7 +192,7 @@ function Fuck_WRS() {
     };
     document.Rwriteln = document.writeln;
     document.writeln = function (str) {
-        if (!regex_S.test(str) || regex_J.test(str)) {
+        if (!scriptWRS_B.test(str) || scriptWRS_W.test(str)) {
             document.Rwriteln(str);
         } else {
             console.log('%c[Block Script Writeln] ✂', 'border-left:5px solid #A0B;color:#A0B;padding:3px', str);
