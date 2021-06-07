@@ -49,8 +49,9 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||ef-dongfeng.tanx.com/tanx?
 ||apstat.js?url=
 ||365dmp.com/*?
-||/logger.js
-||/index/q.php?cid=
+||*/logger.js
+||*/index/q.php?cid=
+||*/js/count.js
 
 !-------规则------
 58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
