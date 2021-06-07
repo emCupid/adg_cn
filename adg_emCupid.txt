@@ -53,6 +53,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||*/index/q.php?cid=
 ||*/js/count.js
 ||*/baidu_tongji.js
+||zz.bdstatic.com/linksubmit/push.js
 
 !-------规则------
 58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
