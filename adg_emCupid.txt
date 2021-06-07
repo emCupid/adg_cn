@@ -27,6 +27,31 @@ v.qq.com#$?#.txp_waterMark_pic{ remove: true; }
 live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo
 
+!-------追踪&统计-------
+||s.union.360.cn/s.gif
+||www.webdissector.com/recv/gs.gif
+||www.douban.com/stat.html
+||webterren.com/webdig.js
+||webstat.ws.126.net/stat/?
+||synacast.com/1.html
+||stat.funshion.com/
+||sbeacon.sina.com.cn/mrt.gif?
+||s.qhupdate.com/sou/home.gif?
+||s.360.cn/*/s.htm?
+||m.wrating.com/m.gif
+||log^.mtime.cn/_t.gif
+||log.qianzhan.com^
+||irs01.net^
+||idm.bce.baidu.com/t/ping.gif
+||gridsumdissector.com/gs.gif?
+||fundin.douban.com/piwik?
+||emw927.com/count?
+||ef-dongfeng.tanx.com/tanx?
+||apstat.js?url=
+||365dmp.com/*?
+||/logger.js
+||/index/q.php?cid=
+
 !-------规则------
 58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog
 www.58pic.com#?#.search_poster:has(.is-advertisement)
