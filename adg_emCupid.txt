@@ -118,6 +118,10 @@ pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 423down.com##h3:has(>a[href^="https://app.weilian.xin"])
 nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
+!真鸡卡去广告
+mmiyue.com$$script[tag-content="killAdKiller"]
+*/zhenbuka2/statics/js/fuck-debugger.js
+*/zhenbuka2/statics/js/UA.js
 zhenbuka2.com#$#.col-lg-wide-75{left: 11%;width: 100%}
 zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
 fanyi.baidu.com##[class^="app-side"],#transOtherRight
