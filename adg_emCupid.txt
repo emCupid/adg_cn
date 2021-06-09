@@ -118,7 +118,6 @@ pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 423down.com##h3:has(>a[href^="https://app.weilian.xin"]),li:has(.cat:contains(优惠推荐))
 nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
-!真鸡卡去广告
 mmiyue.com$$script[tag-content="killAdKiller"]
 */zhenbuka2/statics/js/fuck-debugger.js
 */zhenbuka2/statics/js/UA.js
