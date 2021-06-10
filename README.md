@@ -9,7 +9,7 @@
   
 
 >**朝朝暮暮plus**  
->一些浏览器增强功能及辅助移除广告
+>**一些浏览器增强功能及辅助移除广告**
 >https://emcupid.coding.net/p/adg_cn/d/adg_cn/git/raw/master/hack_plus.user.js  
 >测试iframe类的横幅：https://www.xbiquge.la/10/10489/  
 >测试阻止script write：https://www.hao6v.tv/  
