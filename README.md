@@ -21,9 +21,10 @@ GitHub：https://github.com/emCupid/adg_cn/raw/master/hack_plus.user.js
 jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_plus.user.js  
 测试iframe类的横幅：https://www.xbiquge.la/10/10489/  
 测试阻止script write：https://www.hao6v.tv/  
-测试解除限制（右键、选择、复制、尾巴等）：http://www.360doc.com/content/18/0731/18/30583588_774726606.shtml
+解除限制（右键、选择、复制、尾巴等）：http://www.360doc.com/content/18/0731/18/30583588_774726606.shtml
 
 ## PS： 
 * 反馈QQ群：[240088290](https://jq.qq.com/?_wv=1027&k=Nn7JsKsm)
 * Coding、GitHub、jsDelivr镜像自行测试访问速度三选一
+* jsDelivr节点多，速度快，但是会有缓存（24小时），所以文件可能不是最新
 * 朝朝暮暮plus脚本因为ADG当前版本GM_setValue有BUG导致不能储存设置，所以目前设置是储存在浏览器中。所以如果要设置这个脚本请谨慎清理浏览器储存（不是缓存）
