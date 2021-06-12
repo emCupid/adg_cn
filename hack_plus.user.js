@@ -18,6 +18,7 @@
 // @exclude      *://*.suning.com*
 // @exclude      *://*.dangdang.com*
 // @exclude      *://*.mogu.com*
+// @exclude      *//graph.baidu.com/*similar
 // ==/UserScript==
 
 //--功能模块定义[begin]--//
