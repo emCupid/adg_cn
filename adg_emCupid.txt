@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-06-13
+! Last modified: 2021-06-14
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -105,6 +105,8 @@ video.sina.cn,k.sina.cn###faiz_top_banner_swiper,#faiz_middle_btn,.Card_Mb16,.fa
 sina.cn#%#//scriptlet('remove-attr','style','section.s_card,main.page_main')
 www.ucbug.com###down-server [class^="ad"]
 !↓
+live.bilibili.com$$script[tag-content="NEPTUNE_IS_MY_WAIFU"]
+*/web-room/v1/index/getInfoByRoom?room_id=$replace=/ad_banner_info/noad/
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.net$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap
