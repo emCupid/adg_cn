@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.8.0607
+// @version      1.9.0613
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告，Ctrl+↑脚本设置。
 // @match        *://*/*
@@ -18,7 +18,7 @@
 // @exclude      *://*.suning.com*
 // @exclude      *://*.dangdang.com*
 // @exclude      *://*.mogu.com*
-// @exclude      *//graph.baidu.com/*similar
+// @exclude      *//graph.baidu.com/*similar*
 // ==/UserScript==
 
 //--功能模块定义[begin]--//
@@ -37,7 +37,7 @@
         document.cookie = cookie;
         if (keyR.test(document.cookie)) {
             document.cookie = (cookie + ";expires=" + expiredTime);
-            return window['HackPlus_getMainHost'] = mainHost;
+            return window['_getMainHost'] = mainHost;
         }
     }
 })();
@@ -61,11 +61,6 @@ unsafeWindow._GM_getValue = GM_getValue;
 unsafeWindow._GM_setValue = GM_setValue;
 unsafeWindow._GM_deleteValue = GM_deleteValue;
 unsafeWindow._GM_listValues = GM_listValues;
-
-function Fuck_testDomain(arr) {
-    var regex = new RegExp('^' + arr, 'i');
-    return regex.test(location.href.replace(/https?:\/\//i, ''))
-}
 
 function checkbox_onClick(checkbox) {
     if (checkbox.checked) {
@@ -94,8 +89,7 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
         }
     }
 }
-var getDoamin = window.HackPlus_getMainHost || window.location.host,
-    getHostname = window.location.host,
+var getDoamin = window._getMainHost || window.location.host,
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver,
     hackplus_whitelistJSON = localStorage.getItem("$" + getDoamin + "$") || "{}",
     hackplus_whitelist = JSON.parse(hackplus_whitelistJSON),
@@ -165,21 +159,19 @@ if (hackplus_whitelistJSON == "{}") {
 
 
 function Fuck_ADV(){
-    if (hackplus_whitelist["unFuck_ADV"] != 1){
-        [].forEach.call(document.querySelectorAll('a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
-            Fuck_removeAD(Nodeitem, 580, 1800, 40, 140, 2);
-            Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
-        });
-        [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
-            if (!iframeSRC.test(Nodeitem.src) && Nodeitem.getAttribute("src") && Nodeitem.offsetWidth >= 600 && Nodeitem.offsetWidth <= 1500 && Nodeitem.offsetHeight >= 40 && Nodeitem.offsetHeight <= 180) {
-                //if (Nodeitem.parentNode.children.length <= 2) {
-                //    Nodeitem.parentNode.parentNode.removeChild(Nodeitem.parentNode);
-                //}
-                Nodeitem.parentNode.removeChild(Nodeitem);
-                console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
-            }
-        });
-    }
+    [].forEach.call(document.querySelectorAll('a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
+        Fuck_removeAD(Nodeitem, 580, 1800, 40, 140, 2);
+        Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
+    });
+    [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
+        if (!iframeSRC.test(Nodeitem.src) && Nodeitem.getAttribute("src") && Nodeitem.offsetWidth >= 600 && Nodeitem.offsetWidth <= 1500 && Nodeitem.offsetHeight >= 40 && Nodeitem.offsetHeight <= 180) {
+            //if (Nodeitem.parentNode.children.length <= 2) {
+            //    Nodeitem.parentNode.parentNode.removeChild(Nodeitem.parentNode);
+            //}
+            Nodeitem.parentNode.removeChild(Nodeitem);
+            console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
+        }
+    });
 }
 
 function Fuck_WRS() {
@@ -225,27 +217,29 @@ function Fuck_XZ(event) {
 
 //执行
 (function() {
-    window.observer = new MutationObserver(function () {
-        Fuck_ADV()
-    });
-    window.Timer_FuckRAI = setTimeout(function () {
-        Fuck_ADV();
-        if (document.readyState == "complete") {
-            setTimeout(Fuck_ADV, 1e3);
-            window.observer.observe(document.body, {childList: true,subtree: true});
-            clearTimeout(window.Timer_FuckRAI);
-        } else {
-            setTimeout(Fuck_ADV, 500);
-            setTimeout(arguments.callee, 0)
-        }
-    }, 20);
-    setTimeout(function(){
-        if (window.observer && !window.observer.observe) {
+    if (hackplus_whitelist["unFuck_ADV"] != 1){
+        window.observer = new MutationObserver(function () {
+            Fuck_ADV()
+        });
+        window.Timer_FuckRAI = setTimeout(function () {
             Fuck_ADV();
-            window.observer.observe(document.body, {childList: true,subtree: true});
-            clearTimeout(window.Timer_FuckRAI);
-        }
-    }, 2e4);
+            if (document.readyState == "complete") {
+                setTimeout(Fuck_ADV, 1e3);
+                window.observer.observe(document.body, {childList: true,subtree: true});
+                clearTimeout(window.Timer_FuckRAI);
+            } else {
+                setTimeout(Fuck_ADV, 500);
+                setTimeout(arguments.callee, 0)
+            }
+        }, 20);
+        setTimeout(function(){
+            if (window.observer && !window.observer.observe) {
+                Fuck_ADV();
+                window.observer.observe(document.body, {childList: true,subtree: true});
+                clearTimeout(window.Timer_FuckRAI);
+            }
+        }, 2e4);
+    }
     if (hackplus_whitelist["Fuck_XZ"] == 1) {
         document.addEventListener("readystatechange", function () {
             Fuck_XZ("contextmenu");
