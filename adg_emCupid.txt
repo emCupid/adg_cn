@@ -116,10 +116,11 @@ pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
 mmiyue.com$$script[tag-content="killAdKiller"]
+https://bj.bcebos.com
 */zhenbuka2/statics/js/fuck-debugger.js
 */zhenbuka2/statics/js/UA.js
 zhenbuka2.com#$#.col-lg-wide-75{left: 11%;width: 100%}
-zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
+zhenbuka2.com$$script[tag-content="tip_tongzhi"]
+zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
 fanyi.baidu.com##[class^="app-side"],#transOtherRight
-!zhenbuka.com,zhenbuka3.com,zhenbuka2.com#%#//scriptlet('remove-cookie', 'vodSearchNeedVerify')
 !↑
