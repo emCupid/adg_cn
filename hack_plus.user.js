@@ -229,9 +229,9 @@ function Fuck_XZ(event) {
                 clearTimeout(window.Timer_FuckRAI);
             } else {
                 setTimeout(Fuck_ADV, 500);
-                setTimeout(arguments.callee, 0)
+                setTimeout(arguments.callee, 50)
             }
-        }, 20);
+        }, 50);
         setTimeout(function(){
             if (window.observer && !window.observer.observe) {
                 Fuck_ADV();
