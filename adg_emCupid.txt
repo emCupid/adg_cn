@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-06-14
+! Last modified: 2021-06-16
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -28,6 +28,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo
 
 !-------追踪&统计-------
+||beacon.sina.com.cn^
 ||s.union.360.cn/s.gif
 ||www.webdissector.com/recv/gs.gif
 ||www.douban.com/stat.html
@@ -105,6 +106,17 @@ video.sina.cn,k.sina.cn###faiz_top_banner_swiper,#faiz_middle_btn,.Card_Mb16,.fa
 sina.cn#%#//scriptlet('remove-attr','style','section.s_card,main.page_main')
 www.ucbug.com###down-server [class^="ad"]
 !↓
+sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom
+!渣浪广告接口
+||qzs.qq.com/qzone/biz/res/i.js
+||sinaimg.cn/wap/custom_html/
+||sina.cn/wap/custom_html/
+||sina.cn/api/*/tianyi$replace=/"sax"/"noad"/
+||mixer.sina.cn^
+!渣浪onlyapp部分接除
+https://gk.sina.cn/v1/gkmatch?id=$replace=/"isapp"|"isAPP"/"noapp"/
+https://gk.sina.cn/v1/gkmatch?id=$replace=/"clarity"/"noclarity"/
+https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 live.bilibili.com$$script[tag-content="NEPTUNE_IS_MY_WAIFU"]
 */web-room/v1/index/getInfoByRoom?room_id=$replace=/ad_banner_info/noad/
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
