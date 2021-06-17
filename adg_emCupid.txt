@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-06-16
+! Last modified: 2021-06-17
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -101,12 +101,11 @@ www.jianshu.com#%#//scriptlet('remove-attr','style','body')
 jianshu.com#?#div:has(>div[aria-label*="抽奖"]),div:has(div[tabindex="-1"][role="dialog"])
 mypianku.*#%#AG_defineProperty('pycount',{value:0})
 ||*pianku.*/*.html$replace=/pycount.?==.?0/1/
-sina.cn##div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
 video.sina.cn,k.sina.cn###faiz_top_banner_swiper,#faiz_middle_btn,.Card_Mb16,.faiz_call_up_icon,main.j_call_native,.faiz_confirm
 sina.cn#%#//scriptlet('remove-attr','style','section.s_card,main.page_main')
 www.ucbug.com###down-server [class^="ad"]
 !↓
-sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom
+sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
 !渣浪广告接口
 ||qzs.qq.com/qzone/biz/res/i.js
 ||sinaimg.cn/wap/custom_html/
