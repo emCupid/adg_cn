@@ -128,7 +128,6 @@ pcbeta.com#$#style[type="text/css"]+div{height:auto!important}
 nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
 mmiyue.com$$script[tag-content="killAdKiller"]
-https://bj.bcebos.com
 */zhenbuka2/statics/js/fuck-debugger.js
 */zhenbuka2/statics/js/UA.js
 zhenbuka2.com#$#.col-lg-wide-75{left: 11%;width: 100%}
