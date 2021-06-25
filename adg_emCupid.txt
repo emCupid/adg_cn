@@ -56,6 +56,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||*/js/count.js
 ||*/baidu_tongji.js
 ||zz.bdstatic.com/linksubmit/push.js
+||sbeacon.sina.com.cn/e.gif
 
 !-------规则------
 iqiyi.com##.detail-sd
