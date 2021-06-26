@@ -29,6 +29,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo
 
 !-------追踪&统计-------
+/api.weibo.com\/.*\/(post_log|push_count).json/
 ||beacon.sina.com.cn^
 ||s.union.360.cn/s.gif
 ||www.webdissector.com/recv/gs.gif
