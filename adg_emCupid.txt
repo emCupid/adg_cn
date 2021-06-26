@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-06-25
+! Last modified: 2021-06-26
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -108,6 +108,8 @@ mypianku.*#%#AG_defineProperty('pycount',{value:0})
 video.sina.cn,k.sina.cn###faiz_top_banner_swiper,#faiz_middle_btn,.Card_Mb16,.faiz_call_up_icon,main.j_call_native,.faiz_confirm
 sina.cn#%#//scriptlet('remove-attr','style','section.s_card,main.page_main')
 www.ucbug.com###down-server [class^="ad"]
+ui.cn##.login-fixed
+ui.cn#%#//scriptlet('remove-attr','style','body')
 !↓
 mydrivers.com$$div[id="a_showhotnews_list_dia"]
 sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
