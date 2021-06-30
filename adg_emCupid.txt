@@ -141,4 +141,5 @@ zhenbuka2.com#$#.col-lg-wide-75{left: 11%;width: 100%}
 zhenbuka2.com$$script[tag-content="tip_tongzhi"]
 zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
 fanyi.baidu.com##[class^="app-side"],#transOtherRight
+||mimg.127.net/p/*/js/p0.js$replace=/display:1\,icon:"yanxuan"/display:0\,icon:"yanxuan"/
 !↑
