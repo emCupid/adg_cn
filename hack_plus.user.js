@@ -216,11 +216,12 @@ function Fuck_XZ(event) {
 }
 
 function Fuck_switchAttr(selector,source,target) {
-    [].forEach.call(document.querySelectorAll(selector),function(ahref){
-        ahref.setAttribute(target, ahref.getAttribute(source));
-        ahref.removeAttribute(source)
+    [].forEach.call(document.querySelectorAll(selector),function(el){
+        el.setAttribute(target, el.getAttribute(source));
+        el.removeAttribute(source)
     })
 }
+
 //执行
 (function() {
     if (hackplus_whitelist["unFuck_ADV"] != 1){
