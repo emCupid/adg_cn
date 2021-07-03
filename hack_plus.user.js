@@ -286,10 +286,10 @@ function Fuck_switchAttr(selector,source,target) {
                             Fuck_switchAttr('a[href]','href','x-href')
                         } else {
                             Fuck_switchAttr('a[x-href]','x-href','href');
-                            setTimeout(function(){
-                                document.body.removeChild(document.getElementById("OxOOOOOO"))
-                            },500)
                         }
+                        setTimeout(function(){
+                            document.body.removeChild(document.getElementById("OxOOOOOO"))
+                        },500)
                     }
 			}else if (OxConfigDIV) {
                     document.body.removeChild(OxConfigDIV);
