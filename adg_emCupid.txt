@@ -139,7 +139,7 @@ tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.net$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
-pcbeta.com#?#div:matches-css(padding-top:10px)
+pcbeta.com#?#div:matches-css(padding-top:10px):has(.adsbygoogle)
 423down.com##h3:has(>a[href^="https://app.weilian.xin"]),li:has(.cat:contains(优惠推荐))
 nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
