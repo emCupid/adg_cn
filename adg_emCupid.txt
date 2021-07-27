@@ -148,11 +148,11 @@ pcbeta.com#?#div:matches-css(padding-top:10px):matches-css(height:169px)
 nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
 mmiyue.com$$script[tag-content="killAdKiller"]
-*/zhenbuka2/statics/js/fuck-debugger.js
-*/zhenbuka2/statics/js/UA.js
-zhenbuka2.com#$#.col-lg-wide-75{left: 11%;width: 100%}
-zhenbuka2.com$$script[tag-content="tip_tongzhi"]
-zhenbuka.com,zhenbuka3.com,zhenbuka2.com##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
+*/zhenbuka3/statics/js/fuck-debugger.js
+*/zhenbuka3/statics/js/UA.js
+zhenbuka3.com#$#.col-lg-wide-75{left: 11%;width: 100%}
+zhenbuka3.com$$script[tag-content="tip_tongzhi"]
+zhenbuka5.com,zhenbuka3.com##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt
 fanyi.baidu.com##[class^="app-side"],#transOtherRight
 ||mimg.127.net/p/*/js/p0.js$replace=/display:1\,icon:"yanxuan"/display:0\,icon:"yanxuan"/
 !↑
