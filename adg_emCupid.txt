@@ -122,7 +122,6 @@ ui.cn#%#//scriptlet('remove-attr','style','body')
 www.douyu.com###js-room-activity,a.layout-Slide-banner
 baidu.com$$script[id="ecomScript"]
 baidu.com###content_left > [data-click*="rsv_srcid"],#content_left > [style*="display:block"][style*="visibility:visible"],#content_left > div[style][data-pos],#content_right a[href*="baidu.com/other.php"],#content_right [class*="-show-ad-tip"],#content_right>*:not(table),#content_left [id$="canvas"],[tpl*="ad"],#con-at,.s-news-banner-wrap,.app-side-ad
-bbs.pcbeta.com$$style[type="text/css"][tag-content="#d0dae5"][min-length="520"][max-length="540"]
 !↓
 mydrivers.com$$div[id="a_showhotnews_list_dia"]
 sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
