@@ -73,7 +73,7 @@ iqiyi.com##.detail-sd
 58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog,body>div[id^="activity"][style*="block"],.search-v3-content>div[style*="fixed"]
 www.58pic.com#?#.search_poster:has(.is-advertisement)
 588ku.com##.advertF,#rightAdEditor,.editIndex-entry.editIndexEntry,.adfix-box,.showinfo-ad,.filter-listadBtm-box,.kouIndex-entry,.listhorAdV
-ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"]
+ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"],.enterprise-domination,.combo-fulldown-box
 huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
 jianshu.com##[aria-label*="-ad"]
 www.dianping.com##.bottomLayer,.J-bonus,.bottomLayer
