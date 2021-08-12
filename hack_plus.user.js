@@ -18,7 +18,7 @@
 // @exclude      *://*.suning.com*
 // @exclude      *://*.dangdang.com*
 // @exclude      *://*.mogu.com*
-// @exclude      *//graph.baidu.com/*similar*
+// @exclude      *://graph.baidu.com/*similar*
 // ==/UserScript==
 
 //--功能模块定义[begin]--//
@@ -57,10 +57,10 @@
 //    }
 //};
 //debug GM_Value
-unsafeWindow._GM_getValue = GM_getValue;
-unsafeWindow._GM_setValue = GM_setValue;
-unsafeWindow._GM_deleteValue = GM_deleteValue;
-unsafeWindow._GM_listValues = GM_listValues;
+//unsafeWindow._GM_getValue = GM_getValue;
+//unsafeWindow._GM_setValue = GM_setValue;
+//unsafeWindow._GM_deleteValue = GM_deleteValue;
+//unsafeWindow._GM_listValues = GM_listValues;
 
 function checkbox_onClick(checkbox) {
     if (checkbox.checked) {
