@@ -126,6 +126,7 @@ baidu.com###content_left > [data-click*="rsv_srcid"],#content_left > [style*="di
 !bbs.pcbeta.com$$script[wildcard="!window.BAIDU_DUP*!window.BAIDU_DUP.load"]
 !bbs.pcbeta.com#?##wp>div[id][class]:matches-css(width: 980px)>div
 !bbs.pcbeta.com###append_parent
+bbs.pcbeta.com$$script[wildcard="showADialog* bbs.pcbeta.com"]
 !↓
 mydrivers.com$$div[id="a_showhotnews_list_dia"]
 sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
