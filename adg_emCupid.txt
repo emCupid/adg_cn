@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-08-13
+! Last modified: 2021-08-17
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -127,6 +127,7 @@ baidu.com###content_left > [data-click*="rsv_srcid"],#content_left > [style*="di
 !bbs.pcbeta.com#?##wp>div[id][class]:matches-css(width: 980px)>div
 !bbs.pcbeta.com###append_parent
 bbs.pcbeta.com$$script[wildcard="showADialog* bbs.pcbeta.com"]
+||bbs.pcbeta.com/data/cache/*.js$replace=/^.+ bbs.pcbeta.com .+!ad_left\..+$//s
 !↓
 mydrivers.com$$div[id="a_showhotnews_list_dia"]
 sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
