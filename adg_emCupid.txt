@@ -15,12 +15,6 @@
 @@192.168.*.*
 
 !--优酷暂放
-||acs.youku.com/h5/$replace=/"ad"/"noad"/
-||acs.youku.com/h5/$replace=/"watermark"/"nowatermark"/
-||acs.youku.com/h5/$replace=/"ykad"/"noykad"/
-||ups.youku.com/ups/get.json?vid=*$replace=/"ad"/"noad"/
-||ups.youku.com/ups/get.json?vid=*$replace=/"watermark"/"nowatermark"/
-||ups.youku.com/ups/get.json?vid=*$replace=/"ykad"/"noykad"/
 
 !-------爱奇艺播放广告-------
 ||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"\,/\$1"\,/
@@ -123,10 +117,6 @@ www.douyu.com###js-room-activity,a.layout-Slide-banner
 baidu.com$$script[id="ecomScript"]
 baidu.com###content_left > [data-click*="rsv_srcid"],#content_left > [style*="display:block"][style*="visibility:visible"],#content_left > div[style][data-pos],#content_right a[href*="baidu.com/other.php"],#content_right [class*="-show-ad-tip"],#content_right>*:not(table),#content_left [id$="canvas"],[tpl*="ad"],#con-at,.s-news-banner-wrap,.app-side-ad
 ||www.btdx8.com/js/nav.js
-!bbs.pcbeta.com$$style[type="text/css"][tag-content="height:171px"][min-length="530"][max-length="550"]
-!bbs.pcbeta.com$$script[wildcard="!window.BAIDU_DUP*!window.BAIDU_DUP.load"]
-!bbs.pcbeta.com#?##wp>div[id][class]:matches-css(width: 980px)>div
-!bbs.pcbeta.com###append_parent
 bbs.pcbeta.com$$script[wildcard="showADialog* bbs.pcbeta.com"]
 ||pcbeta.com/data/cache/*.js$replace=/^.+ bbs.pcbeta.com .+BAIDU_CLB_fillSlotAsync.+$//
 !↓
