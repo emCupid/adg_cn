@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-08-28
+! Last modified: 2021-08-31
 
 !-------全局&正则-------
 ##div[style*="z-index"][style*="99999"] iframe,a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
@@ -119,6 +119,9 @@ wenku.baidu.com#%#//scriptlet('remove-attr','style','body')
 ||www.btdx8.com/js/nav.js
 bbs.pcbeta.com$$script[wildcard="showADialog* bbs.pcbeta.com"]
 ||pcbeta.com/data/cache/*.js$replace=/^.+ bbs.pcbeta.com .+BAIDU_CLB_fillSlotAsync.+$//
+panelook.cn##.paddingtop10,a[onClick*="ad_click"]
+||www.panelook.cn/ajax.php?ac=ad_click
+
 !↓
 mydrivers.com$$div[id="a_showhotnews_list_dia"]
 sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
