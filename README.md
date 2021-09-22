@@ -27,4 +27,4 @@ jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_plus.user.js
 * 反馈QQ群：[240088290](https://jq.qq.com/?_wv=1027&k=Nn7JsKsm)
 * Coding、GitHub、jsDelivr镜像自行测试访问速度三选一
 * jsDelivr节点多，速度快，但是会有缓存（24小时），所以文件可能不是最新
-* 朝朝暮暮plus脚本因为ADG当前版本GM_setValue有BUG导致不能储存设置，目前设置是储存在浏览器中。所以如果要设置这个脚本请谨慎清理浏览器储存（不是缓存）
+* 朝朝暮暮plus脚本因为ADG当前稳定版（7.6.1）GM_setValue有BUG导致不能储存设置，如果想正常使用请更新到7.7 Beta1
