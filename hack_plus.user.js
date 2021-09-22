@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.10.0701
+// @version      1.11.0922
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告，Ctrl+↑脚本设置。
 // @match        *://*/*
@@ -42,20 +42,20 @@
     }
 })();
 
-//var localStorage = {
-//    getItem : function (name, defaultValue) {
-//        return GM_getValue(name, defaultValue)
-//    },
-//    setItem : function (name, value) {
-//        return GM_setValue(name, value)
-//    },
-//    removeItem : function (name) {
-//        return GM_deleteValue(name)
-//    },
-//    listItem : function () {
-//        return GM_listValues()
-//    }
-//};
+var localStorage = {
+    getItem : function (name, defaultValue) {
+        return GM_getValue(name, defaultValue)
+    },
+    setItem : function (name, value) {
+        return GM_setValue(name, value)
+    },
+    removeItem : function (name) {
+        return GM_deleteValue(name)
+    },
+    listItem : function () {
+        return GM_listValues()
+    }
+};
 //debug GM_Value
 //unsafeWindow._GM_getValue = GM_getValue;
 //unsafeWindow._GM_setValue = GM_setValue;
