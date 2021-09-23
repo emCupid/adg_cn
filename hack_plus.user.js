@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.11.0922
+// @version      1.12.0923
 // @author       汝莫舞
-// @description  一些浏览器增强功能及辅助移除广告，Ctrl+↑脚本设置。
+// @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
+// @homepageURL  https://github.com/emCupid/adg_cn
 // @match        *://*/*
 // @namespace    emCupid
 // @grant        unsafeWindow
@@ -21,7 +22,7 @@
 // @exclude      *://graph.baidu.com/*similar*
 // ==/UserScript==
 
-//--功能模块定义[begin]--//
+//功能模块定义
 (function (){
     var key = ("mh_" + Math.random());
     var keyR = new RegExp(("(^|;)\\s*" + key + "=12345"));
@@ -56,11 +57,6 @@ var localStorage = {
         return GM_listValues()
     }
 };
-//debug GM_Value
-//unsafeWindow._GM_getValue = GM_getValue;
-//unsafeWindow._GM_setValue = GM_setValue;
-//unsafeWindow._GM_deleteValue = GM_deleteValue;
-//unsafeWindow._GM_listValues = GM_listValues;
 
 function checkbox_onClick(checkbox) {
     if (checkbox.checked) {
@@ -151,11 +147,16 @@ var getDoamin = window._getMainHost || window.location.host,
         '\\/data\\/da_default.js',
         'BackTop'
     ],
-    scriptWRS_W = new RegExp(scriptWRS_whitelist.join("|","i"));
+    scriptWRS_W = new RegExp(scriptWRS_whitelist.join("|","i")),
+    push_error = function (e) {
+        return function () {
+            console.error("Block " + e + " push Ad(s)")
+        }
+    };
 if (hackplus_whitelistJSON == "{}") {
     localStorage.removeItem("$" + getDoamin + "$")
 }
-//--功能模块定义[end]--//
+//功能模块定义[end]
 
 
 function Fuck_ADV(){
@@ -172,6 +173,46 @@ function Fuck_ADV(){
             console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
         }
     });
+}
+
+function Fuck_UNION(){
+    unsafeWindow._SF_ = [];
+    unsafeWindow._SF_._global_ = [];
+    unsafeWindow._SF_._global_._ssp = [];
+    Object.freeze(unsafeWindow._SF_);
+    Object.freeze(unsafeWindow._SF_._global_);
+    Object.freeze(unsafeWindow._SF_._global_._ssp);
+    unsafeWindow._ssp_global = [];
+    Object.freeze(unsafeWindow._ssp_global);
+    unsafeWindow.AD = {};
+    Object.freeze(unsafeWindow.AD);
+    unsafeWindow.Ad = {};
+    Object.freeze(unsafeWindow.Ad);
+    unsafeWindow.ad = {};
+    Object.freeze(unsafeWindow.ad);
+    unsafeWindow.___baidu_union_ = {}
+    Object.freeze(unsafeWindow.___baidu_union_)
+    unsafeWindow.___baidu_union_ds_ = {};
+    Object.freeze(unsafeWindow.___baidu_union_ds_);
+    unsafeWindow.__delivery_global_ = {};
+    Object.freeze(unsafeWindow.__delivery_global_)
+    unsafeWindow.___delivery___global___counter___ = {};
+    Object.freeze(unsafeWindow.___delivery___global___counter___);
+    unsafeWindow.cproArray = {};
+    unsafeWindow.cproArray.push = push_error("Baidu");
+    Object.freeze(cproArray);
+    unsafeWindow.arrBaiduAds = {};
+    unsafeWindow.arrBaiduAds.push = push_error("Baidu");
+    Object.freeze(arrBaiduAds);
+    unsafeWindow.slotbydup = {};
+    unsafeWindow.slotbydup.push = push_error("Baidu SSP");
+    unsafeWindow._qha_data = {};
+    Object.freeze(unsafeWindow._qha_data);
+    unsafeWindow.sinaads = {};
+    unsafeWindow.sinaads.push = push_error("Sina");
+    Object.freeze(unsafeWindow.sinaads);
+    unsafeWindow.sogou_un = {};
+    Object.freeze(unsafeWindow.sogou_un)
 }
 
 function Fuck_WRS() {
@@ -224,7 +265,10 @@ function Fuck_switchAttr(selector,source,target) {
 
 //执行
 (function() {
-    if (hackplus_whitelist["unFuck_ADV"] != 1){
+    if (hackplus_whitelist["unFuck_UNION"] != 1 && window.location.host != "baike.baidu.com") {
+        Fuck_UNION()
+    }
+    if (hackplus_whitelist["unFuck_ADV"] != 1) {
         window.observer = new MutationObserver(function () {
             Fuck_ADV()
         });
@@ -264,10 +308,10 @@ function Fuck_switchAttr(selector,source,target) {
 //设置
 (function () {
     var OxConfigStyle =  document.createElement("style");
-    OxConfigStyle.innerHTML = '.OxOOOOOA{display:block;margin:20px 50px}.OxOOOOOA .OxOOOOOA-slider{position:relative;display:inline-block;height:8px;width:32px;background:#d5d5d5;border-radius:8px;cursor:pointer;-webkit-transition:all .2s ease;transition:all .2s ease}.OxOOOOOA .OxOOOOOA-slider:after{position:absolute;left:-8px;top:-8px;display:block;width:24px;height:24px;border-radius:50%;background:#eee;box-shadow:0 2px 2px rgba(0,0,0,.2);content:" ";-webkit-transition:all .2s ease;transition:all .2s ease}.OxOOOOOA .OxOOOOOA-input{display:none}.OxOOOOOA .OxOOOOOA-input~.OxOOOOOA-label{margin-left:8px;display:inline;font-weight:normal}.OxOOOOOA .OxOOOOOA-input:checked~.OxOOOOOA-slider:after{left:16px}.OxOOOOOA .OxOOOOOA-input:disabled~.OxOOOOOA-slider{background:#e2e2e2;cursor:default}.OxOOOOOA .OxOOOOOA-input:disabled~.OxOOOOOA-slider:after{background:#d5d5d5}.OxOOOOOA.OxOOOOOB .OxOOOOOA-input:checked:not(:disabled)~.OxOOOOOA-slider{background:#28e1bd}.OxOOOOOA.OxOOOOOB .OxOOOOOA-input:checked:not(:disabled)~.OxOOOOOA-slider:after{background:#1abc9c}#OxOOOOOO{border:2px solid #1abc9c;border-left-width:10px;box-shadow:2px 2px 5px rgba(26,188,156,.4);width:340px;padding-left:40px;position:fixed;top:calc(50% - 94px);left:calc(50% - 170px);z-index:240088290;background:#FFF url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAACNCAMAAADctOmQAAAAM1BMVEX///8avJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwr6QpGAAAAEXRSTlMATUhEPzo1MCsnIh0YEw4KBdDNbrgAAARxSURBVHgB7ZnplrQoDEATFjFChPd/2u+0TexYxKbGnn3m/rS8LCEgUADxG+CkrBEP/JIbnOA3QIc8alJ9X94DvkLvytnhSGpvyTuapEPmL9LnYz4BgObQhuAKGU9XvKNO5YYdv3IDgFoSdpapvI2NrFGqnsn9xQyaXvk2k90ZWo2XdscvPp95nZ5mbCDjB3E2zipZFFX/PJEdXBHpSc2SdWEi94AVM5siAH8DwCJ1KCRlN5iQrUSO5xiElHe4x+MB64rDmZ5HOCNxA5NitLAtMvgo+LRZTUiIrsAL1MvDC5FKgyvBG2XmFZSs8MvGoGhwC28p4khcSwVFoSUejE2rAQ0cdDihJjGMQxcyRTcuvS0Zi+cgx+NV3tbolLx7HPG7KUNlSkEtvQ4tXH1ttgqeyM2jTVCDiRYygUzyZysXS/3M+YZCoMLMhSJ2vJkkOtW34cMIdenPyiCHNe+TpVfNU1XhQgwneuld4Uq8rp5xzRUM7KW3SLxlHlhMV09VKn9QzbeutOvjnaJTg9Tea/ZBHtIoVR2wZAfM3LCoCC/WUJEMlWT+SGgqSRYjSXaAqlwXo1P2ZUsSKB/pGXR6SjmLDPS+ye80mxi1l8ugKO4c3xbQJp6dcs36DCLrkBgRIRVaRTrbDbu3XXsf8vq4reM4NjVhI7wQL8Nbk267S1WeW1kgw6siwZTiB4l43FSR4a4woY+F20DRyElQprYEQFGXmSu2+V3e4cdUvqfCBMJ7aHY0msj4Df8aOcbklMyffC2gjlh4GaoqU2ScD196ZLDhBdF+aU/WLwqONy+0HPBCrO+qdXU4kOqN6ovubNQKk8NOgk7Vqo6TrtRTOxYd7HQ1DaqgelKgI68P6gZX1Ko29PGqxgyv9CKbNTA6wxIzZ9LwIS8MFtkr2Zu57db6eDEQnsn8Df/YxWDCj+QouL6lOfDvycMx44D+Mjk9kXFXZ/MAkOM9edgOuNzO3ejyfm5Xhy/k9+XhxQBTWZFQ4/a5rCn+9aA6lxVM8YNlq08XAxu1VaS/XsZvuJP/lyPM+ZFMH+SHsvBc1hvp+kwW/jJZgvgXHBOEnWnkHbnlBU3ekDeH+FROiI9lwudykzZHM2BM9zCUXkqDB5B8D5/L9BM5wSOkzzCj75dZB0ei7RIVfgWEolIwbO2t1JdKA15wBEKayYQDYdfnQJv7wt0OQk7+Vt7QxF0Cx0wDskeyiDAnoRAWIn3zXmBGxQ7V11Nl6H+XbqBpzA06m4qPkLu996s2z9DhdDTMp6qvLrV72tt57x6b/CsjrJNLU7U1TYcbXuOpKzb+4HOq9+vN8eWIjNom1/64qKvgXawgiaCuqFnPvi7r+Ry72uS+svS3lKxqDl0mPQT17AB1uSpZ9bnLq5rZq16d+pafiJKSY3+x4AeOoQaV8V0qsJqfmD4GvT7FphanBvsoS6y9muo6Y/ev3PCjDOzOq6E0TPJ+uvFN2qBl+T3CARl/Q2Unk2ExZGjRy9ypFIa7jCYHhbaYB7EKisbwm/kFWdw9qasmoxkAAAAASUVORK5CYII=) repeat-y;text-align:left;color:#666;font-size:16px}';
+    OxConfigStyle.innerHTML = '.OxOOOOOA{display:block;margin:20px 50px}.OxOOOOOA .OxOOOOOA-slider{position:relative;display:inline-block;height:8px;width:32px;background:#d5d5d5;border-radius:8px;cursor:pointer;-webkit-transition:all .2s ease;transition:all .2s ease}.OxOOOOOA .OxOOOOOA-slider:after{position:absolute;left:-8px;top:-8px;display:block;width:24px;height:24px;border-radius:50%;background:#eee;box-shadow:0 2px 2px rgba(0,0,0,.2);content:" ";-webkit-transition:all .2s ease;transition:all .2s ease}.OxOOOOOA .OxOOOOOA-input{display:none}.OxOOOOOA .OxOOOOOA-input~.OxOOOOOA-label{margin-left:8px;display:inline;font-weight:normal}.OxOOOOOA .OxOOOOOA-input:checked~.OxOOOOOA-slider:after{left:16px}.OxOOOOOA .OxOOOOOA-input:disabled~.OxOOOOOA-slider{background:#e2e2e2;cursor:default}.OxOOOOOA .OxOOOOOA-input:disabled~.OxOOOOOA-slider:after{background:#d5d5d5}.OxOOOOOA.OxOOOOOB .OxOOOOOA-input:checked:not(:disabled)~.OxOOOOOA-slider{background:#28e1bd}.OxOOOOOA.OxOOOOOB .OxOOOOOA-input:checked:not(:disabled)~.OxOOOOOA-slider:after{background:#1abc9c}#OxOOOOOO{border:2px solid #1abc9c;border-left-width:10px;box-shadow:2px 2px 5px rgba(26,188,156,.4);width:340px;padding-left:40px;position:fixed;top:calc(50% - 107px);left:calc(50% - 170px);z-index:240088290;background:#FFF url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAACNCAMAAADctOmQAAAAM1BMVEX///8avJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwavJwr6QpGAAAAEXRSTlMATUhEPzo1MCsnIh0YEw4KBdDNbrgAAARxSURBVHgB7ZnplrQoDEATFjFChPd/2u+0TexYxKbGnn3m/rS8LCEgUADxG+CkrBEP/JIbnOA3QIc8alJ9X94DvkLvytnhSGpvyTuapEPmL9LnYz4BgObQhuAKGU9XvKNO5YYdv3IDgFoSdpapvI2NrFGqnsn9xQyaXvk2k90ZWo2XdscvPp95nZ5mbCDjB3E2zipZFFX/PJEdXBHpSc2SdWEi94AVM5siAH8DwCJ1KCRlN5iQrUSO5xiElHe4x+MB64rDmZ5HOCNxA5NitLAtMvgo+LRZTUiIrsAL1MvDC5FKgyvBG2XmFZSs8MvGoGhwC28p4khcSwVFoSUejE2rAQ0cdDihJjGMQxcyRTcuvS0Zi+cgx+NV3tbolLx7HPG7KUNlSkEtvQ4tXH1ttgqeyM2jTVCDiRYygUzyZysXS/3M+YZCoMLMhSJ2vJkkOtW34cMIdenPyiCHNe+TpVfNU1XhQgwneuld4Uq8rp5xzRUM7KW3SLxlHlhMV09VKn9QzbeutOvjnaJTg9Tea/ZBHtIoVR2wZAfM3LCoCC/WUJEMlWT+SGgqSRYjSXaAqlwXo1P2ZUsSKB/pGXR6SjmLDPS+ye80mxi1l8ugKO4c3xbQJp6dcs36DCLrkBgRIRVaRTrbDbu3XXsf8vq4reM4NjVhI7wQL8Nbk267S1WeW1kgw6siwZTiB4l43FSR4a4woY+F20DRyElQprYEQFGXmSu2+V3e4cdUvqfCBMJ7aHY0msj4Df8aOcbklMyffC2gjlh4GaoqU2ScD196ZLDhBdF+aU/WLwqONy+0HPBCrO+qdXU4kOqN6ovubNQKk8NOgk7Vqo6TrtRTOxYd7HQ1DaqgelKgI68P6gZX1Ko29PGqxgyv9CKbNTA6wxIzZ9LwIS8MFtkr2Zu57db6eDEQnsn8Df/YxWDCj+QouL6lOfDvycMx44D+Mjk9kXFXZ/MAkOM9edgOuNzO3ejyfm5Xhy/k9+XhxQBTWZFQ4/a5rCn+9aA6lxVM8YNlq08XAxu1VaS/XsZvuJP/lyPM+ZFMH+SHsvBc1hvp+kwW/jJZgvgXHBOEnWnkHbnlBU3ekDeH+FROiI9lwudykzZHM2BM9zCUXkqDB5B8D5/L9BM5wSOkzzCj75dZB0ei7RIVfgWEolIwbO2t1JdKA15wBEKayYQDYdfnQJv7wt0OQk7+Vt7QxF0Cx0wDskeyiDAnoRAWIn3zXmBGxQ7V11Nl6H+XbqBpzA06m4qPkLu996s2z9DhdDTMp6qvLrV72tt57x6b/CsjrJNLU7U1TYcbXuOpKzb+4HOq9+vN8eWIjNom1/64qKvgXawgiaCuqFnPvi7r+Ry72uS+svS3lKxqDl0mPQT17AB1uSpZ9bnLq5rZq16d+pafiJKSY3+x4AeOoQaV8V0qsJqfmD4GvT7FphanBvsoS6y9muo6Y/ev3PCjDOzOq6E0TPJ+uvFN2qBl+T3CARl/Q2Unk2ExZGjRy9ypFIa7jCYHhbaYB7EKisbwm/kFWdw9qasmoxkAAAAASUVORK5CYII=) repeat-y;text-align:left;color:#666;font-size:16px}';
     var OxConfig= document.createElement("div");
     OxConfig.id = "OxOOOOOO";
-    OxConfig.innerHTML = '<div class="OxOOOOOA OxOOOOOB"><input id="unFuck_ADV" class="OxOOOOOA-input" type="checkbox" /><label for="unFuck_ADV" class="OxOOOOOA-slider"></label><label for="unFuck_ADV" class="OxOOOOOA-label"> banner广告白名单</label></div><div class="OxOOOOOA OxOOOOOB"><input id="Fuck_WRS" class="OxOOOOOA-input" type="checkbox" /><label for="Fuck_WRS" class="OxOOOOOA-slider"></label><label for="Fuck_WRS" class="OxOOOOOA-label"> 禁用脚本write(ln)</label></div><div class="OxOOOOOA OxOOOOOB"><input id="Fuck_XZ" class="OxOOOOOA-input" type="checkbox" /><label for="Fuck_XZ" class="OxOOOOOA-slider"></label><label for="Fuck_XZ" class="OxOOOOOA-label"> 解除限制</label></div><div class="OxOOOOOA OxOOOOOB"><input id="Fuck_removeHref" class="OxOOOOOA-input tmp-active" type="checkbox" /><label for="Fuck_removeHref" class="OxOOOOOA-slider"></label><label for="Fuck_removeHref" class="OxOOOOOA-label"> 去除A链接</label></div>';
+    OxConfig.innerHTML = '<div class="OxOOOOOA OxOOOOOB"><input id="unFuck_ADV" class="OxOOOOOA-input" type="checkbox" /><label for="unFuck_ADV" class="OxOOOOOA-slider"></label><label for="unFuck_ADV" class="OxOOOOOA-label"> banner广告白名单</label></div><div class="OxOOOOOA OxOOOOOB"><input id="unFuck_UNION" class="OxOOOOOA-input" type="checkbox" /><label for="unFuck_UNION" class="OxOOOOOA-slider"></label><label for="unFuck_UNION" class="OxOOOOOA-label"> 联盟广告白名单</label></div><div class="OxOOOOOA OxOOOOOB"><input id="Fuck_WRS" class="OxOOOOOA-input" type="checkbox" /><label for="Fuck_WRS" class="OxOOOOOA-slider"></label><label for="Fuck_WRS" class="OxOOOOOA-label"> 禁用脚本write(ln)</label></div><div class="OxOOOOOA OxOOOOOB"><input id="Fuck_XZ" class="OxOOOOOA-input" type="checkbox" /><label for="Fuck_XZ" class="OxOOOOOA-slider"></label><label for="Fuck_XZ" class="OxOOOOOA-label"> 解除限制</label></div><div class="OxOOOOOA OxOOOOOB"><input id="Fuck_removeHref" class="OxOOOOOA-input tmp-active" type="checkbox" /><label for="Fuck_removeHref" class="OxOOOOOA-slider"></label><label for="Fuck_removeHref" class="OxOOOOOA-label"> 临时去除A链接</label></div>';
     document.addEventListener("keydown", function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
         if (e.keyCode == 38 && e.ctrlKey) {
@@ -276,6 +320,7 @@ function Fuck_switchAttr(selector,source,target) {
                     document.body.appendChild(OxConfig);
                     OxConfig.appendChild(OxConfigStyle);
                     if (hackplus_whitelist["unFuck_ADV"] == 1){document.getElementById("unFuck_ADV").setAttribute("checked", "checked")}
+                    if (hackplus_whitelist["unFuck_UNION"] == 1){document.getElementById("unFuck_UNION").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["Fuck_WRS"] == 1){document.getElementById("Fuck_WRS").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["Fuck_XZ"] == 1){document.getElementById("Fuck_XZ").setAttribute("checked", "checked")}
                     [].forEach.call(document.querySelectorAll("#OxOOOOOO input:not(.tmp-active)"), function (checkbox){
@@ -344,4 +389,4 @@ function Fuck_switchAttr(selector,source,target) {
             Fuck_Tooltip.style.display = 'none';
         }
     })
-})()
+})();
