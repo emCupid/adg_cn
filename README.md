@@ -8,10 +8,10 @@ GitHub：[https://raw.githubusercontent.com/emCupid/adg_cn/master/adg_emCupid.tx
 jsDelivr：[https://cdn.jsdelivr.net/gh/emCupid/adg_cn/adg_emCupid.txt](https://subscribe.adblockplus.org/?location=https://cdn.jsdelivr.net/gh/emCupid/adg_cn/adg_emCupid.txt "adg_emCupid")  
 
 ## 脚本：  
-【**去联盟广告**】简单阻止一些联盟广告的加载  
-Coding：https://emcupid.coding.net/p/adg_cn/d/adg_cn/git/raw/master/block_Baiduunion.user.js  
-GitHub：https://github.com/emCupid/adg_cn/raw/master/block_Baiduunion.user.js  
-jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/block_Baiduunion.user.js  
+~~【**去联盟广告**】简单阻止一些联盟广告的加载）~~已合并到朝朝暮暮plus  
+Coding：~~https://emcupid.coding.net/p/adg_cn/d/adg_cn/git/raw/master/block_Baiduunion.user.js~~  
+GitHub：~~https://github.com/emCupid/adg_cn/raw/master/block_Baiduunion.user.js~~  
+jsDelivr：~~https://cdn.jsdelivr.net/gh/emCupid/adg_cn/block_Baiduunion.user.js~~  
 测试联盟广告：http://www.wuhan.com/xinwen/68537.html  
   
 
