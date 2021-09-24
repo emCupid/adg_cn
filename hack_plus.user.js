@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.12.0923
+// @version      1.13.0924
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -299,6 +299,9 @@ function Fuck_switchAttr(selector,source,target) {
             window.getSelection = function(){return};
             document.getSelection = function(){return};
         });
+        var selectStyle = "html,body,div,* {-webkit-user-select:text!important;-moz-user-select:text!important;-ms-user-select:text!important;user-select:text!important;-khtml-user-select:text!important} ::selection {color:#fff; background:#3390FF!important}"
+        var xmlStyle = document.createProcessingInstruction("xml-stylesheet", 'type="text/css" href="data:text/css,' + encodeURIComponent(selectStyle) + '"');
+        document.insertBefore(xmlStyle, document.documentElement);
     };
     if (hackplus_whitelist["Fuck_WRS"] == 1) {
         Fuck_WRS()
