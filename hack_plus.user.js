@@ -301,7 +301,7 @@ function Fuck_switchAttr(selector,source,target) {
         });
         var selectStyle = "html,body,div,* {-webkit-user-select:text!important;-moz-user-select:text!important;-ms-user-select:text!important;user-select:text!important;-khtml-user-select:text!important} ::selection {color:#fff; background:#3390FF!important}"
         var xmlStyle = document.createProcessingInstruction("xml-stylesheet", 'type="text/css" href="data:text/css,' + encodeURIComponent(selectStyle) + '"');
-        document.insertBefore(xmlStyle, null);//document.documentElement = 前，null = 后
+        document.insertBefore(xmlStyle, document.documentElement);//document.documentElement = 前，null = 后
     };
     if (hackplus_whitelist["Fuck_WRS"] == 1) {
         Fuck_WRS()
