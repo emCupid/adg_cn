@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-09-24
+! Last modified: 2021-09-25
 
 !-------全局&正则-------
 ~aliyundrive.com##div[style*="z-index"][style*="99999"] iframe
@@ -70,7 +70,7 @@ ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[cla
 huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
 jianshu.com##[aria-label*="-ad"]
 www.dianping.com##.bottomLayer,.J-bonus,.bottomLayer
-www.qiuziti.com##.font-item-box[style*="position"],.banner.home-banner
+www.qiuziti.com##.font-item-box[style*="position"],.banner.home-banner,.font-download-banner
 360kuai.com##.kzx__showcase
 nipic.com##div[onclick="printgif()"],.huitu-guideBox,.homeshow,.insertbdad-wrap,#ad,.advertising
 image.so.com##[data-id^="cm_display"],[data-id*="JumpAds"]
@@ -122,6 +122,9 @@ bbs.pcbeta.com$$script[wildcard="showADialog* bbs.pcbeta.com"]
 ||pcbeta.com/data/cache/*.js$replace=/^.+ bbs.pcbeta.com .+BAIDU_CLB_fillSlotAsync.+$//
 panelook.cn##.paddingtop10,a[onClick*="ad_click"]
 ||www.panelook.cn/ajax.php?ac=ad_click
+||www.cr173.com/innew/newinfo.txt
+||www.cr173.com/count/count.txt
+www.crsky.com##.adowGright
 
 !↓
 mydrivers.com$$div[id="a_showhotnews_list_dia"]
