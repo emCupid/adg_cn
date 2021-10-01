@@ -128,7 +128,6 @@ www.crsky.com##.adowGright
 
 !↓
 ||apic.91bixin.net/api/thirdadv/
-/bbs.pcbeta.com\/data\/cache\/[A-Za-z]*[A-Z]{1,5}.*.js\?/$domain=bbs.pcbeta.com$badfilter
 mydrivers.com$$div[id="a_showhotnews_list_dia"]
 sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
 !渣浪广告接口
