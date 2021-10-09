@@ -72,6 +72,14 @@ function checkbox_onClick(checkbox) {
     localStorage.setItem("$" + getDoamin + "$", JSON.stringify(hackplus_whitelist));
 }
 
+function AddTempHide(Item) {
+    var tempHideItem = Item.tagName + '[src="' + Item.src + '"]';
+    if(tempHide.indexOf(tempHideItem) == -1) {
+        tempHide.push(tempHideItem);
+        sessionStorage.setItem("Fuck_Hide",tempHide)
+    }
+}
+
 function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun, Color) {
     var txtColor = Color || "#E20",
         logCss = 'border-left:' + txtColor + ' 5px solid;color:' + txtColor + ';padding:3px';
@@ -95,6 +103,7 @@ var getDoamin = window._getMainHost || window.location.host,
     hackplus_whitelistJSON = localStorage.getItem("$" + getDoamin + "$") || "{}",
     hackplus_whitelistJSON_temp = localStorage.getItem("$" + getDoamin + "$") || "{}",
     hackplus_whitelist = JSON.parse(hackplus_whitelistJSON),
+    tempHide = sessionStorage.getItem("Fuck_Hide") || ["emCupid"],
     iframeSRC_whitelist = [
         'upload',
         'player',
@@ -275,6 +284,9 @@ function Fuck_switchAttr(selector,source,target) {
         Fuck_UNION()
     }
     if (hackplus_whitelist["unFuck_ADV"] != 1) {
+        var tempCssStyle = tempHide + "{display:none!important}";
+        var tempCssXML = document.createProcessingInstruction("xml-stylesheet", 'type="text/css" href="data:text/css,' + encodeURIComponent(tempCssStyle) + '"');
+        document.insertBefore(tempCssXML, document.documentElement);
         window.observer = new MutationObserver(function () {
             Fuck_ADV()
         });
