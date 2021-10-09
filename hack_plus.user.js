@@ -92,6 +92,7 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
                 console.log('%c[Remove AD] ✂%o', logCss, Item.src || Item);
                 break;
             case 2:
+                AddTempHide(Item);
                 Item.parentNode.parentNode.removeChild(Item.parentNode);
                 console.log('%c[Remove AD] ✂%o', logCss, Item.src || Item);
                 break;
