@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.15.0925
+// @version      1.16.1009
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -167,7 +167,7 @@ if (hackplus_whitelistJSON == "{}") {
 
 function Fuck_ADV(){
     [].forEach.call(document.querySelectorAll('a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
-        Fuck_removeAD(Nodeitem, 580, 1800, 40, 140, 2);
+        Fuck_removeAD(Nodeitem, 580, 1800, 40, 150, 2);
         Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
     });
     [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
