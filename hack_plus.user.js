@@ -75,7 +75,12 @@ function checkbox_onClick(checkbox) {
 function AddTempHide(Item) {
     var tempHideItem = Item.tagName + '[src="' + Item.src + '"]';
     if(tempHide.indexOf(tempHideItem) == -1) {
-        tempHide.push(tempHideItem);
+        try {
+            tempHide.push(tempHideItem)
+        } catch {
+            tempHide.split(",");
+            tempHide.push(tempHideItem)
+        }
         sessionStorage.setItem("Fuck_Hide",tempHide)
     }
 }
