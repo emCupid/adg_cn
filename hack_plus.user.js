@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.18.1010
+// @version      1.19.1010
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -105,6 +105,8 @@ var getDoamin = window._getMainHost || window.location.host,
     hackplus_whitelistJSON_temp = localStorage.getItem("$" + getDoamin + "$") || "{}",
     hackplus_whitelist = JSON.parse(hackplus_whitelistJSON),
     tempHide = sessionStorage.getItem("Fuck_Hide") || ["emCupid"],
+    tempCssStyle = tempHide + "{display:none!important}",
+    tempCssXML = document.createProcessingInstruction("xml-stylesheet", 'type="text/css" href="data:text/css,' + encodeURIComponent(tempCssStyle) + '"'),
     iframeSRC_whitelist = [
         'upload',
         'player',
@@ -285,9 +287,9 @@ function Fuck_switchAttr(selector,source,target) {
         Fuck_UNION()
     }
     if (hackplus_whitelist["unFuck_ADV"] != 1) {
-        var tempCssStyle = tempHide + "{display:none!important}";
-        var tempCssXML = document.createProcessingInstruction("xml-stylesheet", 'type="text/css" href="data:text/css,' + encodeURIComponent(tempCssStyle) + '"');
-        document.insertBefore(tempCssXML, document.documentElement);
+        if (tempHide[0] != "emCupid") {
+            document.insertBefore(tempCssXML, document.documentElement)
+        };
         window.observer = new MutationObserver(function () {
             Fuck_ADV()
         });
@@ -351,7 +353,7 @@ function Fuck_switchAttr(selector,source,target) {
                     var OxCloseBtn = document.querySelector(".OxCloseBtn");
                     OxCloseBtn.onclick = function(){
                         if(JSON.stringify(hackplus_whitelist) != hackplus_whitelistJSON_temp) {
-                            var c_msg = "设置已改变，尚未生效，是否刷新页面？"; 
+                            var c_msg = "设置已改变，尚未生效，是否刷新页面？";
                             if (confirm(c_msg)==true) location.reload()
                         }
                         document.body.removeChild(OxConfig);
