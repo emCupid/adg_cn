@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.19.1010
+// @version      1.20.1012
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -110,7 +110,7 @@ var getDoamin = window._getMainHost || window.location.host,
     hackplus_whitelistJSON_temp = localStorage.getItem("$" + getDoamin + "$") || "{}",
     hackplus_whitelist = JSON.parse(hackplus_whitelistJSON),
     tempHide = sessionStorage.getItem("Fuck_Hide") || ["emCupid"],
-    tempCssStyle = tempHide + "{display:none!important}",
+    tempCssStyle = tempHide + "{position:absolute!important;left:-5000px;}",
     tempCssXML = document.createProcessingInstruction("xml-stylesheet", 'type="text/css" href="data:text/css,' + encodeURIComponent(tempCssStyle) + '"'),
     iframeSRC_whitelist = [
         'upload',
