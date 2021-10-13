@@ -110,7 +110,7 @@ var getDoamin = window._getMainHost || window.location.host,
     hackplus_whitelistJSON_temp = localStorage.getItem("$" + getDoamin + "$") || "{}",
     hackplus_whitelist = JSON.parse(hackplus_whitelistJSON),
     tempHide = sessionStorage.getItem("Fuck_Hide") || ["emCupid"],
-    tempCssStyle = tempHide + "{position:absolute!important;left:-5000px;}",
+    tempCssStyle = tempHide + "{position:absolute!important;left:-5000px;width:1000px;height:100px}",
     tempCssXML = document.createProcessingInstruction("xml-stylesheet", 'type="text/css" href="data:text/css,' + encodeURIComponent(tempCssStyle) + '"'),
     iframeSRC_whitelist = [
         'upload',
