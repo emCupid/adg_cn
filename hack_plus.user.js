@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.21.1013
+// @version      1.22.1023
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -124,6 +124,7 @@ var getDoamin = window._getMainHost || window.location.host,
         '\\/index\\.php\\?url=https?:\\/\\/',
         'lanzou..com\\/fn\\?',
         '.china.com.cn\\/node_',
+        '\\/\\/.+?\\.douyu\\.com',
         '\\/\\/v.qq.com',
         '\\/\\/tushuo.baidu.com',
         '\\/\\/zhannei.baidu.com',
