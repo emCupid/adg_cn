@@ -98,6 +98,7 @@ qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
 v.qq.com##.mod_row_box_ad
 www.appinn.com###media_image-2
+zhihu.com#%#document.addEventListener('readystatechange',function(){try{document.querySelector('.Modal-backdrop').onclick = function(){document.querySelector('.Modal-closeButton').click()}}catch{}});
 zhihu.com#%#//scriptlet('remove-attr','style','html')
 csdn.net##.passport-login-container,#csdn-shop-window-top,#csdn-shop-window,#blogColumnPayAdvert,.toolbar-advert
 blog.csdn.net##div[class^="hide-article"]
