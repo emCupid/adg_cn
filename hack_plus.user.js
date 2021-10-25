@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.22.1023
+// @version      1.23.1025
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -75,13 +75,14 @@ function checkbox_onClick(checkbox) {
 function AddTempHide(Item) {
     var tempHideItem = Item.tagName + '[src="' + Item.src + '"]';
     if(tempHide.indexOf(tempHideItem) == -1) {
-        try {
-            tempHide.push(tempHideItem)
-        } catch {
-            tempHide.split(",");
-            tempHide.push(tempHideItem)
+        try{
+            tempHide.split(",")
+        } catch(e){
+            //console.log(e)
+        } finally {
+            tempHide.push(tempHideItem);
+            sessionStorage.setItem("Fuck_Hide",tempHide)
         }
-        sessionStorage.setItem("Fuck_Hide",tempHide)
     }
 }
 
