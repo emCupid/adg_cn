@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.24.1025
+// @version      1.25.1025
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -79,7 +79,7 @@ function AddTempHide(Item) {
             tempHide.split(",");
             tempHide.push(tempHideItem)
         } catch(e){
-            //console.log(e)
+            console.log(tempHide)
         } finally {
             sessionStorage.setItem("Fuck_Hide",tempHide)
         }
