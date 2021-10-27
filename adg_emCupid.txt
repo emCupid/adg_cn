@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-10-25
+! Last modified: 2021-10-27
 
 !-------全局&正则-------
 ~aliyundrive.com##div[style*="z-index"][style*="99999"] iframe
@@ -131,6 +131,7 @@ news.17173.com##.header-undefined
 ly.com##.app-warp,.topimg-show,[class*="_adv_"],.loginTapeBox
 
 !↓
+|https://static.zhihu.com/heifetz/*.app.*.js$replace=/e\.defaultType\?/0\?/
 ||ouphoarg.com^
 ||govhechi.cn:*
 ||xiaodi99.com:*
@@ -158,7 +159,8 @@ tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.net$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
-423down.com##h3:has(>a[href^="https://app.weilian.xin"]),li:has(.cat:contains(优惠推荐))
+423down.com##a[href^="https://app.weilian.xin"],li:has(.cat:contains(优惠推荐)),#menu-item-12546,img[src$="D7/img/new.png"],img[src$="D7/img/new.png"]+a,.item:has(a:contains(优惠推荐))
+423down.com$$li[tag-content="香港服务器"]
 nfmovies.com##div.tips.close-box
 nfmovies.com$$span[tag-content="关闭"]
 mmiyue.com$$script[tag-content="killAdKiller"]
