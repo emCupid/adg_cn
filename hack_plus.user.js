@@ -63,6 +63,57 @@ unsafeWindow.__$set = GM_setValue;
 unsafeWindow.__$delete = GM_deleteValue;
 unsafeWindow.__$list = GM_listValues;
 
+//Pro Config
+var hackplus_proConfigJSON = localStorage.getItem("hackplus_proConfig") || '{"wBanner":{"minWidth":580,"maxWidth":1800,"minHeight":40,"maxHeight":150},"hBanner":{"minWidth":580,"maxWidth":1800,"minHeight":40,"maxHeight":150},"iFrameRule":""}',
+    hackplus_proConfig = JSON.parse(hackplus_proConfigJSON);
+unsafeWindow.__$proConfig = {
+    set : function(type, item, value) {
+        if (type == "wBanner") {
+            switch(item) {
+                case "minWidth" :
+                    hackplus_proConfig["wBanner"]["minWidth"] = value
+                    break;
+                case "maxWidth" :
+                    hackplus_proConfig["wBanner"]["maxWidth"] = value
+                    break;
+                case "minHeight" :
+                    hackplus_proConfig["wBanner"]["minHeight"] = value
+                    break;
+                case "maxHeight" :
+                    hackplus_proConfig["wBanner"]["maxHeight"] = value
+                    break;
+            }
+        } else if (type == "hBanner") {
+            switch(item) {
+                case "minWidth" :
+                    hackplus_proConfig["hBanne"]["minWidth"] = value
+                    break;
+                case "maxWidth" :
+                    hackplus_proConfig["hBanne"]["maxWidth"] = value
+                    break;
+                case "minHeight" :
+                    hackplus_proConfig["hBanne"]["minHeight"] = value
+                    break;
+                case "maxHeight" :
+                    hackplus_proConfig["hBanne"]["maxHeight"] = value
+                    break;
+            }
+        } else if (type == "iFrame") {
+
+        } else {
+
+        }
+        localStorage.setItem("hackplus_proConfig", JSON.stringify(hackplus_proConfig));
+        result = hackplus_proConfig;
+        return result;
+    },
+    del : function(item) {
+        localStorage.setItem("hackplus_proConfig", JSON.stringify(hackplus_proConfig));
+        result = hackplus_proConfig;
+        return result;
+    }
+}
+
 function checkbox_onClick(checkbox) {
     if (checkbox.checked) {
         hackplus_whitelist[checkbox.id] = 1;
