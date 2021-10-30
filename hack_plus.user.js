@@ -64,41 +64,51 @@ unsafeWindow.__$delete = GM_deleteValue;
 unsafeWindow.__$list = GM_listValues;
 
 //Pro Config
-var hackplus_proConfigJSON = localStorage.getItem("hackplus_proConfig") || '{"wBanner":{"minWidth":580,"maxWidth":1800,"minHeight":40,"maxHeight":150},"hBanner":{"minWidth":580,"maxWidth":1800,"minHeight":40,"maxHeight":150},"iFrameRule":""}',
+var hackplus_proConfigJSON = localStorage.getItem("hackplus_proConfig") || '{"wBanner":{"minWidth":580,"maxWidth":1800,"minHeight":40,"maxHeight":150},"hBanner":{"minWidth":40,"maxWidth":150,"minHeight":300,"maxHeight":650},"iFrameRule":""}',
     hackplus_proConfig = JSON.parse(hackplus_proConfigJSON);
 unsafeWindow.__$proConfig = {
     set : function(type, item, value) {
         if (type == "wBanner") {
+            value = parseInt(value);
             switch(item) {
                 case "minWidth" :
+                    value < hackplus_proConfig["wBanner"]["maxWidth"] ? value = value : value = hackplus_proConfig["wBanner"]["minWidth"];
                     hackplus_proConfig["wBanner"]["minWidth"] = value
                     break;
                 case "maxWidth" :
+                    value > hackplus_proConfig["wBanner"]["minWidth"] ? value = value : value = hackplus_proConfig["wBanner"]["maxWidth"];
                     hackplus_proConfig["wBanner"]["maxWidth"] = value
                     break;
                 case "minHeight" :
+                    value < hackplus_proConfig["wBanner"]["maxHeight"] ? value = value : value = hackplus_proConfig["wBanner"]["minHeight"];
                     hackplus_proConfig["wBanner"]["minHeight"] = value
                     break;
                 case "maxHeight" :
+                    value > hackplus_proConfig["wBanner"]["minHeight"] ? value = value : value = hackplus_proConfig["wBanner"]["maxHeight"];
                     hackplus_proConfig["wBanner"]["maxHeight"] = value
                     break;
             }
         } else if (type == "hBanner") {
+            value = parseInt(value);
             switch(item) {
                 case "minWidth" :
-                    hackplus_proConfig["hBanne"]["minWidth"] = value
+                    value < hackplus_proConfig["hBanner"]["maxWidth"] ? value = value : value = hackplus_proConfig["hBanner"]["minWidth"];
+                    hackplus_proConfig["hBanner"]["minWidth"] = value
                     break;
                 case "maxWidth" :
-                    hackplus_proConfig["hBanne"]["maxWidth"] = value
+                    value > hackplus_proConfig["hBanner"]["minWidth"] ? value = value : value = hackplus_proConfig["hBanner"]["maxWidth"];
+                    hackplus_proConfig["hBanner"]["maxWidth"] = value
                     break;
                 case "minHeight" :
-                    hackplus_proConfig["hBanne"]["minHeight"] = value
+                    value < hackplus_proConfig["hBanner"]["maxHeight"] ? value = value : value = hackplus_proConfig["hBanner"]["minHeight"];
+                    hackplus_proConfig["hBanner"]["minHeight"] = value
                     break;
                 case "maxHeight" :
-                    hackplus_proConfig["hBanne"]["maxHeight"] = value
+                    value > hackplus_proConfig["hBanner"]["minHeight"] ? value = value : value = hackplus_proConfig["hBanner"]["maxHeight"];
+                    hackplus_proConfig["hBanner"]["maxHeight"] = value
                     break;
             }
-        } else if (type == "iFrame") {
+        } else if (type == "iframe") {
 
         } else {
 
@@ -107,7 +117,14 @@ unsafeWindow.__$proConfig = {
         result = hackplus_proConfig;
         return result;
     },
-    del : function(item) {
+    del : function(type) {
+        if (type == "wBanner") {
+            hackplus_proConfig["wBanner"] = {"minWidth":580,"maxWidth":1800,"minHeight":40,"maxHeight":150}
+        } else if (type = "hBanner") {
+            hackplus_proConfig["hBanner"] = {"minWidth":40,"maxWidth":150,"minHeight":300,"maxHeight":650}
+        } else if (type = "iframe") {
+            hackplus_proConfig["iFrameRule"] = ""
+        }
         localStorage.setItem("hackplus_proConfig", JSON.stringify(hackplus_proConfig));
         result = hackplus_proConfig;
         return result;
