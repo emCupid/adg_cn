@@ -473,8 +473,11 @@ function Fuck_switchAttr(selector,source,target) {
 	    document.body.appendChild(div);
       div.onclick = setting;
 	    }
-	   if (window.screen.height > window.screen.width) {
-	          $(document).ready(function(){floatWindow();});
+	   if (window.screen.height > window.screen.width) { 
+	          $(document).ready(function(){
+	            var plusDIV = document.getElementById("hack-plus-container");
+	            if(!plusDIV){floatWindow();}
+	           });
 	        }
     
 })();
