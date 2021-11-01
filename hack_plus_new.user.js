@@ -417,7 +417,7 @@ function Fuck_switchAttr(selector,source,target) {
             if (!OxConfigDIV) {
                     document.body.appendChild(OxConfig);
                     OxConfig.appendChild(OxConfigStyle);
-                    if (window.screen.height > window.screen.width){OxConfig.style.left= parseInt((window.screen.width-392)/2) + "px"}
+                    if (window.screen.height > window.screen.width){OxConfig.style.left= parseInt((window.screen.width-OxConfig.offsetWidth)/2) + "px"}
                     if (hackplus_whitelist["unFuck_ADV"] == 1){document.getElementById("unFuck_ADV").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["unFuck_UNION"] == 1){document.getElementById("unFuck_UNION").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["Fuck_WRS"] == 1){document.getElementById("Fuck_WRS").setAttribute("checked", "checked")}
@@ -475,8 +475,7 @@ function Fuck_switchAttr(selector,source,target) {
 	    }
 	   if (window.screen.height > window.screen.width) { 
 	          $(document).ready(function(){
-	            var plusDIV = document.getElementById("hack-plus-container");
-	            if(!plusDIV){floatWindow();}
+	            if(top.location == self.location){floatWindow();}
 	           });
 	        }
     
