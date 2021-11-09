@@ -4,7 +4,7 @@
 
 !-------全局&正则-------
 ~aliyundrive.com##div[style*="z-index"][style*="99999"] iframe
-##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box,.adv img
+##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
 ||*@*_*.exe$redirect=empty
 ||*_*@*.exe$redirect=empty
 /\/ads\/\.*?\d*.*?\.js/$script
@@ -98,7 +98,7 @@ qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
 v.qq.com##.mod_row_box_ad
 www.appinn.com###media_image-2
-zhihu.com#%#document.addEventListener('readystatechange',function(){try{document.querySelector('.Modal-backdrop').onclick = function(){document.querySelector('.Modal-closeButton').click()}}catch{}});
+!zhihu.com#%#document.addEventListener('readystatechange',function(){try{document.querySelector('.Modal-backdrop').onclick = function(){document.querySelector('.Modal-closeButton').click()}}catch{}});
 zhihu.com#%#//scriptlet('remove-attr','style','html')
 csdn.net##.passport-login-container,#csdn-shop-window-top,#csdn-shop-window,#blogColumnPayAdvert,.toolbar-advert
 blog.csdn.net##div[class^="hide-article"]
