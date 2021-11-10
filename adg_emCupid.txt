@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2021-11-09
+! Last modified: 2021-11-10
 
 !-------全局&正则-------
 ~aliyundrive.com##div[style*="z-index"][style*="99999"] iframe
@@ -129,6 +129,7 @@ panelook.cn##.paddingtop10,a[onClick*="ad_click"]
 www.crsky.com##.adowGright
 news.17173.com##.header-undefined
 ly.com##.app-warp,.topimg-show,[class*="_adv_"],.loginTapeBox
+pconline.com.cn###xuanfu_wapper
 
 !↓
 |https://static.zhihu.com/heifetz/*.app.*.js$replace=/e\.defaultType\?/0\?/
