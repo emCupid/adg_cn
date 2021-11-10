@@ -129,7 +129,7 @@ panelook.cn##.paddingtop10,a[onClick*="ad_click"]
 www.crsky.com##.adowGright
 news.17173.com##.header-undefined
 ly.com##.app-warp,.topimg-show,[class*="_adv_"],.loginTapeBox
-pconline.com.cn###xuanfu_wapper
+pconline.com.cn###xuanfu_wapper,.fixLeftQRcode
 
 !↓
 |https://static.zhihu.com/heifetz/*.app.*.js$replace=/e\.defaultType\?/0\?/
