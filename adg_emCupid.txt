@@ -81,7 +81,7 @@ huaban.com##div[class*="hb-ad"]
 ||ntimg.cn/*_ad.jpg
 toutiao.com##div[class$="-mode"] :has(a.ad)
 !www.epinv.com#?#.epinv_f,.footbar,.adsbygoogle
-||epinv.com
+||epinv.com$redirect=empty
 youku.com##[data-adtype],[data-adpid],[data-adext]
 qq.com##txpdiv[data-role^="hd-ad-adapter-"]
 www.sohu.com##div.clear[data-spm-content]:matches-attr("data-spm-content"="/.{200}.*/")
