@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2022-01-05
+! Last modified: 2022-01-06
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -67,7 +67,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 !-------规则------
 iqiyi.com##.detail-sd
 51miz.com##.banner-warp,.rise-price-use-now
-58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog,body>div[id^="activity"][style*="block"],.search-v3-content>div[style*="fixed"],.header-renewal,.index-move-modal,.market-dialog-model
+58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog,body>div[id^="activity"][style*="block"],.search-v3-content>div[style*="fixed"],.header-renewal,.index-move-modal,.market-dialog-model,#double-dan
 www.58pic.com#?#.search_poster:has(.is-advertisement)
 588ku.com##.advertF,#rightAdEditor,.editIndex-entry.editIndexEntry,.adfix-box,.showinfo-ad,.filter-listadBtm-box,.kouIndex-entry,.listhorAdV
 ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"],.enterprise-domination,.combo-fulldown-box
