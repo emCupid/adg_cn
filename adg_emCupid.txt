@@ -66,6 +66,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||rs.sinajs.cn/*.gif?
 
 !-------规则------
+avgle.com###ps32-container
 qianoo.cn##.ad,.ads
 qianoo.cn$$div[tag-content="close-ads"]
 javdb.com##.app-desktop-banner,.moj-content
