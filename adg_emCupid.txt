@@ -144,7 +144,7 @@ pconline.com.cn###xuanfu_wapper,.fixLeftQRcode
 
 !↓
 tvyb01.com,tvyb02.com,tvyb03.com##.tips,.close-box,.btn-danger,.btn-warm,#hth
-tvyb02.com$$script[tag-content="document.write"]
+tvyb02.com$$script[tag-content="document.write"][max-length="770"]
 |https://static.zhihu.com/heifetz/*.app.*.js$replace=/e\.defaultType\?/0\?/
 ||ouphoarg.com^
 ||govhechi.cn:*
