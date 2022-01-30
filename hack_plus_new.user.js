@@ -312,7 +312,7 @@ function Fuck_UNION(){
 function Fuck_WRS() {
     document.Rwrite = document.write;
     document.write = function (str) {
-        if (!scriptWRS_B.test(str) || scriptWRS_W.test(str)) {
+        if (scriptWRS_W.test(str)) {
             document.Rwrite(str);
         } else {
             console.log('%c[Block Script Write] ✂', 'border-left:5px solid #A0B;color:#A0B;padding:3px', str);
@@ -320,7 +320,7 @@ function Fuck_WRS() {
     };
     document.Rwriteln = document.writeln;
     document.writeln = function (str) {
-        if (!scriptWRS_B.test(str) || scriptWRS_W.test(str)) {
+        if (scriptWRS_W.test(str)) {
             document.Rwriteln(str);
         } else {
             console.log('%c[Block Script Writeln] ✂', 'border-left:5px solid #A0B;color:#A0B;padding:3px', str);
