@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2022-02-10
+! Last modified: 2022-02-18
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -143,6 +143,12 @@ ly.com##.app-warp,.topimg-show,[class*="_adv_"],.loginTapeBox
 pconline.com.cn###xuanfu_wapper,.fixLeftQRcode
 
 !↓
+||missav.com/img/*.gif
+||apple1818.net^
+missav.com$$a[rel="sponsored"]
+missav.com## .lg\:block
+missav.com#%#//scriptlet('prevent-addEventListener','visibilitychange')
+missav.com#%#//scriptlet('prevent-addEventListener','blur')
 ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 weidown.com##p:contains("高速下载"),.quickBox:contains("高速下载")
 weidown.com$$div[class="quickBox"][tag-content="高速下载"]
@@ -176,7 +182,7 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 |https://live.bilibili.com/*$replace=/"ad_banner_info":/"noad":/
 */web-room/v1/index/getInfoByRoom?room_id=$replace=/ad_banner_info/noad/
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
-sehuatang.net$$div[class="show-text"]
+sehuatang.*$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
 423down.com##a[href^="https://app.weilian.xin"],li:has(.cat:contains(优惠推荐)),#menu-item-12546,img[src$="D7/img/new.png"],img[src$="D7/img/new.png"]+a,.item:has(a:contains(优惠推荐))
