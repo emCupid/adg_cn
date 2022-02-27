@@ -144,6 +144,7 @@ ly.com##.app-warp,.topimg-show,[class*="_adv_"],.loginTapeBox
 pconline.com.cn###xuanfu_wapper,.fixLeftQRcode
 
 !↓
+bbs.125.la##.gdts
 ||missav.com/img/*.gif
 ||apple1818.net^
 missav.com$$a[rel="sponsored"]
