@@ -189,8 +189,6 @@ chinaz.com##.ToolsTxtWrap
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
 423down.com##a[href^="https://app.weilian.xin"],li:has(.cat:contains(优惠推荐)),#menu-item-12546,img[src$="D7/img/new.png"],img[src$="D7/img/new.png"]+a,.item:has(a:contains(优惠推荐))
 423down.com$$li[tag-content="香港服务器"]
-nfmovies.com##div.tips.close-box
-nfmovies.com$$span[tag-content="关闭"]
 mmiyue.com$$script[tag-content="killAdKiller"]
 */zhenbuka*/statics/js/fuck-debugger.js
 */zhenbuka*/statics/js/UA.js
