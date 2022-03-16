@@ -263,7 +263,6 @@ function Fuck_ADV(){
         Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
     });
     [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
-        console.log('%c[log iframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem.offsetWidth, Nodeitem.offsetHeight,Nodeitem.src);
         if (!iframeSRC.test(Nodeitem.src) && Nodeitem.getAttribute("src") && Nodeitem.offsetWidth >= 600 && Nodeitem.offsetWidth <= 1500 && Nodeitem.offsetHeight >= 40 && Nodeitem.offsetHeight <= 180) {
             //if (Nodeitem.parentNode.children.length <= 2) {
             //    Nodeitem.parentNode.parentNode.removeChild(Nodeitem.parentNode);
@@ -271,8 +270,7 @@ function Fuck_ADV(){
             Nodeitem.parentNode.removeChild(Nodeitem);
             console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
         }else if(Nodeitem.offsetWidth >300){
-        
-        
+         console.log('%c[log iframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem.offsetWidth, Nodeitem.offsetHeight,Nodeitem.src);
         }
     });
 }
