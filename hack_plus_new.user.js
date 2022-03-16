@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         朝朝暮暮plus_new_20220316
+// @name         朝朝暮暮plus_new
 // @version      1.27.1027
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
