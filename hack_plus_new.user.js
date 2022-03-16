@@ -172,7 +172,7 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
                 console.log('%c[Remove AD] ✂%o', logCss, Item.src || Item);
                 break;
         }
-    }else if((Item.offsetWidth > MaxWidth && Item.offsetHeight < 300) || (Item.naturalWidth > MaxWidth && Item.naturalHeight  < 300)){
+    }else if((Item.offsetWidth > 500 && Item.offsetHeight) || (Item.naturalWidth > 500 && Item.naturalHeight)){
     
     console.log('%c[log offset] ✂%O',logCss,'offsetWidth:' ,Item.offsetWidth||Item.naturalWidth,'offsetHeight:',Item.offsetHeight||Item.naturalHeight ,Item.src || Item);
     }
