@@ -269,6 +269,9 @@ function Fuck_ADV(){
             //}
             Nodeitem.parentNode.removeChild(Nodeitem);
             console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
+        }else if(Nodeitem.offsetWidth >300){
+        console.log('%c[log iframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem.offsetWidth, Nodeitem.offsetHeight,Nodeitem.src);
+        
         }
     });
 }
