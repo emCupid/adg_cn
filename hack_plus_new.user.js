@@ -173,8 +173,7 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
                 break;
         }
     }else if((Item.offsetWidth > 500 && Item.offsetHeight) || (Item.naturalWidth > 500 && Item.naturalHeight)){
-    
-    console.log('%c[log offset] ✂%O',logCss,'offsetWidth:' ,Item.offsetWidth||Item.naturalWidth,'offsetHeight:',Item.offsetHeight||Item.naturalHeight ,Item.src || Item);
+    //console.log('%c[log offset] ✂%O',logCss,'offsetWidth:' ,Item.offsetWidth||Item.naturalWidth,'offsetHeight:',Item.offsetHeight||Item.naturalHeight ,Item.src || Item);
     }
 }
 var getDoamin = window._getMainHost || window.location.host,
@@ -270,7 +269,7 @@ function Fuck_ADV(){
             Nodeitem.parentNode.removeChild(Nodeitem);
             console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
         }else if(Nodeitem.offsetWidth >300){
-         console.log('%c[log iframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem.offsetWidth, Nodeitem.offsetHeight,Nodeitem.src);
+         //console.log('%c[log iframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem.offsetWidth, Nodeitem.offsetHeight,Nodeitem.src);
         }
     });
 }
