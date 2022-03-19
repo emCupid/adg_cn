@@ -6,6 +6,7 @@
 // @homepageURL  https://github.com/emCupid/adg_cn
 // @match        *://*/*
 // @namespace    emCupid
+// @updateURL    https://emcupid.coding.net/p/adg_cn/d/adg_cn/git/raw/master/hack_plus_new.user.js
 // @grant        unsafeWindow
 // @grant        GM_setValue
 // @grant        GM_getValue
