@@ -159,10 +159,6 @@ missav.com## .lg\:block
 missav.com#%#//scriptlet('prevent-addEventListener','visibilitychange')
 missav.com#%#//scriptlet('prevent-addEventListener','blur')
 ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
-weidown.com##p:contains("高速下载"),.quickBox:contains("高速下载")
-weidown.com$$div[class="quickBox"][tag-content="高速下载"]
-weidown.com$$p[tag-content="高速下载"]
-weidown.com$$div[class="adWrapper full"]
 ||yhczx.cn
 ||51.la
 tvyb01.com,tvyb02.com,tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth
