@@ -212,6 +212,7 @@ var getDoamin = window._getMainHost || window.location.host,
     ],
     scriptWRS_B = new RegExp(scriptWRS_blacklist.join("|","i")),
     scriptWRS_whitelist = [
+        'MacPlayer',
         '[\\u4e00-\\u9fa5]',
         'player',
         'editor\\/',
