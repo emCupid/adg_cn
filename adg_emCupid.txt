@@ -13,7 +13,7 @@
 !-------白名单-------
 @@||lts*.qq.com^*.ts?index=$media,domain=qq.com
 @@||192.168.*.*$important
-@@192.168.*.*$content,elemhide,jsinject,urlblock,extension,stealth,important
+@@192.168.*.*
 @@||stats.g.doubleclick.net^$domain=netlify.com
 
 !-------爱奇艺播放广告-------
