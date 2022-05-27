@@ -84,7 +84,7 @@ www.58pic.com#?#.search_poster:has(.is-advertisement)
 588ku.com##.advertF,#rightAdEditor,.editIndex-entry.editIndexEntry,.adfix-box,.showinfo-ad,.filter-listadBtm-box,.kouIndex-entry,.listhorAdV
 ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"],.enterprise-domination,.combo-fulldown-box
 huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
-jianshu.com##[aria-label*="-ad"],.aside>div:contains(抽奖)
+jianshu.com##[aria-label*="-ad"],.aside>div:contains(抽奖),#menu>div:contains(抽奖)
 www.dianping.com##.bottomLayer,.J-bonus,.bottomLayer
 www.qiuziti.com##.font-item-box[style*="position"],.banner.home-banner,.font-download-banner
 360kuai.com##.kzx__showcase
