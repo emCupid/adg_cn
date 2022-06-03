@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2022-05-27
+! Last modified: 2022-06-03
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -17,7 +17,7 @@
 @@||stats.g.doubleclick.net^$domain=netlify.com
 
 !-------爱奇艺播放广告-------
-||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"\,/\$1"\,/
+||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"/\$1"/
 ||iqiyi.com/show2?e=*$replace=/"[^"]+?\.(jpg|png|swf)"/""/
 !-------腾讯播放广告-------
 ||vm.gtimg.cn/c/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
