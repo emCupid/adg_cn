@@ -17,8 +17,9 @@
 @@||stats.g.doubleclick.net^$domain=netlify.com
 
 !-------爱奇艺播放广告-------
-||iqiyi.com/show2?e=*$replace=/("\w*?":")\d+?"/\$1"/
-||iqiyi.com/show2?e=*$replace=/"[^"]+?\.(jpg|png|swf)"/""/
+iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
+||iqiyi.com/show2?$replace=/("\w*?":")\d+?"\,/\$1"\,/
+||iqiyi.com/show2?$replace=/"[^"]+?\.(jpg|png|swf)"/""/
 !-------腾讯播放广告-------
 ||vm.gtimg.cn/c/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
 ||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
