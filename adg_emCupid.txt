@@ -203,7 +203,7 @@ mmiyue.com$$script[tag-content="killAdKiller"]
 */zhenbuka*/statics/js/UA.js
 zhenbuka5.com#$#.col-lg-wide-75{left: 11%;width: 100%}
 zhenbuka5.com$$script[tag-content="tip_tongzhi"]
-zhenbuka5.com$$script[tag-content="24h_tips"]
+zhenbuka5.com$$script[tag-content="_tips"]
 zhenbuka5.com,zhenbuka3.com##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
 fanyi.baidu.com##[class^="app-side"],#transOtherRight
 ||mimg.127.net/p/*/js/p0.js$replace=/display:1\,icon:"yanxuan"/display:0\,icon:"yanxuan"/
