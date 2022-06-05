@@ -69,6 +69,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 
 !-------规则------
 tp102.com,weav.xyz#?#.q-img,.gg-config
+tp102.com,weav.xyz#%#//scriptlet("set-constant", "av_response.vip", "null")
 tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads", "null")
 tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads_object", "null")
 porncvd.com##h5,h5 + div
