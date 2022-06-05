@@ -68,9 +68,9 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||rs.sinajs.cn/*.gif?
 
 !-------规则------
-weav.xyz#?#.q-img,.gg-config
-weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads", "null")
-weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads_object", "null")
+tp102.com,weav.xyz#?#.q-img,.gg-config
+tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads", "null")
+tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads_object", "null")
 porncvd.com##h5,h5 + div
 porncvd.com#%#sessionStorage.setItem('token', 'Tom');
 ||porncvd.com/poweredby-test
