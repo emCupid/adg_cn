@@ -153,6 +153,7 @@ www.crsky.com##.adowGright
 news.17173.com##.header-undefined
 ly.com##.app-warp,.topimg-show,[class*="_adv_"],.loginTapeBox
 pconline.com.cn###xuanfu_wapper,.fixLeftQRcode
+design006.com###banner_div
 
 !↓
 /api/*/ad?type=
