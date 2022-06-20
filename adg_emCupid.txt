@@ -116,7 +116,7 @@ tv.sohu.com/s/sohuplayer/*$replace=/<\/html>/<style>iframe{display:none}<\/style
 zcool.com.cn##div[class*="-advlong-"]
 imooc.com##div[class*="-adv"]
 youdao.com###ads
-jb51.net##.tonglan,.softsfwtl
+jb51.net##.tonglan,.softsfwtl,.da-download,.topimg
 jb51.net#?#.side-box:has(.blank5)
 qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
