@@ -146,7 +146,7 @@ wenku.baidu.com#%#//scriptlet('remove-attr','style','body')
 ||www.btdx8.com/js/nav.js
 bbs.pcbeta.com$$script[wildcard="showADialog* bbs.pcbeta.com"]
 ||pcbeta.com/data/cache/*.js$replace=/^.+ bbs.pcbeta.com .+BAIDU_CLB_fillSlotAsync.+$//
-bbs.pcbeta.com#?##wp>div:matches-css(padding: 9px):matches-css(border:/1px/)
+pcbeta.com#?##wp>div:matches-css(padding: 9px):matches-css(width:980px)
 pcbeta.com$replace=/{padding:9px;width:980px;overflow:hidden;border:1px.*?display:block !important;}/{display:none !important;}/
 panelook.cn##.paddingtop10,a[onClick*="ad_click"]
 ||www.panelook.cn/ajax.php?ac=ad_click
