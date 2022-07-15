@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2022-07-05
+! Last modified: 2022-07-15
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -146,8 +146,8 @@ wenku.baidu.com#%#//scriptlet('remove-attr','style','body')
 ||www.btdx8.com/js/nav.js
 bbs.pcbeta.com$$script[wildcard="showADialog* bbs.pcbeta.com"]
 ||pcbeta.com/data/cache/*.js$replace=/^.+ bbs.pcbeta.com .+BAIDU_CLB_fillSlotAsync.+$//
-!bbs.pcbeta.com#?##wp>div:matches-css(padding: 9px):matches-css(border:/1px/)
-!pcbeta.com$replace=/{padding:9px;width:980px;overflow:hidden;border:1px.*?display:block !important;}/{display:none !important;}/
+bbs.pcbeta.com#?##wp>div:matches-css(padding: 9px):matches-css(border:/1px/)
+pcbeta.com$replace=/{padding:9px;width:980px;overflow:hidden;border:1px.*?display:block !important;}/{display:none !important;}/
 panelook.cn##.paddingtop10,a[onClick*="ad_click"]
 ||www.panelook.cn/ajax.php?ac=ad_click
 ||www.cr173.com/innew/newinfo.txt
@@ -179,7 +179,6 @@ ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||51.la
 tvyb01.com,tvyb02.com,tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth
 tvyb02.com$$script[tag-content="document.write"][max-length="770"]
-|https://static.zhihu.com/heifetz/*.app.*.js$replace=/e\.defaultType\?/0\?/
 ||ouphoarg.com^
 ||govhechi.cn:*
 ||xiaodi99.com:*
