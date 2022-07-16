@@ -17,6 +17,7 @@
 @@||stats.g.doubleclick.net^$domain=netlify.com
 
 !-------爱奇艺播放广告-------
+iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc")
 iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
 ||iqiyi.com/show2?$replace=/("\w*?":")\d+?"\,/\$1"\,/
 ||iqiyi.com/show2?$replace=/"[^"]+?\.(jpg|png|swf)"/""/
