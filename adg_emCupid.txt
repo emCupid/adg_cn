@@ -76,12 +76,12 @@ theporn.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.user.is_vip"
 theporn.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "av_response.vip", "null")
 theporn.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads", "null")
 theporn.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads_object", "null")
-porncvd.com##h5,h5 + div
+porncvd.com##h5, h5 + div
 porncvd.com#%#sessionStorage.setItem('token', 'Tom');
 ||porncvd.com/poweredby-test
-kmbbb46.com##.el-dialog
-hxcbb111.com#$?##app{overflow-x:visible!important;}
-hxcbb111.com,hxcbb101.com##.videoListStyle:has([target="_blank"])
+kmff14.com##.el-dialog
+fi11sm59.com#$?##app{overflow-x:visible!important;}
+fi11sm59.com##.videoListStyle:has([target="_blank"])
 ||hxc-api.com/home/getAds
 avgle.com###ps32-container
 qianoo.cn##.ad,.ads
