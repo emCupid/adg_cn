@@ -11,7 +11,7 @@ jsDelivr：[https://cdn.jsdelivr.net/gh/emCupid/adg_cn/adg_emCupid.txt](https://
 
 ## 脚本：  
 【**朝朝暮暮plus**】一些浏览器增强功能及辅助移除广告  
-GitLab：https://gitlab.com/emCupid/adg_cn/-/raw/master/hack_plus.user.js
+GitLab：https://gitlab.com/emCupid/adg_cn/-/raw/master/hack_plus.user.js   
 GitHub：https://github.com/emCupid/adg_cn/raw/master/hack_plus.user.js   
 jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_plus.user.js  
 测试联盟广告：http://www.wuhan.com/xinwen/68537.html  
