@@ -1,9 +1,11 @@
-## 仓库：  
+## 仓库：
+https://gitlab.com/emCupid/adg_cn.git  
 https://github.com/emCupid/adg_cn  
 https://emcupid.coding.net/public/adg_cn/adg_cn/git
 
+
 ## 规则：  
-Coding：[https://emcupid.coding.net/p/adg_cn/d/adg_cn/git/raw/master/adg_emCupid.txt](https://subscribe.adblockplus.org/?location=https://emcupid.coding.net/p/adg_cn/d/adg_cn/git/raw/master/adg_emCupid.txt "adg_emCupid")  
+Gitlab：[https://gitlab.com/emCupid/adg_cn/-/raw/master/adg_emCupid.txt](https://subscribe.adblockplus.org/?location=https://gitlab.com/emCupid/adg_cn/-/raw/master/adg_emCupid.txt "adg_emCupid")  
 GitHub：[https://raw.githubusercontent.com/emCupid/adg_cn/master/adg_emCupid.txt](https://subscribe.adblockplus.org/?location=https://raw.githubusercontent.com/emCupid/adg_cn/master/adg_emCupid.txt "adg_emCupid")  
 jsDelivr：[https://cdn.jsdelivr.net/gh/emCupid/adg_cn/adg_emCupid.txt](https://subscribe.adblockplus.org/?location=https://cdn.jsdelivr.net/gh/emCupid/adg_cn/adg_emCupid.txt "adg_emCupid")  
 
