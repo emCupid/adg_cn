@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.27.1027
+// @version      1.28.0817
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -170,6 +170,11 @@ function Fuck_removeAD(Item, MinWidth, MaxWidth, MinHeight, MaxHeight, RmoveFun,
                 Item.parentNode.parentNode.removeChild(Item.parentNode);
                 console.log('%c[Remove AD] ✂%o', logCss, Item.src || Item);
                 break;
+            case 3:
+                AddTempHide(Item);
+                Item.parentNode.removeChild(Item);
+                console.log('%c[Remove AD] ✂%o', logCss, Item.src || Item);
+                break;
         }
     }
 }
@@ -256,6 +261,10 @@ function Fuck_ADV(){
     [].forEach.call(document.querySelectorAll('a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
         Fuck_removeAD(Nodeitem, 580, 1800, 40, 150, 2);
         Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
+    });
+    [].forEach.call(document.querySelectorAll('img[data-link]'), function (Nodeitem) {
+        Fuck_removeAD(Nodeitem, 580, 1800, 40, 150, 3);
+        //Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
     });
     [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
         if (!iframeSRC.test(Nodeitem.src) && Nodeitem.getAttribute("src") && Nodeitem.offsetWidth >= 600 && Nodeitem.offsetWidth <= 1500 && Nodeitem.offsetHeight >= 40 && Nodeitem.offsetHeight <= 180) {
