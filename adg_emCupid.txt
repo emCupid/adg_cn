@@ -1,6 +1,5 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Expires: 1 days
 ! Last modified: 2022-08-17
 
 !-------全局&正则-------
