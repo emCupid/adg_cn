@@ -21,7 +21,7 @@ jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_plus.user.js
 
 ## PS： 
 * 反馈QQ群：[240088290](https://jq.qq.com/?_wv=1027&k=Nn7JsKsm)
-* Coding、GitHub、jsDelivr镜像自行测试访问速度三选一
+* GitLab、GitHub、jsDelivr镜像自行测试访问速度三选一
 * jsDelivr节点多，速度快，但是会有缓存（24小时），所以文件可能不是最新
 * 朝朝暮暮plus脚本因为ADG当前稳定版（7.6.1）GM_setValue有BUG导致不能储存设置，如果想正常使用请更新到7.7 Beta 1以上
 * 代理横式下无法保存设置揭示adguard-ws-api报错在host下添加一条【176.103.133.77 adguard-ws-api】即可解决（不含【】）
