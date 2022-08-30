@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2022-08-28
+! Last modified: 2022-08-30
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -207,6 +207,8 @@ sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop)
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"isapp"|"isAPP"/"noapp"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"clarity"/"noclarity"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
+!内测版b站首页推广
+https://www.bilibili.com$replace=/\,ad:\[/\,ad:\[\]\,noad:\[/
 |https://api.live.bilibili.com/xlive/activity-interface/v1/widgetBanner/
 |https://live.bilibili.com/*$replace=/"ad_banner_info":/"noad":/
 */web-room/v1/index/getInfoByRoom?room_id=$replace=/ad_banner_info/noad/
