@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! Last modified: 2022-08-30
+! Last modified: 2022-08-31
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -186,8 +186,7 @@ missav.com#%#//scriptlet('prevent-addEventListener','blur')
 ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||yhczx.cn
 ||51.la
-tvyb01.com,tvyb02.com,tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth
-tvyb02.com$$script[tag-content="document.write"][max-length="770"]
+tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth
 ||ouphoarg.com^
 ||govhechi.cn:*
 ||xiaodi99.com:*
@@ -208,7 +207,8 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"isapp"|"isAPP"/"noapp"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"clarity"/"noclarity"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !内测版b站首页推广
-https://www.bilibili.com$replace=/\,ad:\[/\,ad:\[\]\,noad:\[/
+www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.ad', 'emptyArr')
+www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad', 'emptyArr')
 |https://api.live.bilibili.com/xlive/activity-interface/v1/widgetBanner/
 |https://live.bilibili.com/*$replace=/"ad_banner_info":/"noad":/
 */web-room/v1/index/getInfoByRoom?room_id=$replace=/ad_banner_info/noad/
