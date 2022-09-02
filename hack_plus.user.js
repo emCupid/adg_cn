@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.30.0901
+// @version      1.30.0902
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -383,7 +383,6 @@ function Fuck_switchAttr(selector,source,target) {
         //    execSSStime = 15e3;
         //}
         window.Timer_FuckRAI = setTimeout(function () {
-            console.log(1);
             Fuck_ADV();
             if (document.readyState == "complete" || (window.observer && !window.observer.observe)) {
                 setTimeout(Fuck_ADV, 1e3);
