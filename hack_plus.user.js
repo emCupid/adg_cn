@@ -264,13 +264,9 @@ function Fuck_ADV(){
     });
     [].forEach.call(document.querySelectorAll('img[data-link]'), function (Nodeitem) {
         Fuck_removeAD(Nodeitem, 580, 1800, 40, 150, 3);
-        //Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
     });
     [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
         if (!iframeSRC.test(Nodeitem.src) && Nodeitem.getAttribute("src") && Nodeitem.offsetWidth >= 600 && Nodeitem.offsetWidth <= 1500 && Nodeitem.offsetHeight >= 40 && Nodeitem.offsetHeight <= 180) {
-            //if (Nodeitem.parentNode.children.length <= 2) {
-            //    Nodeitem.parentNode.parentNode.removeChild(Nodeitem.parentNode);
-            //}
             Nodeitem.parentNode.removeChild(Nodeitem);
             console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
         }
