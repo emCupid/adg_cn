@@ -428,7 +428,7 @@ function Fuck_switchAttr(selector,source,target) {
             if (!OxConfigDIV) {
                     document.body.appendChild(OxConfig);
                     OxConfig.appendChild(OxConfigStyle);
-                    var Fuck_SSS_input = document.getElementById("Fuck_SSS");
+                    //var Fuck_SSS_input = document.getElementById("Fuck_SSS");
                     if (hackplus_whitelist["unFuck_ADV"] == 1){document.getElementById("unFuck_ADV").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["unFuck_UNION"] == 1){document.getElementById("unFuck_UNION").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["Fuck_WRS"] == 1){document.getElementById("Fuck_WRS").setAttribute("checked", "checked")}
