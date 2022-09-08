@@ -128,7 +128,7 @@ jb51.net##.tonglan,.softsfwtl,.da-download,.topimg
 jb51.net#?#.side-box:has(.blank5)
 qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
-v.qq.com##.mod_row_box_ad
+v.qq.com##.mod_row_box_ad,div[dt-params^="ad_"]
 www.appinn.com###media_image-2
 !zhihu.com#%#document.addEventListener('readystatechange',function(){try{document.querySelector('.Modal-backdrop').onclick = function(){document.querySelector('.Modal-closeButton').click()}}catch{}});
 zhihu.com#%#//scriptlet('remove-attr','style','html')
