@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-09-08T23:40:40+08:00
+! TimeUpdated: 2022-09-10T22:12:58+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -128,7 +128,7 @@ jb51.net##.tonglan,.softsfwtl,.da-download,.topimg
 jb51.net#?#.side-box:has(.blank5)
 qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
-v.qq.com##.mod_row_box_ad
+v.qq.com##.mod_row_box_ad,#iwan-game-switch-page
 www.appinn.com###media_image-2
 !zhihu.com#%#document.addEventListener('readystatechange',function(){try{document.querySelector('.Modal-backdrop').onclick = function(){document.querySelector('.Modal-closeButton').click()}}catch{}});
 zhihu.com#%#//scriptlet('remove-attr','style','html')
