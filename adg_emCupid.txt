@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-09-10T22:12:58+08:00
+! TimeUpdated: 2022-09-11T20:40:53+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -69,7 +69,8 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||rs.sinajs.cn/*.gif?
 
 !-------规则------
-youtube.com#?##masthead-ad
+greasyfork.org##.post-install
+||ctfile.com/assets/js/clipboard.min.js
 ||myqcloud.com/app/gif/*.gif
 bdys01.com#%#//scriptlet('abort-on-property-read', 'alert')
 ||gmtv1.xyz$redirect=nooptext
@@ -212,6 +213,7 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !内测版b站首页推广
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.ad', 'emptyArr')
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad', 'emptyArr')
+www.bilibili.com#%#//scriptlet('set-constant', 'window.__INITIAL_STATE__.adData', 'emptyArr')
 |https://api.live.bilibili.com/xlive/activity-interface/v1/widgetBanner/
 |https://live.bilibili.com/*$replace=/"ad_banner_info":/"noad":/
 */web-room/v1/index/getInfoByRoom?room_id=$replace=/ad_banner_info/noad/
