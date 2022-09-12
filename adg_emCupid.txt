@@ -215,7 +215,7 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !内测版b站首页推广
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.ad', 'emptyArr')
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad', 'emptyArr')
-www.bilibili.com#%#//scriptlet('set-constant', 'window.__INITIAL_STATE__.adData', 'emptyArr')
+!www.bilibili.com#%#//scriptlet('set-constant', 'window.__INITIAL_STATE__.adData', 'emptyArr')
 |https://api.live.bilibili.com/xlive/activity-interface/v1/widgetBanner/
 |https://live.bilibili.com/*$replace=/"ad_banner_info":/"noad":/
 */web-room/v1/index/getInfoByRoom?room_id=$replace=/ad_banner_info/noad/
