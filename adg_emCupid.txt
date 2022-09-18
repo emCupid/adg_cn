@@ -132,7 +132,7 @@ jb51.net##.tonglan,.softsfwtl,.da-download,.topimg
 jb51.net#?#.side-box:has(.blank5)
 qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
-v.qq.com##.mod_row_box_ad,#iwan-game-switch-page
+v.qq.com##.mod_row_box_ad,#iwan-game-switch-page,[dt-eid^="ad_"]
 ||video.qq.com/*/getVLPage$replace=/{"id":"[^{]*?"\,"type":"pc_card_ad".*?{"id":/{"id":/
 ||video.qq.com/*/getVLPage$replace=/"ad_list"/"noad"/
 www.appinn.com###media_image-2
