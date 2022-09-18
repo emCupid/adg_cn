@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-09-15T21:20:19+08:00
+! TimeUpdated: 2022-09-18T19:12:14+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -65,9 +65,11 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||*/index/q.php?cid=
 ||*/js/count.js
 ||*/baidu_tongji.js
+||hm.baidu.com^
 ||zz.bdstatic.com/linksubmit/push.js
 ||sbeacon.sina.com.cn/e.gif
 ||rs.sinajs.cn/*.gif?
+||51.la^
 
 !-------规则------
 greasyfork.org##.post-install
@@ -131,6 +133,8 @@ jb51.net#?#.side-box:has(.blank5)
 qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
 v.qq.com##.mod_row_box_ad,#iwan-game-switch-page
+||video.qq.com/*/getVLPage$replace=/{"id":"[^{]*?"\,"type":"pc_card_ad".*?{"id":/{"id":/
+||video.qq.com/*/getVLPage$replace=/"ad_list"/"noad"/
 www.appinn.com###media_image-2
 !zhihu.com#%#document.addEventListener('readystatechange',function(){try{document.querySelector('.Modal-backdrop').onclick = function(){document.querySelector('.Modal-closeButton').click()}}catch{}});
 zhihu.com#%#//scriptlet('remove-attr','style','html')
@@ -181,6 +185,7 @@ v.qq.com#$?#div[dt-params^="ad_"]{ remove: true; }
 /d/file/huandeng/*
 sfw5.me##img[src$=".gif"][border="0"],[href^="/gghtml/"],.slide-index,.download_app,.vip,.GzList,#moblie_right,.mb-item:has([style*=".gif"])
 *.gif|$domain=sfw5.me
+||*/static/extra/ad.js
 bbs.125.la##.bor_left[style="padding:0px;"],.gdts
 ||apple1818.net^
 ||missav.com/*.gif
@@ -191,7 +196,6 @@ missav.com#%#//scriptlet('prevent-addEventListener','visibilitychange')
 missav.com#%#//scriptlet('prevent-addEventListener','blur')
 ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||yhczx.cn
-||51.la
 tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth
 ||ouphoarg.com^
 ||govhechi.cn:*
@@ -218,7 +222,7 @@ www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad
 live.bilibili.com#%#//scriptlet('set-constant', '__SSR_INITIAL_STATE__.baseInfoRoom.ad_banner_info', 'emptyObj')
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.*$$div[class="show-text"]
-chinaz.com##.ToolsTxtWrap,a[href^="https://app.chinaz.com/click/"],.single-mode:has(a[href^="https://app.chinaz.com/click/"]),.medialink-wrapper
+chinaz.com##.ToolsTxtWrap,a[href^="https://app.chinaz.com/click/"],.single-mode:has(a[href^="https://app.chinaz.com/click/"]),.medialink-wrapper,.smediabox
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
 423down.com##a[href^="https://app.weilian.xin"],li:has(.cat:contains(优惠推荐)),#menu-item-12546,img[src$="D7/img/new.png"],img[src$="D7/img/new.png"]+a,.item:has(a:contains(优惠推荐))
 fanyi.baidu.com##[class^="app-side"],#transOtherRight,#app-read
