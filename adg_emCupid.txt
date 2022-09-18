@@ -173,7 +173,7 @@ www.bilibili.com##.activity-m-v1.act-end,.adblock-tips
 php.cn##.bottom_vue
 www.fontke.com##.footer .fixed,.index-adver
 cloud.189.cn##.advertising-mask
-v.qq.com#$?#div[dt-params^="ad_"]{ remove: true; }
+v.qq.com#$?#[dt-params^="ad_"]{ remove: true; }
 126.com,mail.163.com##.gWel-bottom,.mailgg,.main-inner-wrap
 
 
