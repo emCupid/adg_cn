@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-09-18T19:12:14+08:00
+! TimeUpdated: 2022-09-27T20:55:14+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -169,7 +169,8 @@ news.17173.com##.header-undefined
 ly.com##.app-warp,.topimg-show,[class*="_adv_"],.loginTapeBox
 pconline.com.cn###xuanfu_wapper,.fixLeftQRcode
 design006.com###banner_div
-www.bilibili.com##.activity-m-v1.act-end,.adblock-tips
+www.bilibili.com##.activity-m-v1.act-end
+www.bilibili.com##.bili-video-card.is-rcmd:has(.bili-video-card__info--ad):remove()
 php.cn##.bottom_vue
 www.fontke.com##.footer .fixed,.index-adver
 cloud.189.cn##.advertising-mask
@@ -183,8 +184,8 @@ v.qq.com#$?#[dt-params^="ad_"]{ remove: true; }
 |http://*/e/DownSys/play/$replace=/advertisements:'.*?'\,//
 /gghtml/*
 /d/file/huandeng/*
-sfw5.me##img[src$=".gif"][border="0"],[href^="/gghtml/"],.slide-index,.download_app,.vip,.GzList,#moblie_right,.mb-item:has([style*=".gif"])
-*.gif|$domain=sfw5.me
+sfw142.me##img[src$=".gif"][border="0"],[href^="/gghtml/"],.slide-index,.download_app,.vip,.GzList,#moblie_right,.mb-item:has([style*=".gif"])
+*.gif|$domain=sfw142.me
 ||*/static/extra/ad.js
 bbs.125.la##.bor_left[style="padding:0px;"],.gdts
 ||apple1818.net^
@@ -196,7 +197,7 @@ missav.com#%#//scriptlet('prevent-addEventListener','visibilitychange')
 missav.com#%#//scriptlet('prevent-addEventListener','blur')
 ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||yhczx.cn
-tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth
+tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth,h1[align="center"]
 ||ouphoarg.com^
 ||govhechi.cn:*
 ||xiaodi99.com:*
