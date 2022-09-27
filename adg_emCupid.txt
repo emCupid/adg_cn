@@ -170,7 +170,6 @@ ly.com##.app-warp,.topimg-show,[class*="_adv_"],.loginTapeBox
 pconline.com.cn###xuanfu_wapper,.fixLeftQRcode
 design006.com###banner_div
 www.bilibili.com##.activity-m-v1.act-end
-www.bilibili.com##.bili-video-card.is-rcmd:has(.bili-video-card__info--ad):remove()
 php.cn##.bottom_vue
 www.fontke.com##.footer .fixed,.index-adver
 cloud.189.cn##.advertising-mask
@@ -218,6 +217,8 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"isapp"|"isAPP"/"noapp"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"clarity"/"noclarity"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !内测版b站首页推广
+||api.bilibili.com/x/web-interface/index/top/feed/rcmd$removeparam=feed_version,xmlhttprequest
+www.bilibili.com$$div[class="bili-video-card is-rcmd"][tag-content="bili-video-card__info--ad"]
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.ad', 'emptyArr')
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad', 'emptyArr')
 live.bilibili.com#%#//scriptlet('set-constant', '__SSR_INITIAL_STATE__.baseInfoRoom.ad_banner_info', 'emptyObj')
