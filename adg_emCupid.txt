@@ -1,10 +1,11 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-09-27T20:55:14+08:00
+! TimeUpdated: 2022-10-01T20:40:38+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
 ##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
+#%#//scriptlet('set-constant', 'ExoLoader', 'true')
 ||*@*_*.exe$redirect=empty
 ||*_*@*.exe$redirect=empty
 /\/ads\/\.*?\d*.*?\.js/$script
@@ -92,8 +93,6 @@ porncvd.com#%#sessionStorage.setItem('token', 'Tom');
 #$?##app{overflow-x:visible!important;}
 ||hxc-api.com/home/getAds
 avgle.com###ps32-container
-qianoo.cn##.ad,.ads
-qianoo.cn$$div[tag-content="close-ads"]
 javdb.com##.app-desktop-banner,.moj-content
 iqiyi.com##.detail-sd
 51miz.com##.banner-warp,.rise-price-use-now
@@ -133,6 +132,7 @@ jb51.net#?#.side-box:has(.blank5)
 qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
 v.qq.com##.mod_row_box_ad,#iwan-game-switch-page,[dt-eid^="ad_"]
+v.qq.com#$?#[dt-params^="ad_"]{ remove: true; }
 ||video.qq.com/*/getVLPage$replace=/{"id":"[^{]*?"\,"type":"pc_card_ad".*?{"id":/{"id":/
 ||video.qq.com/*/getVLPage$replace=/"ad_list"/"noad"/
 www.appinn.com###media_image-2
@@ -173,7 +173,6 @@ www.bilibili.com##.activity-m-v1.act-end
 php.cn##.bottom_vue
 www.fontke.com##.footer .fixed,.index-adver
 cloud.189.cn##.advertising-mask
-v.qq.com#$?#[dt-params^="ad_"]{ remove: true; }
 126.com,mail.163.com##.gWel-bottom,.mailgg,.main-inner-wrap
 
 
@@ -186,7 +185,6 @@ v.qq.com#$?#[dt-params^="ad_"]{ remove: true; }
 sfw142.me##img[src$=".gif"][border="0"],[href^="/gghtml/"],.slide-index,.download_app,.vip,.GzList,#moblie_right,.mb-item:has([style*=".gif"])
 *.gif|$domain=sfw142.me
 ||*/static/extra/ad.js
-bbs.125.la##.bor_left[style="padding:0px;"],.gdts
 ||apple1818.net^
 ||missav.com/*.gif
 missav.com$$a[rel="sponsored"]
@@ -197,6 +195,12 @@ missav.com#%#//scriptlet('prevent-addEventListener','blur')
 ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||yhczx.cn
 tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth,h1[align="center"]
+mmiyue.com$$script[tag-content="killAdKiller"]
+||*/statics/js/fuck-debugger.js
+ikandy.fun#$#.col-lg-wide-75{left: 11%;width: 100%}
+ikandy.fun$$script[tag-content="tip_tongzhi"]
+ikandy.fun$$script[tag-content="_tips"]
+ikandy.fun##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
 ||ouphoarg.com^
 ||govhechi.cn:*
 ||xiaodi99.com:*
@@ -205,7 +209,7 @@ tieba.baidu.com#%#//scriptlet('remove-class','special_conf_skin','body')
 tieba.baidu.com#$#body { background: none!important; }
 bbs.pcbeta.com#%#//scriptlet('remove-class','collapsed')
 mydrivers.com$$div[id="a_showhotnews_list_dia"]
-sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined
+sina.cn##.zhidi,#j_card_gum,.fl_qr,.qr_box,.fl_suspension_template:not(#j_toTop):not(#j_fixAppBtn),[sax-type],.callApp_fl_btn_di,.faiz_zoom,div.callApp_fl_btn,.look_more,.broadcast_box,.qweasd,section.undefined, .cm_index_popup
 !渣浪广告接口
 ||qzs.qq.com/qzone/biz/res/i.js
 ||sinaimg.cn/wap/custom_html/
