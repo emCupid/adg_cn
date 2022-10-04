@@ -6,7 +6,7 @@
 // @homepageURL  https://github.com/emCupid/adg_cn
 // @match        *://*/*
 // @namespace    emCupid
-// @updateURL    https://emcupid.coding.net/p/adg_cn/d/adg_cn/git/raw/master/hack_plus_new.user.js
+// @updateURL    https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_plus_new.user.js
 // @grant        unsafeWindow
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -64,74 +64,6 @@ unsafeWindow.__$get = GM_getValue;
 unsafeWindow.__$set = GM_setValue;
 unsafeWindow.__$delete = GM_deleteValue;
 unsafeWindow.__$list = GM_listValues;
-
-//Pro Config
-var hackplus_proConfigJSON = localStorage.getItem("hackplus_proConfig") || '{"wBanner":{"minWidth":580,"maxWidth":1800,"minHeight":40,"maxHeight":150},"hBanner":{"minWidth":40,"maxWidth":150,"minHeight":300,"maxHeight":650},"iFrameRule":""}',
-    hackplus_proConfig = JSON.parse(hackplus_proConfigJSON);
-unsafeWindow.__$proConfig = {
-    set : function(type, item, value) {
-        if (type == "wBanner") {
-            value = parseInt(value);
-            switch(item) {
-                case "minWidth" :
-                    value < hackplus_proConfig["wBanner"]["maxWidth"] ? value = value : value = hackplus_proConfig["wBanner"]["minWidth"];
-                    hackplus_proConfig["wBanner"]["minWidth"] = value
-                    break;
-                case "maxWidth" :
-                    value > hackplus_proConfig["wBanner"]["minWidth"] ? value = value : value = hackplus_proConfig["wBanner"]["maxWidth"];
-                    hackplus_proConfig["wBanner"]["maxWidth"] = value
-                    break;
-                case "minHeight" :
-                    value < hackplus_proConfig["wBanner"]["maxHeight"] ? value = value : value = hackplus_proConfig["wBanner"]["minHeight"];
-                    hackplus_proConfig["wBanner"]["minHeight"] = value
-                    break;
-                case "maxHeight" :
-                    value > hackplus_proConfig["wBanner"]["minHeight"] ? value = value : value = hackplus_proConfig["wBanner"]["maxHeight"];
-                    hackplus_proConfig["wBanner"]["maxHeight"] = value
-                    break;
-            }
-        } else if (type == "hBanner") {
-            value = parseInt(value);
-            switch(item) {
-                case "minWidth" :
-                    value < hackplus_proConfig["hBanner"]["maxWidth"] ? value = value : value = hackplus_proConfig["hBanner"]["minWidth"];
-                    hackplus_proConfig["hBanner"]["minWidth"] = value
-                    break;
-                case "maxWidth" :
-                    value > hackplus_proConfig["hBanner"]["minWidth"] ? value = value : value = hackplus_proConfig["hBanner"]["maxWidth"];
-                    hackplus_proConfig["hBanner"]["maxWidth"] = value
-                    break;
-                case "minHeight" :
-                    value < hackplus_proConfig["hBanner"]["maxHeight"] ? value = value : value = hackplus_proConfig["hBanner"]["minHeight"];
-                    hackplus_proConfig["hBanner"]["minHeight"] = value
-                    break;
-                case "maxHeight" :
-                    value > hackplus_proConfig["hBanner"]["minHeight"] ? value = value : value = hackplus_proConfig["hBanner"]["maxHeight"];
-                    hackplus_proConfig["hBanner"]["maxHeight"] = value
-                    break;
-            }
-        } else if (type == "iframe") {
-
-        } else {
-
-        }
-        localStorage.setItem("hackplus_proConfig", JSON.stringify(hackplus_proConfig));
-        result = hackplus_proConfig;
-        return result;
-    },
-    del : function(type) {
-        if (type == "wBanner") {
-            hackplus_proConfig["wBanner"] = {"minWidth":580,"maxWidth":1800,"minHeight":40,"maxHeight":150}
-        } else if (type = "hBanner") {
-            hackplus_proConfig["hBanner"] = {"minWidth":40,"maxWidth":150,"minHeight":300,"maxHeight":650}
-        } else if (type = "iframe") {
-            hackplus_proConfig["iFrameRule"] = ""
-        }
-        localStorage.setItem("hackplus_proConfig", JSON.stringify(hackplus_proConfig));
-        result = hackplus_proConfig;
-        return result;
-    }
-}
 
 function checkbox_onClick(checkbox) {
     if (checkbox.checked) {
@@ -261,20 +193,21 @@ if (hackplus_whitelistJSON == "{}") {
 
 
 function Fuck_ADV(){
-    [].forEach.call(document.querySelectorAll('a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
-        Fuck_removeAD(Nodeitem, 580, 1800, 40, 150, 2);
+    [].forEach.call(document.querySelectorAll('[class*="img"][style*="background-image"],a[target] img:not([src*="avatar"]),a[style] img:not([src*="avatar"]),a[onclick] img:not([src*="avatar"]),a[href*="javascript"] img:not([src*="avatar"]),a[rel*="nofollow"] img:not([src*="avatar"]),a img[style*="display"][style*="block"],a:not([href*="' + getDoamin.split('.')[0] + '."]):not([href^="/"]) img'), function (Nodeitem) {
+        Fuck_removeAD(Nodeitem, 570, 1800, 40, 150, 2);
         Fuck_removeAD(Nodeitem, 350, 400, 35, 150, 2);//手机缩放兼容
         Fuck_removeAD(Nodeitem, 40, 150, 300, 650, 2, "#08E")
     });
+    [].forEach.call(document.querySelectorAll('img[data-link]'), function (Nodeitem) {
+        Fuck_removeAD(Nodeitem, 579, 1800, 40, 150, 3);
+    });
+    [].forEach.call(document.querySelectorAll('a[target*="/?channelCode"] img,a[href*=":1"] img,,a[href*=":2"] img,,a[href*=":3"] img,,a[href*=":4"] img,,a[href*=":5"] img,,a[href*=":6"] img,,a[href*=":7"] img,,a[href*=":8"] img,,a[href*=":9"] img'), function (Nodeitem) {
+        Fuck_removeAD(Nodeitem, 579, 1800, 40, 190, 3);
+    });
     [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
         if (!iframeSRC.test(Nodeitem.src) && Nodeitem.getAttribute("src") && Nodeitem.offsetWidth >= 600 && Nodeitem.offsetWidth <= 1500 && Nodeitem.offsetHeight >= 40 && Nodeitem.offsetHeight <= 180) {
-            //if (Nodeitem.parentNode.children.length <= 2) {
-            //    Nodeitem.parentNode.parentNode.removeChild(Nodeitem.parentNode);
-            //}
             Nodeitem.parentNode.removeChild(Nodeitem);
             console.log('%c[Remove ADiframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem, Nodeitem.src);
-        }else if(Nodeitem.offsetWidth >300){
-         //console.log('%c[log iframe] ✂%O', 'border-left:5px solid #0B0;color:#0B0;padding:3px', Nodeitem.offsetWidth, Nodeitem.offsetHeight,Nodeitem.src);
         }
     });
 }
