@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus
-// @version      1.30.1002
+// @version      1.31.1004
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -197,6 +197,9 @@ function Fuck_ADV(){
     [].forEach.call(document.querySelectorAll('img[data-link]'), function (Nodeitem) {
         Fuck_removeAD(Nodeitem, 579, 1800, 40, 150, 3);
     });
+    [].forEach.call(document.querySelectorAll('a[target*="/?channelCode"] img,a[href*=":1"] img,,a[href*=":2"] img,,a[href*=":3"] img,,a[href*=":4"] img,,a[href*=":5"] img,,a[href*=":6"] img,,a[href*=":7"] img,,a[href*=":8"] img,,a[href*=":9"] img'), function (Nodeitem) {
+        Fuck_removeAD(Nodeitem, 579, 1800, 40, 190, 3);
+    });
     [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
         if (!iframeSRC.test(Nodeitem.src) && Nodeitem.getAttribute("src") && Nodeitem.offsetWidth >= 600 && Nodeitem.offsetWidth <= 1500 && Nodeitem.offsetHeight >= 40 && Nodeitem.offsetHeight <= 180) {
             Nodeitem.parentNode.removeChild(Nodeitem);
@@ -305,11 +308,6 @@ function Fuck_switchAttr(selector,source,target) {
         window.observer = new MutationObserver(function () {
             Fuck_ADV()
         });
-        //if (hackplus_whitelist["Fuck_SSS"] >= 5 && hackplus_whitelist["Fuck_SSS"] <= 30) {
-        //    execSSStime = hackplus_whitelist["Fuck_SSS"] * 1000;
-        //} else {
-        //    execSSStime = 15e3;
-        //}
         window.Timer_FuckRAI = setTimeout(function () {
             Fuck_ADV();
             if (document.readyState == "complete" || (window.observer && !window.observer.observe)) {
@@ -360,26 +358,10 @@ function Fuck_switchAttr(selector,source,target) {
             if (!OxConfigDIV) {
                     document.body.appendChild(OxConfig);
                     OxConfig.appendChild(OxConfigStyle);
-                    //var Fuck_SSS_input = document.getElementById("Fuck_SSS");
                     if (hackplus_whitelist["unFuck_ADV"] == 1){document.getElementById("unFuck_ADV").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["unFuck_UNION"] == 1){document.getElementById("unFuck_UNION").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["Fuck_WRS"] == 1){document.getElementById("Fuck_WRS").setAttribute("checked", "checked")}
                     if (hackplus_whitelist["Fuck_XZ"] == 1){document.getElementById("Fuck_XZ").setAttribute("checked", "checked")}
-                    //if (hackplus_whitelist["Fuck_SSS"] != 15 && hackplus_whitelist["Fuck_SSS"] >= 5 && hackplus_whitelist["Fuck_SSS"] <= 30){
-                    //    Fuck_SSS_input.value = hackplus_whitelist["Fuck_SSS"];
-                    //} else {
-                    //    Fuck_SSS_input.value = 15;
-                    //}
-                    //Fuck_SSS_input.onchange = function(){
-                    //    if(this.value >= 5 && this.value <= 30){
-                    //        hackplus_whitelist["Fuck_SSS"] = this.value;
-                    //        localStorage.setItem("$" + getDoamin + "$", JSON.stringify(hackplus_whitelist));
-                    //    } else {
-                    //        this.value = 15;
-                    //        alert("输入有误，请输入5-30之间的数字");
-                    //        delete hackplus_whitelist["Fuck_SSS"];
-                    //    }
-                    //};
                     [].forEach.call(document.querySelectorAll("#OxOOOOOO input:not(.tmp-active)"), function (checkbox){
                         checkbox.onclick = function(){checkbox_onClick(checkbox)};
                     });
