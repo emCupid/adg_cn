@@ -197,7 +197,7 @@ function Fuck_ADV(){
     [].forEach.call(document.querySelectorAll('img[data-link]'), function (Nodeitem) {
         Fuck_removeAD(Nodeitem, 579, 1800, 40, 150, 3);
     });
-    [].forEach.call(document.querySelectorAll('a[target*="/?channelCode"] img,a[href*=":1"] img,,a[href*=":2"] img,,a[href*=":3"] img,,a[href*=":4"] img,,a[href*=":5"] img,,a[href*=":6"] img,,a[href*=":7"] img,,a[href*=":8"] img,,a[href*=":9"] img'), function (Nodeitem) {
+    [].forEach.call(document.querySelectorAll('a[target*="/?channelCode"] img,a[href*=":1"] img,a[href*=":2"] img,a[href*=":3"] img,a[href*=":4"] img,a[href*=":5"] img,a[href*=":6"] img,a[href*=":7"] img,a[href*=":8"] img,a[href*=":9"] img'), function (Nodeitem) {
         Fuck_removeAD(Nodeitem, 579, 1800, 40, 190, 3);
     });
     [].forEach.call(document.getElementsByTagName('iframe'), function (Nodeitem) {
