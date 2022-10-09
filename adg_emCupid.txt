@@ -19,7 +19,7 @@
 @@||zhihu.com/api/*/oauth/captcha/
 
 !-------爱奇艺播放广告-------
-!#if adguard_app_windows)
+!#if (adguard_app_windows)
 iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc")
 !#endif
 iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
