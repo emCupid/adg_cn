@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-10-09T15:47:26+08:00
+! TimeUpdated: 2022-10-09T20:50:46+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -19,7 +19,9 @@
 @@||zhihu.com/api/*/oauth/captcha/
 
 !-------爱奇艺播放广告-------
+!#if adguard_app_windows)
 iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc")
+!#endif
 iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
 ||iqiyi.com/show2?$replace=/("\w*?":")\d+?"\,/\$1"\,/
 ||iqiyi.com/show2?$replace=/"[^"]+?\.(jpg|png|swf)"/""/
@@ -183,7 +185,7 @@ cloud.189.cn##.advertising-mask
 |http://*/e/DownSys/play/$replace=/advertisements:'.*?'\,//
 /gghtml/*
 /d/file/huandeng/*
-sfw142.me##img[src$=".gif"][border="0"],[href^="/gghtml/"],.slide-index,.download_app,.vip,.GzList,#moblie_right,.mb-item:has([style*=".gif"])
+sfw142.me##img[src$=".gif"][border="0"],[href^="/gghtml/"],.slide-index,.download_app,.vip,.GzList,#moblie_right,.mb-item:has([style*=".gif"]), .deangg
 *.gif|$domain=sfw142.me
 ||*/static/extra/ad.js
 ||apple1818.net^
@@ -199,8 +201,8 @@ tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth,h1[align="center"]
 mmiyue.com$$script[tag-content="killAdKiller"]
 ||*/statics/js/fuck-debugger.js
 ikandy.fun#$#.col-lg-wide-75{left: 11%;width: 100%}
-ikandy.fun$$script[tag-content="tip_tongzhi"]
-ikandy.fun$$script[tag-content="_tips"]
+ikandy.fun#%#//scriptlet('set-cookie', '1every_24h_gq', 'true')
+ikandy.fun#%#//scriptlet('set-cookie', 'tip_shuqian', 'true')
 ikandy.fun##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
 ||ouphoarg.com^
 ||govhechi.cn:*
