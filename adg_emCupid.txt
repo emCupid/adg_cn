@@ -21,8 +21,8 @@
 !-------爱奇艺播放广告-------
 !#if (adguard_app_windows)
 iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc")
-!#endif
 iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
+!#endif
 ||iqiyi.com/show2?$replace=/("\w*?":")\d+?"\,/\$1"\,/
 ||iqiyi.com/show2?$replace=/"[^"]+?\.(jpg|png|swf)"/""/
 !-------腾讯播放广告-------
