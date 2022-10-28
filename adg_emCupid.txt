@@ -1,10 +1,11 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-10-23T21:00:27+08:00
+! TimeUpdated: 2022-10-28T19:49:42+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
 ##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
+##.qq>a,li:has([data-original*="gif"])
 #%#//scriptlet('set-constant', 'ExoLoader', 'true')
 ||*@*_*.exe$redirect=empty
 ||*_*@*.exe$redirect=empty
@@ -229,7 +230,7 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"clarity"/"noclarity"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !内测版b站首页推广
 ||api.bilibili.com/x/web-interface/index/top/feed/rcmd$removeparam=feed_version,xmlhttprequest
-www.bilibili.com##.bili-video-card.is-rcmd:has(.bili-video-card__info--ad):remove()
+www.bilibili.com##.eva-extension-feed-body>div:has([class^="bili-video-card__info--ad"]):remove()
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.ad', 'emptyArr')
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad', 'emptyArr')
 live.bilibili.com#%#//scriptlet('set-constant', '__SSR_INITIAL_STATE__.baseInfoRoom.ad_banner_info', 'emptyObj')
