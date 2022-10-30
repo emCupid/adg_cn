@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus_new
-// @version      1.27.1027
+// @version      1.28.0000
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -302,6 +302,18 @@ function Fuck_switchAttr(selector,source,target) {
 
 //执行
 (function() {
+    function NoRedirect(){
+         document.querySelectorAll('a[id^="issue"]').forEach(function (_this) {_this.target = '_blank';});
+         document.querySelectorAll('a[href*="AnonymousRedirect"]').forEach(function (_this) {
+             _this.target = '_blank';
+             var _href = _this.href;
+             _href = decodeURIComponent(_href.replace('https://adguardteam.github.io/AnonymousRedirect/redirect.html?url=',''));
+             _this.href = _href;
+               })}
+    if (window.location.host == 'github.com'){
+        const observer = new MutationObserver(function () {NoRedirect()});
+        observer.observe(document, { childList: true, subtree: true });
+      }
     if (hackplus_whitelist["unFuck_UNION"] != 1 && window.location.host != "baike.baidu.com") {
         Fuck_UNION()
     }

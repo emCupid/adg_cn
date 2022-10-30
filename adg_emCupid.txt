@@ -6,7 +6,7 @@
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
 ##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
 ##.qq>a,li:has([data-original*="gif"])
-#%#//scriptlet('set-constant', 'ExoLoader', 'true')
+!#%#//scriptlet('set-constant', 'ExoLoader', 'true')
 ||*@*_*.exe$redirect=empty
 ||*_*@*.exe$redirect=empty
 /\/ads\/\.*?\d*.*?\.js/$script
@@ -229,7 +229,6 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"isapp"|"isAPP"/"noapp"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"clarity"/"noclarity"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !内测版b站首页推广
-||api.bilibili.com/x/web-interface/index/top/feed/rcmd$removeparam=feed_version,xmlhttprequest
 www.bilibili.com##.eva-extension-feed-body>div:has([class^="bili-video-card__info--ad"]):remove()
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.ad', 'emptyArr')
 www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad', 'emptyArr')
