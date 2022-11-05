@@ -6,7 +6,7 @@
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
 ##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
 ##.qq>a,li:has([data-original*="gif"])
-!#%#//scriptlet('set-constant', 'ExoLoader', 'true')
+#%#//scriptlet('set-constant', 'ExoLoader', 'true')
 ||*@*_*.exe$redirect=empty
 ||*_*@*.exe$redirect=empty
 /\/ads\/\.*?\d*.*?\.js/$script
