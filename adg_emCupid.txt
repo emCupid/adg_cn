@@ -1,12 +1,11 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-11-04T14:44:21+08:00
+! TimeUpdated: 2022-11-05T14:06:45+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
 ##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
 ##.qq>a,li:has([data-original*="gif"])
-#%#//scriptlet('set-constant', 'ExoLoader', 'true')
 ||*@*_*.exe$redirect=empty
 ||*_*@*.exe$redirect=empty
 /\/ads\/\.*?\d*.*?\.js/$script
@@ -76,6 +75,8 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||51.la^
 
 !-------规则------
+btnull.*#%#//scriptlet('set-local-storage-item', 'lyad', '1')
+btnull.*#%#//scriptlet('set-local-storage-item', 'adset', '1')
 huya.com###hy-ad,#hy-ab,.end-ab-wrap,.end-ab-banner
 ||huya.com/*cache*min.php
 greasyfork.org##.post-install
