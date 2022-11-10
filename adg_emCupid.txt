@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-11-07T13:28:29+08:00
+! TimeUpdated: 2022-11-10T13:35:49+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -106,7 +106,7 @@ iqiyi.com##.detail-sd
 58pic.com##.activitySettings-fixedBottom,.slider-gg-banner-row,#new-user-dialog,body>div[id^="activity"][style*="block"],.search-v3-content>div[style*="fixed"],.header-renewal,.index-move-modal,.market-dialog-model,#double-dan
 www.58pic.com#?#.search_poster:has(.is-advertisement)
 588ku.com##.advertF,#rightAdEditor,.editIndex-entry.editIndexEntry,.adfix-box,.showinfo-ad,.filter-listadBtm-box,.kouIndex-entry,.listhorAdV
-ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"],.enterprise-domination,.combo-fulldown-box,.enterprise-home-domination
+ibaotu.com##[ibaotu-md-value*="_ad"],[class*="-ad"]:not(li),.upgrade-comVip,[class*="qyvip"],.qy-Redenvelope,.AdverBanner,.nationalRed-wrap,.float-upgrade,.searchAdver,.divQRalert,.index-ope-pop,.TryOut-PopUps,.TryOut-Bottom,[class^="question"],[ibaotu-md-value="zhjgy_dbggw"],.enterprise-domination,.combo-fulldown-box,.enterprise-home-domination,a.vip-qy-download-button,.qy-enterprise-init
 huaban.com##[class*="pin-view"] a[href*="utm_source="],[id*="-ad-"]
 jianshu.com##[aria-label*="-ad"],.aside>div:contains(抽奖),#menu>div:contains(抽奖)
 jianshu.com#?#div:has(>div[aria-label*="抽奖"]),div:has(div[tabindex="-1"][role="dialog"])
