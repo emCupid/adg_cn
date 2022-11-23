@@ -5,7 +5,7 @@
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
 ##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
-##.title>.qq>a,##ul.stui-vodlist>li:not(:has(.stui-vodlist__thumb[href*="vod"])):has(.stui-vodlist__detail>h4)
+##.title>.qq>a,ul.stui-vodlist>li:not(:has(.stui-vodlist__thumb[href*="vod"])):has(.stui-vodlist__detail>h4)
 ||*@*_*.exe$redirect=empty
 ||*_*@*.exe$redirect=empty
 /\/ads\/\.*?\d*.*?\.js/$script
