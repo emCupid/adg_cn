@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-11-23T21:02:14+08:00
+! TimeUpdated: 2022-12-12T19:11:06+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -77,16 +77,19 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 !-------规则------
 btnull.*#%#//scriptlet('set-local-storage-item', 'lyad', '1')
 btnull.*#%#//scriptlet('set-local-storage-item', 'adset', '1')
-huya.com###hy-ad,#hy-ab,.end-ab-wrap,.end-ab-banner
-||huya.com/*cache*min.php
+!huya.com###hy-ad,#hy-ab,.end-ab-wrap,.end-ab-banner
+!||huya.com/*cache*min.php
 greasyfork.org##.post-install
 ctfile.com#%#//scriptlet('set-constant', '_popup_ispoped','true')
 ||myqcloud.com/app/gif/*.gif
 bdys01.com#%#//scriptlet('abort-on-property-read', 'alert')
 ||gmtv1.xyz$redirect=nooptext
-nbys.tv##.st-btn,img.pca-img
+nbys.tv##.st-btn,img.pca-img,#copytoshareAlert,#bg_cover 
 ||subaibaiys.com/wp-admin/admin-ajax.php$replace=/"code":0/"code":1/
 subaibaiys.com#%#//scriptlet('set-cookie', 'myannoun', '1')
+https://cbs.sports.cctv.com/schedule_plus.html$third-party
+theav101.com##.green,.choice_list,.openwin
+theav101.com#$#.player{width:70%;left:15% !important}
 theporn.cc,tp102.com,weav.xyz#?#.q-img,.gg-config,.toolbar-gg,#vip_only
 theporn.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.video_playr_sider", "null")
 theporn.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.user.is_vip", "true")
@@ -158,6 +161,7 @@ ui.cn##.login-fixed
 ui.cn#%#//scriptlet('remove-attr','style','body')
 www.douyu.com###js-room-activity,a.layout-Slide-banner
 yuba.douyu.com##div[class^="index-leftListWrapper"]>div[class^="index-wrapperBox"]
+||baidu.com/aladdin.php$redirect=empty
 baidu.com$$script[id="ecomScript"]
 baidu.com###content_left > [data-click*="rsv_srcid"],#content_left > [style*="display:block"][style*="visibility:visible"],#content_left > div[style][data-pos],#content_right a[href*="baidu.com/other.php"],#content_right [class*="-show-ad-tip"],#content_right>*:not(table),#content_left [id$="canvas"],[tpl*="ad"]:not([tpl*="head"]),#con-at,.s-news-banner-wrap,.app-side-ad,div[class*="float_video"]
 wenku.baidu.com##.vip-member-pop-content,.pure-guide-dialog
@@ -203,7 +207,7 @@ missav.com#%#//scriptlet('prevent-addEventListener','blur')
 ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||yhczx.cn
 ||bcebos.com/images/$domain=tvyb03.com
-tvyb03.com#?#.tips,.close-box,.btn-danger,.btn-warm,#hth,h1[align="center"]
+tvyb03.com##.tips,.close-box,.btn-danger,.btn-warm,#hth,h1[align="center"],.fa
 mmiyue.com$$script[tag-content="killAdKiller"]
 ||*/statics/js/fuck-debugger.js
 ikandy.fun#$#.col-lg-wide-75{left: 12.5%}
