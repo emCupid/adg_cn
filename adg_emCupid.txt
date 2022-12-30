@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2022-12-15T13:47:54+08:00
+! TimeUpdated: 2022-12-30T20:49:26+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -83,13 +83,13 @@ greasyfork.org##.post-install
 ctfile.com#%#//scriptlet('set-constant', '_popup_ispoped','true')
 ||myqcloud.com/app/gif/*.gif
 bdys01.com#%#//scriptlet('abort-on-property-read', 'alert')
-||gmtv1.xyz$redirect=nooptext
-nbys.tv##.st-btn,img.pca-img,#copytoshareAlert,#bg_cover 
-||subaibaiys.com/wp-admin/admin-ajax.php$replace=/"code":0/"code":1/
+||gmtv1.*$redirect=nooptext
+nivodi.tv##.st-btn,img.pca-img,#copytoshareAlert,#bg_cover 
 subaibaiys.com#%#//scriptlet('set-cookie', 'myannoun', '1')
-https://cbs.sports.cctv.com/schedule_plus.html$third-party
+https://theav101.com/videos/$replace=/\?segments=\d*?&time=\d*?"/"/
+theav101.com##+js(set, PlayerjsEvents, noopFunc)
 theav101.com##.green,.choice_list,.openwin
-theav101.com#$#.player{width:70%;left:15% !important}
+theav101.com#$#.player{width:70%;height:70%;left:15% !important}
 theporn.cc,tp102.com,weav.xyz#?#.q-img,.gg-config,.toolbar-gg,#vip_only
 theporn.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.video_playr_sider", "null")
 theporn.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.user.is_vip", "true")
@@ -238,8 +238,8 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 ||api.bilibili.com/x/web-interface/index/top/feed/rcmd$removeparam=feed_version,xmlhttprequest
 www.bilibili.com##.bili-video-card.is-rcmd:has(.bili-video-card__info--ad):remove()
 www.bilibili.com##.eva-extension-feed-body>div:has([class^="bili-video-card__info--ad"]):remove()
-www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.ad', 'emptyArr')
-www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad', 'emptyArr')
+!www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.ad', 'emptyArr')
+!www.bilibili.com#%#//scriptlet('set-constant', 'window.__pinia.feed.data.head.ad', 'emptyArr')
 live.bilibili.com#%#//scriptlet('set-constant', '__SSR_INITIAL_STATE__.baseInfoRoom.ad_banner_info', 'emptyObj')
 tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
 sehuatang.*$$div[class="show-text"]
