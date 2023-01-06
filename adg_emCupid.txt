@@ -75,6 +75,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 ||51.la^
 
 !-------规则------
+dataaps.com#%#//scriptlet('prevent-window-open')
 btnull.*#%#//scriptlet('set-local-storage-item', 'lyad', '1')
 btnull.*#%#//scriptlet('set-local-storage-item', 'adset', '1')
 !huya.com###hy-ad,#hy-ab,.end-ab-wrap,.end-ab-banner
