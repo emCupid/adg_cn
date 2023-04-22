@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2023-01-07T19:30:58+08:00
+! TimeUpdated: 2023-04-22T16:49:00+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -207,13 +207,14 @@ missav.com#%#//scriptlet('prevent-addEventListener','visibilitychange')
 missav.com#%#//scriptlet('prevent-addEventListener','blur')
 ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||yhczx.cn
+||chkaja.com
 ||bcebos.com/images/$domain=tvyb03.com
-tvyb03.com##.tips,.close-box,.btn-danger,.btn-warm,#hth,h1[align="center"],.fa
+tvyb03.com##.tips,.close-box,.btn-danger,.btn-warm,#hth,h1[align="center"],.fa, [href="/lht.html"]
 mmiyue.com$$script[tag-content="killAdKiller"]
 ||*/statics/js/fuck-debugger.js
 ##.stui-banner__item:has(.stui-banner__pic[href^="/statics/js/ky"]):remove()
 ikandy.fun#$#.col-lg-wide-75{left: 12.5%}
-ikandy.fun#%#//scriptlet('set-cookie', '1every_24h_gq', 'true')
+ikandy.fun#%#//scriptlet('set-cookie', 'every_1h_play_tips', 'true')
 ikandy.fun#%#//scriptlet('set-cookie', 'tip_shuqian', 'true')
 ikandy.fun##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
 ||ouphoarg.com^
