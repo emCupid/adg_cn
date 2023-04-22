@@ -26,7 +26,6 @@ iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
 ||iqiyi.com/show2?$replace=/("\w*?":")\d+?"\,/\$1"\,/
 ||iqiyi.com/show2?$replace=/"[^"]+?\.(jpg|png|swf)"/""/
 !-------腾讯播放广告-------
-||qq.com/proxyhttp$replace=/ad/_ad/$badfilter
 ||vm.gtimg.cn/c/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
 ||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
 !-------优酷播放广告-------
