@@ -1,10 +1,10 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2023-05-29T21:48:56+08:00
+! TimeUpdated: 2023-06-04T20:54:05+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
-##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box,[href^="https://www.shenguangai.com"]
+##a[href*="@"][href*="_"][href*="exe"],a.gaosu,#down_gs,.gs_box
 ##.title>.qq>a,ul.stui-vodlist>li:not(:has(.stui-vodlist__thumb[href^="/"])):has(.stui-vodlist__detail>h4)
 ||*@*_*.exe$redirect=empty
 ||*_*@*.exe$redirect=empty
@@ -90,7 +90,7 @@ bdys01.com#%#//scriptlet('abort-on-property-read', 'alert')
 ||gmtv1.*$redirect=nooptext
 nivodi.tv##.st-btn,img.pca-img,#copytoshareAlert,#bg_cover 
 subaibaiys.com#%#//scriptlet('set-cookie', 'myannoun', '1')
-https://theav101.com/videos/$replace=/\?segments=\d*?&time=\d*?"/"/
+https://theav101.com/player/m3key.php$replace=/\?segments=\d*?&time=\d*?'/'/
 theav101.com##+js(set, PlayerjsEvents, noopFunc)
 theav101.com##.green,.choice_list,.openwin
 theav101.com#$#.player{width:70%;height:70%;left:15% !important}
@@ -147,8 +147,6 @@ qidian.com###j-topOpBox
 mgtv.com##.sidebar-download
 v.qq.com##.mod_row_box_ad,#iwan-game-switch-page,[dt-eid^="ad_"]
 v.qq.com#$?#[dt-params*="&ad_"]{ remove: true; }
-||video.qq.com/*/getVLPage$replace=/{"id":"[^{]*?"\,"type":"pc_card_ad".*?{"id":/{"id":/
-||video.qq.com/*/getVLPage$replace=/"ad_list"/"noad"/
 www.appinn.com###media_image-2
 !zhihu.com#%#document.addEventListener('readystatechange',function(){try{document.querySelector('.Modal-backdrop').onclick = function(){document.querySelector('.Modal-closeButton').click()}}catch{}});
 zhihu.com#%#//scriptlet('remove-attr','style','html')
@@ -198,8 +196,6 @@ cloud.189.cn##.advertising-mask
 |http://*/e/DownSys/play/$replace=/advertisements:'.*?'\,//
 /gghtml/*
 /d/file/huandeng/*
-sfw142.me##img[src$=".gif"][border="0"],[href^="/gghtml/"],.slide-index,.download_app,.vip,.GzList,#moblie_right,.mb-item:has([style*=".gif"]), .deangg
-*.gif|$domain=sfw142.me
 ||*/static/extra/ad.js
 ||apple1818.net^
 ||missav.com/*.gif
@@ -212,9 +208,8 @@ ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||yhczx.cn
 ||chkaja.com
 ||bcebos.com/images/$domain=tvyb03.com
-tvyb03.com##.tips,.close-box,.btn-danger,#hth,h1[align="center"],.fa, [href="/lht.html"]
+tvyb03.com##.tips,.close-box,.btn-danger,#hth,h1[align="center"], [href="/lht.html"]
 tvyb03.com#%#//scriptlet('set-cookie', 'allpop', '1')
-mmiyue.com$$script[tag-content="killAdKiller"]
 ||*/statics/js/fuck-debugger.js
 ##.stui-banner__item:has(.stui-banner__pic[href^="/statics/js/ky"]):remove()
 ikandy.fun#$#.col-lg-wide-75{left: 12.5%}
