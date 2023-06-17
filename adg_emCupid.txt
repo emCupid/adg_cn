@@ -109,7 +109,7 @@ av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.video_playr_s
 av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.user.is_vip", "true")
 av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "av_response.vip", "null")
 av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads", "null")
-av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads_object", "null")
+tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads_object", "null")
 porncvd.com##h5, h5 + div
 porncvd.com#%#sessionStorage.setItem('token', 'Tom');
 ||porncvd.com/poweredby-test
