@@ -103,7 +103,7 @@ theav101.com##+js(set, PlayerjsEvents, noopFunc)
 theav101.com##.green,.choice_list,.openwin
 theav101.com#$#.player{width:70%;height:70%;left:15% !important}
 av411.xyz##.navbar-item[target="_blank"],.q-loading-bar
-https://*.xyz/static/jshtml/domain.change.dialog.js
+||*.xyz/static/jshtml/domain.change.dialog.js
 av411.xyz,tp102.com,weav.xyz#?#.q-img,.gg-config,.toolbar-gg,#vip_only
 av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.video_playr_sider", "null")
 av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.user.is_vip", "true")
