@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2023-07-23T21:14:36+08:00
+! TimeUpdated: 2023-08-06T21:12:06+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -87,6 +87,7 @@ pan.baidu.com#%#//scriptlet('prevent-setTimeout', 'message')
 pan.baidu.com#$#.init-new-content{width:100%!important}
 https://pan.baidu.com/*/pcs/adx
 
+||iqiyipic.com/gaze/pcw/ssr/$replace=/this.hasJumpType/1/
 ||iqiyi.com/player*/display/control
 iqiyi.com#%#//scriptlet('prevent-setTimeout', '/\.promotionShow/')
 dataaps.com#%#//scriptlet('prevent-window-open')
@@ -176,6 +177,7 @@ www.douyu.com###js-room-activity,a.layout-Slide-banner
 yuba.douyu.com##div[class^="index-leftListWrapper"]>div[class^="index-wrapperBox"]
 ||baidu.com/aladdin.php$redirect=empty
 baidu.com$$script[id="ecomScript"]
+baidu.*##body > div[ad-dom-img]
 baidu.com###content_left > [data-click*="rsv_srcid"],#content_left > [style*="display:block"][style*="visibility:visible"],#content_left > div[style][data-pos],#content_right a[href*="baidu.com/other.php"],#content_right [class*="-show-ad-tip"],#content_right>*:not(table),#content_left [id$="canvas"],[tpl*="ad"]:not([tpl*="head"]),#con-at,.s-news-banner-wrap,.app-side-ad,div[class*="float_video"]
 wenku.baidu.com##.vip-member-pop-content,.pure-guide-dialog
 wenku.baidu.com#%#//scriptlet('remove-attr','style','body')
@@ -221,10 +223,11 @@ ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||bcebos.com/images/$domain=tvyb03.com
 tvyb03.com##.tips,.close-box,.btn-danger,#hth,h1[align="center"], [href="/lht.html"],.myui-content__operate
 tvyb03.com#%#//scriptlet('set-cookie', 'allpop', '1')
+tvyb03.com#%#//scriptlet('remove-attr', 'style', 'div.dropdown-box')
 ||*/statics/js/fuck-debugger.js
 ##.stui-banner__item:has(.stui-banner__pic[href^="/statics/js/ky"]):remove()
 ikandy2.fun#$#.col-lg-wide-75{left: 12.5%}
-ikandy2.fun#%#//scriptlet('set-cookie', 'every_1h_play_tips', 'true')
+ikandy2.fun#%#//scriptlet('set-constant', 'layer.open', 'undefined')
 ikandy2.fun#%#//scriptlet('set-cookie', 'tip_shuqian', 'true')
 ikandy2.fun##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
 ||ouphoarg.com^
