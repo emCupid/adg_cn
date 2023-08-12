@@ -228,7 +228,7 @@ tvyb03.com#%#//scriptlet('remove-attr', 'style', 'div.dropdown-box')
 ||*/statics/js/fuck-debugger.js
 ##.stui-banner__item:has(.stui-banner__pic[href^="/statics/js/ky"]):remove()
 ikandy2.fun#$#.col-lg-wide-75{left: 12.5%}
-ikandy2.fun#%#AG_defineProperty('window.navigator.platform', { value: "Win32"})
+ikandy2.fun#%#//scriptlet('abort-on-property-read', 'navigator.platform')
 ikandy2.fun#%#//scriptlet('prevent-setTimeout', 'ad_id')
 ikandy2.fun#%#//scriptlet('set-constant', 'layer.open', 'undefined')
 ikandy2.fun#%#//scriptlet('set-cookie', 'tip_shuqian', 'true')
