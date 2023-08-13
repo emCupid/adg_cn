@@ -79,7 +79,6 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 !-------规则------
 
 ! 度盘AD
-||miao.baidu.com
 https://pan.baidu.com/*conf_key=business_ad
 ||bdstatic.com/business-static/*/businessAd
 https://pan.baidu.com/ndbs/nd_bundle*.js
