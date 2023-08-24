@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2023-08-17T23:41:52+08:00
+! TimeUpdated: 2023-08-24T23:12:48+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -232,7 +232,7 @@ ikandy2.fun#%#//scriptlet('abort-on-property-read', 'navigator.platform')
 ikandy2.fun#%#//scriptlet('prevent-setTimeout', 'ad_id')
 ikandy2.fun#%#//scriptlet('set-constant', 'layer.open', 'undefined')
 ikandy2.fun#%#//scriptlet('set-cookie', 'tip_shuqian', 'true')
-ikandy2.fun##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
+ikandy2.fun##.jq-toast-wrap,[onclick*="remove()"],[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
 ||ouphoarg.com^
 ||govhechi.cn:*
 ||xiaodi99.com:*
