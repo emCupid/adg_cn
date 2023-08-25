@@ -232,7 +232,8 @@ ikandy2.fun#%#//scriptlet('abort-on-property-read', 'navigator.platform')
 ikandy2.fun#%#//scriptlet('prevent-setTimeout', 'ad_id')
 ikandy2.fun#%#//scriptlet('set-constant', 'layer.open', 'undefined')
 ikandy2.fun#%#//scriptlet('set-cookie', 'tip_shuqian', 'true')
-ikandy2.fun##.jq-toast-wrap,[onclick*="remove()"],[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
+ikandy2.fun##a[target="_new"],b[onclick*="remove()"]
+ikandy2.fun##.jq-toast-wrap,[onclick*="window.open"],#hth608,#yb112,#md112,.col-lg-wide-25.stui-pannel-side,.marquee_txt,dnz,frird
 ||ouphoarg.com^
 ||govhechi.cn:*
 ||xiaodi99.com:*
