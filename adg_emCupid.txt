@@ -1,6 +1,6 @@
 ! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2023-10-06T12:59:16+08:00
+! TimeUpdated: 2023-10-31T12:33:15+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -266,7 +266,7 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !www.bilibili.com##.bili-video-card.is-rcmd:has(.bili-video-card__info--ad):remove()
 !www.bilibili.com##.eva-extension-feed-body>div:has([class^="bili-video-card__info--ad"]):remove()
 live.bilibili.com#%#//scriptlet('set-constant', '__SSR_INITIAL_STATE__.baseInfoRoom.ad_banner_info', 'emptyObj')
-tingfm.com#%#AG_defineProperty('wndt.is_vip',{value:true})
+https://tingfm.com/radio/$replace=/"is_vip":false/"is_vip":true/
 sehuatang.*$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap,a[href^="https://app.chinaz.com/click/"],.single-mode:has(a[href^="https://app.chinaz.com/click/"]),.medialink-wrapper,.smediabox
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
