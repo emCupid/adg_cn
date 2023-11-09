@@ -19,9 +19,9 @@
 @@||zhihu.com/api/*/oauth/captcha/
 
 !-------爱奇艺播放广告-------
+iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
 !#if (adguard_app_windows)
 iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc")
-iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
 !#endif
 !||cupid.iqiyi.com/mixer
 ||iqiyi.com/show2?$replace=/"cr":\{/"cr":\{\}\,"noad":\{/
