@@ -87,6 +87,7 @@ pan.baidu.com#%#//scriptlet('prevent-setTimeout', 'message')
 pan.baidu.com#$#.init-new-content{width:100%!important}
 https://pan.baidu.com/*/pcs/adx
 
+123pan.com##.banner-container-pc
 ||58cdn.com.cn/git/wuxianfe/pc-static/*/doneA_*.js
 58.com###bottomBanner,.job_item:has(.hr),.job_item:has(.job_ad_tips)
 ||iqiyipic.com/gaze/pcw/ssr*/$replace=/this.hasJumpType/1/
