@@ -1,4 +1,4 @@
-! Title: ADG_emCupid
+﻿! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
 ! TimeUpdated: 2023-12-31T22:33:58+08:00
 
@@ -275,7 +275,7 @@ sehuatang.*$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap,a[href^="https://app.chinaz.com/click/"],.single-mode:has(a[href^="https://app.chinaz.com/click/"]),.medialink-wrapper,.smediabox
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
 423down.com##.entry:nth-child(2) > p:first-child > a
-423down.com##a[href^="http://www.zuhaogou.top"],a[href="http://jike168.top/"],li:has(.cat:contains(产品推广)),#menu-item-12546,img[src$="D7/img/new.png"],img[src$="D7/img/new.png"]+a,.item:has(a:contains(推荐))
+423down.com##a[href^="http://www.zuhaogou.top"],a[href="http://jike168.top/"],li:has(.cat:contains(产品推广)),.item:has(a:contains(产品推广)),img[src$="D7/img/new.png"],img[src$="D7/img/new.png"]+a
 fanyi.baidu.com##[class^="app-side"],#transOtherRight,#app-read,.app-guide
 ||mimg.127.net/p/*/js/p0.js$replace=/display:1\,icon:"yanxuan"/display:0\,icon:"yanxuan"/
 !↑
