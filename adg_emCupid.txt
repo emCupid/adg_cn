@@ -274,8 +274,8 @@ https://tingfm.com$replace=/"is_vip":false/"is_vip":true/
 sehuatang.*$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap,a[href^="https://app.chinaz.com/click/"],.single-mode:has(a[href^="https://app.chinaz.com/click/"]),.medialink-wrapper,.smediabox
 ||hdslb.com/bfs/static/jinkela/space/*.js$replace=/>=128/<0/
-423down.com##.entry:nth-child(2) > p:first-child > a
-423down.com##a[href^="http://www.zuhaogou.top"],a[href="http://jike168.top/"],li:has(.cat:contains(产品推广)),.item:has(a:contains(产品推广)),img[src$="D7/img/new.png"],img[src$="D7/img/new.png"]+a
+423down.com##.entry:nth-child(2) > p:first-child > a,a[href^="http://www.zuhaogou.top"],a[href="http://jike168.top/"],li:has(.cat:contains(产品推广))
+423down.com##.item:has(a:contains(产品推广)),img[src$="D7/img/new.png"],img[src$="D7/img/new.png"]+a
 fanyi.baidu.com##[class^="app-side"],#transOtherRight,#app-read,.app-guide
 ||mimg.127.net/p/*/js/p0.js$replace=/display:1\,icon:"yanxuan"/display:0\,icon:"yanxuan"/
 !↑
