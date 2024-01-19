@@ -38,7 +38,7 @@ iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc"
 !-------主流视频去水印-------
 ixigua.com##.common-xgplayer__Logo
 iqiyi.com#$?#.iqp-logo-box{ remove: true; }
-v.youku.com#$?#.kui-watermark-logo-layer{ remove: true; }
+v.youku.com#?#.kui-watermark-logo-layer
 v.qq.com#$?#.txp-watermark{ remove: true; }
 live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo,.yzmplayer-logo
