@@ -1,6 +1,6 @@
 ﻿! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2024-01-17T19:30:32+08:00
+! TimeUpdated: 2024-01-19T13:02:31+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -35,13 +35,10 @@ iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc"
 ||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
 !-------优酷播放广告-------
 ||yk-*.ad.youku.com^
-||acs.youku.com/h5/$replace=/"ad"/"ad":{}\,"noad"/
-||acs.youku.com/h5/$replace=/"watermark"/"nowatermark"/
-||acs.youku.com/h5/$replace=/"ykad"/"ykad":{}\,"noykad"/
 !-------主流视频去水印-------
 ixigua.com##.common-xgplayer__Logo
 iqiyi.com#$?#.iqp-logo-box{ remove: true; }
-v.youku.com#$?#.logo-new{ remove: true; }
+v.youku.com#$?#.kui-watermark-logo-layer{ remove: true; }
 v.qq.com#$?#.txp-watermark{ remove: true; }
 live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo,.yzmplayer-logo
