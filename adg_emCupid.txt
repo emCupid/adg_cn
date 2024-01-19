@@ -1,6 +1,6 @@
 ﻿! Title: ADG_emCupid
 ! Description: 只对于AdGrard中文过滤器、EasyList中国补充（仅PC，移动端未测试），adg home不适用绝大部分规则
-! TimeUpdated: 2023-12-31T22:33:58+08:00
+! TimeUpdated: 2024-01-17T19:30:32+08:00
 
 !-------全局&正则-------
 ~aliyundrive.com,~qq.com##div[style*="z-index"][style*="99999"] iframe
@@ -114,15 +114,15 @@ https://theav101.com/player/m3key.php$replace=/\?segments=\d*?&time=\d*?'/'/
 theav101.com##+js(set, PlayerjsEvents, noopFunc)
 theav101.com##.green,.choice_list,.openwin
 theav101.com#$#.player{width:70%;height:70%;left:15% !important}
-av411.xyz##.navbar-item[target="_blank"],.q-loading-bar
+88lou.cc##.navbar-item[target="_blank"],.q-loading-bar
 /static/jshtml/domain.change.dialog.js
-/*.gif$domain=av411.xyz
-av411.xyz,tp102.com,weav.xyz#?#.q-img,.gg-config,.toolbar-gg,#vip_only
-av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.video_playr_sider", "null")
-av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.user.is_vip", "true")
-av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "av_response.vip", "null")
-av411.xyz,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads", "null")
-tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads_object", "null")
+/*.gif$domain=88lou.cc,av411.xyz
+88lou.cc,tp102.com,weav.xyz#?#.q-img,.gg-config,.toolbar-gg,#vip_only
+88lou.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.video_playr_sider", "null")
+88lou.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.user.is_vip", "true")
+88lou.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "av_response.vip", "null")
+88lou.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads", "null")
+88lou.cc,tp102.com,weav.xyz#%#//scriptlet("set-constant", "avshow.config.ads_object", "null")
 porncvd.com##h5, h5 + div
 porncvd.com#%#sessionStorage.setItem('token', 'Tom');
 ||porncvd.com/poweredby-test
