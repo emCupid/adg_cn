@@ -34,6 +34,7 @@ iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc"
 ||vm.gtimg.cn/c/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
 ||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
 !-------优酷播放广告-------
+||yk-*.ad.youku.com^
 ||acs.youku.com/h5/$replace=/"ad"/"ad":{}\,"noad"/
 ||acs.youku.com/h5/$replace=/"watermark"/"nowatermark"/
 ||acs.youku.com/h5/$replace=/"ykad"/"ykad":{}\,"noykad"/
@@ -46,6 +47,7 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo,.yzmplayer-logo
 
 !-------追踪&统计-------
+||mmstat.com^$third-party
 ||beacon.qq.com/analytics/$replace=/^.*$/{"msg": "success"}/
 ||beacon.sina.com.cn^
 ||s.union.360.cn/s.gif
