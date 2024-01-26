@@ -24,6 +24,7 @@ le.com#%#//scriptlet("set-constant", "Object.prototype.noAD", "true")
 !-------爱奇艺播放广告-------
 iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData", "null")
 !#if (adguard_app_windows)
+||iqiyi.com/v_*.html$replace=/"[^"]+?\.(f4v|mp4)"/""/
 iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc")
 !#endif
 !||cupid.iqiyi.com/mixer
