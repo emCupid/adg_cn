@@ -49,7 +49,6 @@ live.bilibili.com#$?#.web-player-icon-roomStatus{ remove: true; }
 #?#.dplayer-logo,.yzmplayer-logo
 
 !-------追踪&统计-------
-||mmstat.com^$third-party
 ||beacon.qq.com/analytics/$replace=/^.*$/{"msg": "success"}/
 ||beacon.sina.com.cn^
 ||s.union.360.cn/s.gif
