@@ -22,9 +22,9 @@
 le.com#%#//scriptlet("set-constant", "isAdLoaded", "true")
 le.com#%#//scriptlet("set-constant", "Object.prototype.noAD", "true")
 !-------爱奇艺播放广告-------
-iqiyi.com#%#//scriptlet("set-constant", "window.QiyiPlayerProphetData.a", "emptyObj")
-!#if (adguard_app_windows)
 ||iqiyi.com/v_*.html$replace=/"[^"]+?\.(f4v|mp4)"/""/
+!||www.iqiyi.com/$replace=/window.QiyiPlayerProphetData=/window.noad=/
+!#if (adguard_app_windows)
 iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc")
 !#endif
 !||cupid.iqiyi.com/mixer
@@ -37,11 +37,9 @@ iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc"
 !-------优酷播放广告-------
 ||yk-*.ad.youku.com^
 youku.com#%#//scriptlet("set-constant", "Object.prototype._playlistData.ad", "null")
-!#if (adguard_app_windows)
 ||acs.youku.com/h5/$replace=/"ad"/"ad":{}\,"noad"/
 ||acs.youku.com/h5/$replace=/"watermark"/"nowatermark"/
 ||acs.youku.com/h5/$replace=/"ykad"/"ykad":{}\,"noykad"/
-!#endif
 !-------主流视频去水印-------
 ixigua.com##.common-xgplayer__Logo
 iqiyi.com#$?#.iqp-logo-box{ remove: true; }
