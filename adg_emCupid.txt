@@ -272,7 +272,7 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !www.bilibili.com#$?#.feed-card:empty{remove:true}
 !www.bilibili.com##.bili-video-card.is-rcmd:has(.bili-video-card__info--ad):remove()
 !www.bilibili.com##.eva-extension-feed-body>div:has([class^="bili-video-card__info--ad"]):remove()
-live.bilibili.com#%#//scriptlet('set-constant', '__NEPTUNE_IS_MY_WAIFU__.roomInfoRes.data.ad_banner_info', 'emptyObj')
+!live.bilibili.com#%#//scriptlet('set-constant', '__NEPTUNE_IS_MY_WAIFU__.roomInfoRes.data.ad_banner_info', 'emptyObj')
 https://tingfm.com$replace=/"is_vip":false/"is_vip":true/
 sehuatang.*$$div[class="show-text"]
 chinaz.com##.ToolsTxtWrap,a[href^="https://app.chinaz.com/click/"],.single-mode:has(a[href^="https://app.chinaz.com/click/"]),.medialink-wrapper,.smediabox
