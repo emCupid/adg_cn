@@ -35,7 +35,7 @@ iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc"
 ||vm.gtimg.cn/c/*/tencentvideo/txpv*$replace=/\w\.ad\)/{"adGetv":{}})/
 ||l.qq.com/*get_video_mark_all*$replace=/"admark"/"admark":{}\,"noad"/
 !-------优酷播放广告-------
-||yk-*.ad.youku.com^
+||yk-*.ad.youku.com$redirect-rule=1x1.gif,from=youku.com
 youku.com#%#//scriptlet("set-constant", "Object.prototype._playlistData.ad", "null")
 ||acs.youku.com/h5/$replace=/"ad"/"ad":{}\,"noad"/
 ||acs.youku.com/h5/$replace=/"watermark"/"nowatermark"/
@@ -268,6 +268,7 @@ https://gk.sina.cn/v1/gkmatch?id=$replace=/"isapp"|"isAPP"/"noapp"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"clarity"/"noclarity"/
 https://gk.sina.cn/v1/gkmatch?id=$replace=/"resp"/"noresp"/
 !内测版b站首页推广
+live.bilibili.com#?#.w-100.over-hidden.p-relative.flip-view
 ||api.bilibili.com/x/web-interface/*index/top/feed/rcmd$jsonprune=\$.data.item[?(key-eq 'goto' 'ad')]
 !www.bilibili.com#$?#.feed-card:empty{remove:true}
 !www.bilibili.com##.bili-video-card.is-rcmd:has(.bili-video-card__info--ad):remove()
