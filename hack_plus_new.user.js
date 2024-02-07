@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         朝朝暮暮plus_new
-// @version      1.28.0001
+// @version      1.28.0002
 // @author       汝莫舞
 // @description  一些浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -253,6 +253,56 @@ function Fuck_UNION(){
 }
 
 function Fuck_WRS() {
+    /// abort-on-property-read.js
+    /// alias aopr.js
+    const magic = String.fromCharCode(Date.now() % 26 + 97) +
+                  Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    const abort = function() {
+        throw new ReferenceError(magic);
+    };
+    const makeProxy = function(owner, chain) {
+        const pos = chain.indexOf('.');
+        if ( pos === -1 ) {
+            const desc = Object.getOwnPropertyDescriptor(owner, chain);
+            if ( !desc || desc.get !== abort ) {
+                Object.defineProperty(owner, chain, {
+                    get: abort,
+                    set: function(){}
+                });
+            }
+            return;
+        }
+        const prop = chain.slice(0, pos);
+        let v = owner[prop];
+        chain = chain.slice(pos + 1);
+        if ( v ) {
+            makeProxy(v, chain);
+            return;
+        }
+        const desc = Object.getOwnPropertyDescriptor(owner, prop);
+        if ( desc && desc.set !== undefined ) { return; }
+        Object.defineProperty(owner, prop, {
+            get: function() { return v; },
+            set: function(a) {
+                v = a;
+                if ( a instanceof Object ) {
+                    makeProxy(a, chain);
+                }
+            }
+        });
+    };
+    const owner = window;
+    let chain = 'navigator.platform';
+    makeProxy(owner, chain);
+    const oe = window.onerror;
+    window.onerror = function(msg, src, line, col, error) {
+        if ( typeof msg === 'string' && msg.indexOf(magic) !== -1 ) {
+            return true;
+        }
+        if ( oe instanceof Function ) {
+            return oe(msg, src, line, col, error);
+        }
+    }.bind();
     document.Rwrite = document.write;
     document.write = function (str) {
         if (scriptWRS_W.test(str)) {
