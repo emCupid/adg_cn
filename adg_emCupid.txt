@@ -22,9 +22,7 @@
 le.com#%#//scriptlet("set-constant", "isAdLoaded", "true")
 le.com#%#//scriptlet("set-constant", "Object.prototype.noAD", "true")
 !-------爱奇艺播放广告-------
-iqiyi.com#%#var _olddef = Object.defineProperties;Object.defineProperties = function (key, value) {if (value.QiyiPlayerProphetData){Object.defineProperties=_olddef;return true;};return _olddef.apply(this, arguments);};
 ||iqiyi.com/v_*.html$replace=/"[^"]+?\.(f4v|mp4)"/""/
-!||www.iqiyi.com/$replace=/window.QiyiPlayerProphetData=/window.noad=/
 !#if (adguard_app_windows)
 iqiyi.com#@%#//scriptlet("set-constant", "Object.prototype.parseXML", "noopFunc")
 !#endif
