@@ -235,7 +235,7 @@ ghxi.com##.ghxi_wpcom_ad_wrap, .ad_single_1
 ||yhczx.cn
 ||chkaja.com
 ||bcebos.com/images/$domain=tvyb03.com
-tvyb03.com##.tips,.close-box,.btn-danger,#hth,h1[align="center"], [href="/lht.html"],.myui-content__operate
+tvyb03.com##.tips,.textblue,.close-box,.btn-danger,#hth,h1[align="center"], [href="/lht.html"],.myui-content__operate
 tvyb03.com#%#//scriptlet('set-cookie', 'allpop', '1')
 tvyb03.com#%#//scriptlet('remove-attr', 'style', 'div.dropdown-box')
 ||*/statics/js/fuck-debugger.js
