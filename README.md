@@ -10,7 +10,7 @@ jsDelivr：[https://cdn.jsdelivr.net/gh/emCupid/adg_cn/adg_emCupid.txt](https://
 GitHub：https://github.com/emCupid/adg_cn/raw/master/hack_plus.user.js   
 jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_plus.user.js  
 
-【**朝朝暮暮pro plus（新版）**】和旧版本的储存数据不兼容，需要移除旧版本后再装新版本
+【**朝朝暮暮pro plus（新版）**】和旧版本的储存数据不兼容，需要移除旧版本后再装新版本  
 GitHub：https://github.com/emCupid/adg_cn/raw/master/hack_pro_plus.user.js   
 jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_pro_plus.user.js 
 
