@@ -1,23 +1,18 @@
 ## 仓库：
-https://gitlab.com/emCupid/adg_cn.git  
 https://github.com/emCupid/adg_cn  
-https://emcupid.coding.net/public/adg_cn/adg_cn/git
-
 
 ## 规则：  
-Gitlab：[https://gitlab.com/emCupid/adg_cn/-/raw/master/adg_emCupid.txt](https://subscribe.adblockplus.org/?location=https://gitlab.com/emCupid/adg_cn/-/raw/master/adg_emCupid.txt "adg_emCupid")  
 GitHub：[https://raw.githubusercontent.com/emCupid/adg_cn/master/adg_emCupid.txt](https://subscribe.adblockplus.org/?location=https://raw.githubusercontent.com/emCupid/adg_cn/master/adg_emCupid.txt "adg_emCupid")  
 jsDelivr：[https://cdn.jsdelivr.net/gh/emCupid/adg_cn/adg_emCupid.txt](https://subscribe.adblockplus.org/?location=https://cdn.jsdelivr.net/gh/emCupid/adg_cn/adg_emCupid.txt "adg_emCupid")  
 
 ## 脚本：  
-【**朝朝暮暮plus**】一些浏览器增强功能及辅助移除广告  
-GitLab：https://gitlab.com/emCupid/adg_cn/-/raw/master/hack_plus.user.js   
+【**朝朝暮暮plus（旧版）**】一些浏览器增强功能及辅助移除广告  
 GitHub：https://github.com/emCupid/adg_cn/raw/master/hack_plus.user.js   
 jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_plus.user.js  
-测试联盟广告：http://www.wuhan.com/xinwen/68537.html  
-测试iframe类的横幅：https://www.xbiquge.la/10/10489/  
-测试阻止script write：https://www.hao6v.tv/  
-解除限制（右键、选择、复制、尾巴等）：http://www.360doc.com/content/18/0731/18/30583588_774726606.shtml
+
+【**朝朝暮暮pro plus（新版）**】和旧版本的储存数据不兼容，需要移除旧版本后再装新版本
+GitHub：https://github.com/emCupid/adg_cn/raw/master/hack_pro_plus.user.js   
+jsDelivr：https://cdn.jsdelivr.net/gh/emCupid/adg_cn/hack_pro_plus.user.js 
 
 ## PS： 
 * 反馈QQ群：[240088290](https://jq.qq.com/?_wv=1027&k=Nn7JsKsm)
