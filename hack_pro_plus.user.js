@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         莫舞Pro Plus
-// @version      2.7.8
+// @version      2.7.9
 // @author       汝莫舞
 // @description  浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -159,6 +159,11 @@ class ConfigManager {
     hasAnyWhitelist() {
         return Object.keys(this.whitelist).length > 0 && 
                Object.values(this.whitelist).some(value => value === 1);
+    }
+    
+    // 新增方法：检查白名单中是否有特定功能
+    hasFeature(feature) {
+        return this.whitelist[feature] === 1;
     }
 }
 
@@ -472,7 +477,9 @@ class FloatIconManager {
         
         this.floatIcon = document.createElement('div');
         this.floatIcon.id = 'hackplus-float-icon';
-        this.floatIcon.innerHTML = '⚙';
+        
+        // 使用 textContent 设置文本内容，避免 innerHTML
+        this.floatIcon.textContent = '⚙';
         this.floatIcon.title = '莫舞Pro Plus设置 (点击打开设置面板)';
         
         // 设置初始位置
@@ -496,6 +503,8 @@ class FloatIconManager {
         
         const style = document.createElement('style');
         style.id = 'hackplus-float-icon-styles';
+        
+        // 使用 textContent 设置样式内容
         style.textContent = `
             #hackplus-float-icon {
                 position: fixed;
@@ -1153,6 +1162,50 @@ class ScriptWriteProtection {
     }
 }
 
+// 辅助函数：安全地创建元素
+const createElement = (tag, attributes = {}, textContent = '') => {
+    const element = document.createElement(tag);
+    
+    // 设置属性
+    Object.entries(attributes).forEach(([key, value]) => {
+        if (key === 'className') {
+            element.className = value;
+        } else if (key === 'htmlFor') {
+            element.htmlFor = value;
+        } else if (key === 'checked') {
+            // 特殊处理checked属性，使用property而不是attribute
+            element.checked = value;
+        } else if (key.startsWith('data-')) {
+            element.setAttribute(key, value);
+        } else if (key === 'style' && typeof value === 'object') {
+            Object.assign(element.style, value);
+        } else {
+            element.setAttribute(key, value);
+        }
+    });
+    
+    // 设置文本内容
+    if (textContent) {
+        element.textContent = textContent;
+    }
+    
+    return element;
+};
+
+// 辅助函数：安全地添加样式
+const addStyles = (styles, id = '') => {
+    if (document.getElementById(id)) {
+        return;
+    }
+    
+    const style = document.createElement('style');
+    if (id) {
+        style.id = id;
+    }
+    style.textContent = styles;
+    document.head.appendChild(style);
+};
+
 // 设置面板
 class SettingsPanel {
     constructor(config, floatIconManager, imgCustomSizeManager, iframeCustomSizeManager) {
@@ -1187,18 +1240,20 @@ class SettingsPanel {
     }
 
     createPanel() {
-        const panel = document.createElement('div');
-        panel.id = 'hackplus-settings-panel';
-        panel.innerHTML = this.getPanelHTML();
+        const panel = createElement('div', {
+            id: 'hackplus-settings-panel'
+        });
         
         document.body.appendChild(panel);
         
-        this.addPanelStyles();
+        // 构建面板内容
+        this.buildPanelContent(panel);
         
+        this.addPanelStyles();
         this.setupPanelEvents(panel);
     }
 
-    getPanelHTML() {
+    buildPanelContent(panel) {
         const floatIconSettings = GM_getValue('hackplus_float_icon_settings', '{}');
         let floatIconEnabled = false;
         try {
@@ -1211,158 +1266,183 @@ class SettingsPanel {
         const imgCustomSizeSettings = this.imgCustomSizeManager.getSettings();
         const iframeCustomSizeSettings = this.iframeCustomSizeManager.getSettings();
         
-        return `
-            <div class="hackplus-panel-header">
-                <h3>莫舞Pro Plus 设置</h3>
-                <button class="hackplus-close-btn" title="关闭">×</button>
-            </div>
-            <div class="hackplus-panel-content">
-                <div class="hackplus-setting-item">
-                    <label class="hackplus-switch">
-                        <input type="checkbox" id="unFuck_ADV_IMG" 
-                               ${this.config.whitelist['unFuck_ADV_IMG'] ? 'checked' : ''}>
-                        <span class="hackplus-slider"></span>
-                    </label>
-                    <label for="unFuck_ADV_IMG" class="hackplus-label">图片广告白名单</label>
-                </div>
-                
-                <div class="hackplus-setting-item">
-                    <label class="hackplus-switch">
-                        <input type="checkbox" id="unFuck_ADV_IFRAME" 
-                               ${this.config.whitelist['unFuck_ADV_IFRAME'] ? 'checked' : ''}>
-                        <span class="hackplus-slider"></span>
-                    </label>
-                    <label for="unFuck_ADV_IFRAME" class="hackplus-label">内嵌框架广告白名单</label>
-                </div>
-                
-                <div class="hackplus-setting-item">
-                    <label class="hackplus-switch">
-                        <input type="checkbox" id="unFuck_UNION" 
-                               ${this.config.whitelist['unFuck_UNION'] ? 'checked' : ''}>
-                        <span class="hackplus-slider"></span>
-                    </label>
-                    <label for="unFuck_UNION" class="hackplus-label">联盟广告白名单</label>
-                </div>
-                
-                <div class="hackplus-setting-item">
-                    <label class="hackplus-switch">
-                        <input type="checkbox" id="Fuck_WRS" 
-                               ${this.config.whitelist['Fuck_WRS'] ? 'checked' : ''}>
-                        <span class="hackplus-slider"></span>
-                    </label>
-                    <label for="Fuck_WRS" class="hackplus-label">禁用脚本write(ln)</label>
-                </div>
-                
-                <div class="hackplus-setting-item">
-                    <label class="hackplus-switch">
-                        <input type="checkbox" id="Fuck_XZ" 
-                               ${this.config.whitelist['Fuck_XZ'] ? 'checked' : ''}>
-                        <span class="hackplus-slider"></span>
-                    </label>
-                    <label for="Fuck_XZ" class="hackplus-label">解除限制</label>
-                </div>
-                
-                <div class="hackplus-setting-item">
-                    <label class="hackplus-switch">
-                        <input type="checkbox" id="FloatIcon" 
-                               ${floatIconEnabled ? 'checked' : ''}>
-                        <span class="hackplus-slider"></span>
-                    </label>
-                    <label for="FloatIcon" class="hackplus-label">显示浮动图标(全局)</label>
-                </div>
-                
-                <!-- 图片自定义尺寸部分 -->
-                <div class="hackplus-custom-size-section">
-                    <div class="hackplus-custom-size-header">
-                        <label class="hackplus-switch">
-                            <input type="checkbox" id="ImgCustomSize" 
-                                   ${imgCustomSizeSettings.enabled ? 'checked' : ''}>
-                            <span class="hackplus-slider"></span>
-                        </label>
-                        <label for="ImgCustomSize" class="hackplus-label">移除【图片】大小px（全局）</label>
-                        <button class="hackplus-reset-btn" title="重置为默认值" data-type="img">↺</button>
-                    </div>
-                    
-                    <div class="hackplus-size-inputs">
-                        <div class="hackplus-size-row">
-                            <div class="hackplus-size-input-group">
-                                <label for="imgMinWidth">最小宽度:</label>
-                                <input type="number" id="imgMinWidth" value="${imgCustomSizeSettings.minWidth}" min="1" max="1000">
-                            </div>
-                            
-                            <div class="hackplus-size-input-group">
-                                <label for="imgMaxWidth">最大宽度:</label>
-                                <input type="number" id="imgMaxWidth" value="${imgCustomSizeSettings.maxWidth}" min="2" max="3000">
-                            </div>
-                        </div>
-                        
-                        <div class="hackplus-size-row">
-                            <div class="hackplus-size-input-group">
-                                <label for="imgMinHeight">最小高度:</label>
-                                <input type="number" id="imgMinHeight" value="${imgCustomSizeSettings.minHeight}" min="1" max="1000">
-                            </div>
-                            
-                            <div class="hackplus-size-input-group">
-                                <label for="imgMaxHeight">最大高度:</label>
-                                <input type="number" id="imgMaxHeight" value="${imgCustomSizeSettings.maxHeight}" min="2" max="3000">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- iframe自定义尺寸部分 -->
-                <div class="hackplus-custom-size-section">
-                    <div class="hackplus-custom-size-header">
-                        <label class="hackplus-switch">
-                            <input type="checkbox" id="IframeCustomSize" 
-                                   ${iframeCustomSizeSettings.enabled ? 'checked' : ''}>
-                            <span class="hackplus-slider"></span>
-                        </label>
-                        <label for="IframeCustomSize" class="hackplus-label">移除【框架】大小px（全局）</label>
-                        <button class="hackplus-reset-btn" title="重置为默认值" data-type="iframe">↺</button>
-                    </div>
-                    
-                    <div class="hackplus-size-inputs">
-                        <div class="hackplus-size-row">
-                            <div class="hackplus-size-input-group">
-                                <label for="iframeMinWidth">最小宽度:</label>
-                                <input type="number" id="iframeMinWidth" value="${iframeCustomSizeSettings.minWidth}" min="1" max="1000">
-                            </div>
-                            
-                            <div class="hackplus-size-input-group">
-                                <label for="iframeMaxWidth">最大宽度:</label>
-                                <input type="number" id="iframeMaxWidth" value="${iframeCustomSizeSettings.maxWidth}" min="2" max="3000">
-                            </div>
-                        </div>
-                        
-                        <div class="hackplus-size-row">
-                            <div class="hackplus-size-input-group">
-                                <label for="iframeMinHeight">最小高度:</label>
-                                <input type="number" id="iframeMinHeight" value="${iframeCustomSizeSettings.minHeight}" min="1" max="1000">
-                            </div>
-                            
-                            <div class="hackplus-size-input-group">
-                                <label for="iframeMaxHeight">最大高度:</label>
-                                <input type="number" id="iframeMaxHeight" value="${iframeCustomSizeSettings.maxHeight}" min="2" max="3000">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hackplus-panel-footer">
-                <button class="hackplus-apply-btn">应用并刷新</button>
-            </div>
-        `;
+        // 创建面板头部
+        const header = createElement('div', { className: 'hackplus-panel-header' });
+        
+        const title = createElement('h3', {}, '莫舞Pro Plus 设置');
+        const closeBtn = createElement('button', {
+            className: 'hackplus-close-btn',
+            title: '关闭'
+        }, '×');
+        
+        header.appendChild(title);
+        header.appendChild(closeBtn);
+        
+        // 创建面板内容区域
+        const content = createElement('div', { className: 'hackplus-panel-content' });
+        
+        // 创建设置项 - 注意：白名单中有该功能表示功能被禁用，所以开关状态应该是反的
+        this.createSettingItem(content, 'unFuck_ADV_IMG', '图片广告白名单', this.config.hasFeature('unFuck_ADV_IMG'));
+        this.createSettingItem(content, 'unFuck_ADV_IFRAME', '内嵌框架广告白名单', this.config.hasFeature('unFuck_ADV_IFRAME'));
+        this.createSettingItem(content, 'unFuck_UNION', '联盟广告白名单', this.config.hasFeature('unFuck_UNION'));
+        this.createSettingItem(content, 'Fuck_WRS', '禁用脚本write(ln)', this.config.hasFeature('Fuck_WRS'));
+        this.createSettingItem(content, 'Fuck_XZ', '解除限制', this.config.hasFeature('Fuck_XZ'));
+        this.createSettingItem(content, 'FloatIcon', '显示浮动图标(全局)', floatIconEnabled);
+        
+        // 创建图片自定义尺寸部分
+        this.createCustomSizeSection(content, 'img', imgCustomSizeSettings, '移除【图片】大小px（全局）');
+        
+        // 创建iframe自定义尺寸部分
+        this.createCustomSizeSection(content, 'iframe', iframeCustomSizeSettings, '移除【框架】大小px（全局）');
+        
+        // 创建面板底部
+        const footer = createElement('div', { className: 'hackplus-panel-footer' });
+        const applyBtn = createElement('button', { className: 'hackplus-apply-btn' }, '应用并刷新');
+        footer.appendChild(applyBtn);
+        
+        // 组装面板
+        panel.appendChild(header);
+        panel.appendChild(content);
+        panel.appendChild(footer);
+    }
+    
+    createSettingItem(container, id, labelText, isChecked) {
+        const item = createElement('div', { className: 'hackplus-setting-item' });
+        
+        const switchContainer = createElement('label', { className: 'hackplus-switch' });
+        const checkbox = createElement('input', {
+            type: 'checkbox',
+            id: id
+        });
+        
+        // 使用property设置checked状态
+        checkbox.checked = isChecked;
+        
+        const slider = createElement('span', { className: 'hackplus-slider' });
+        
+        switchContainer.appendChild(checkbox);
+        switchContainer.appendChild(slider);
+        
+        const label = createElement('label', {
+            htmlFor: id,
+            className: 'hackplus-label'
+        }, labelText);
+        
+        item.appendChild(switchContainer);
+        item.appendChild(label);
+        container.appendChild(item);
+    }
+    
+    createCustomSizeSection(container, type, settings, labelText) {
+        const section = createElement('div', { className: 'hackplus-custom-size-section' });
+        
+        const header = createElement('div', { className: 'hackplus-custom-size-header' });
+        
+        const switchContainer = createElement('label', { className: 'hackplus-switch' });
+        const checkbox = createElement('input', {
+            type: 'checkbox',
+            id: `${type.charAt(0).toUpperCase() + type.slice(1)}CustomSize`
+        });
+        
+        // 使用property设置checked状态
+        checkbox.checked = settings.enabled;
+        
+        const slider = createElement('span', { className: 'hackplus-slider' });
+        
+        switchContainer.appendChild(checkbox);
+        switchContainer.appendChild(slider);
+        
+        const label = createElement('label', {
+            htmlFor: `${type.charAt(0).toUpperCase() + type.slice(1)}CustomSize`,
+            className: 'hackplus-label'
+        }, labelText);
+        
+        const resetBtn = createElement('button', {
+            className: 'hackplus-reset-btn',
+            title: '重置为默认值',
+            'data-type': type
+        }, '↺');
+        
+        header.appendChild(switchContainer);
+        header.appendChild(label);
+        header.appendChild(resetBtn);
+        
+        const inputsContainer = createElement('div', { className: 'hackplus-size-inputs' });
+        
+        // 创建宽度行
+        const widthRow = createElement('div', { className: 'hackplus-size-row' });
+        
+        const minWidthGroup = createElement('div', { className: 'hackplus-size-input-group' });
+        const minWidthLabel = createElement('label', { htmlFor: `${type}MinWidth` }, '最小宽度:');
+        const minWidthInput = createElement('input', {
+            type: 'number',
+            id: `${type}MinWidth`,
+            value: settings.minWidth,
+            min: '1',
+            max: '1000'
+        });
+        
+        minWidthGroup.appendChild(minWidthLabel);
+        minWidthGroup.appendChild(minWidthInput);
+        
+        const maxWidthGroup = createElement('div', { className: 'hackplus-size-input-group' });
+        const maxWidthLabel = createElement('label', { htmlFor: `${type}MaxWidth` }, '最大宽度:');
+        const maxWidthInput = createElement('input', {
+            type: 'number',
+            id: `${type}MaxWidth`,
+            value: settings.maxWidth,
+            min: '2',
+            max: '3000'
+        });
+        
+        maxWidthGroup.appendChild(maxWidthLabel);
+        maxWidthGroup.appendChild(maxWidthInput);
+        
+        widthRow.appendChild(minWidthGroup);
+        widthRow.appendChild(maxWidthGroup);
+        
+        // 创建高度行
+        const heightRow = createElement('div', { className: 'hackplus-size-row' });
+        
+        const minHeightGroup = createElement('div', { className: 'hackplus-size-input-group' });
+        const minHeightLabel = createElement('label', { htmlFor: `${type}MinHeight` }, '最小高度:');
+        const minHeightInput = createElement('input', {
+            type: 'number',
+            id: `${type}MinHeight`,
+            value: settings.minHeight,
+            min: '1',
+            max: '1000'
+        });
+        
+        minHeightGroup.appendChild(minHeightLabel);
+        minHeightGroup.appendChild(minHeightInput);
+        
+        const maxHeightGroup = createElement('div', { className: 'hackplus-size-input-group' });
+        const maxHeightLabel = createElement('label', { htmlFor: `${type}MaxHeight` }, '最大高度:');
+        const maxHeightInput = createElement('input', {
+            type: 'number',
+            id: `${type}MaxHeight`,
+            value: settings.maxHeight,
+            min: '2',
+            max: '3000'
+        });
+        
+        maxHeightGroup.appendChild(maxHeightLabel);
+        maxHeightGroup.appendChild(maxHeightInput);
+        
+        heightRow.appendChild(minHeightGroup);
+        heightRow.appendChild(maxHeightGroup);
+        
+        inputsContainer.appendChild(widthRow);
+        inputsContainer.appendChild(heightRow);
+        
+        section.appendChild(header);
+        section.appendChild(inputsContainer);
+        container.appendChild(section);
     }
 
     addPanelStyles() {
-        if (document.getElementById('hackplus-panel-styles')) {
-            return;
-        }
-        
-        const style = document.createElement('style');
-        style.id = 'hackplus-panel-styles';
-        style.textContent = `
+        const styles = `
             /* 通过高特异性选择器和CSS重置来保持样式独立 */
             #hackplus-settings-panel {
                 all: initial;
@@ -1965,7 +2045,8 @@ class SettingsPanel {
                 background: #a0aec0;
             }
         `;
-        document.head.appendChild(style);
+        
+        addStyles(styles, 'hackplus-panel-styles');
     }
 
     setupPanelEvents(panel) {
