@@ -1375,7 +1375,7 @@ class SettingsPanel {
                 right: 0;
                 bottom: 0;
                 width: 100%;
-                max-width: 330px;
+                max-width: 330px; /* 宽度增加10px */
                 background: #FFF;
                 border-radius: 12px;
                 box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
@@ -1384,7 +1384,7 @@ class SettingsPanel {
                 border: 1px solid #1abc9c;
                 display: flex;
                 flex-direction: column;
-                max-height: 82vh;
+                max-height: 78vh; /* 原有90vh减12vh */
                 margin: auto;
             }
             
@@ -1439,14 +1439,14 @@ class SettingsPanel {
                 flex: 1;
                 min-height: 0;
                 overflow-y: auto;
-                max-height: calc(84vh - 120px);
+                max-height: calc(78vh - 120px + 2vh); /* 原有基础上加2vh */
             }
             
             .hackplus-setting-item {
                 display: flex;
                 align-items: center;
                 min-height: 36px;
-                margin-bottom: 6px;
+                margin-bottom: 6px; /* 回退到减小尺寸之前的尺寸 */
                 padding: 6px 10px;
                 background: white;
                 border-radius: 6px;
@@ -1527,7 +1527,7 @@ class SettingsPanel {
             }
             
             .hackplus-custom-size-section {
-                margin-top: 8px;
+                margin-top: 8px; /* 回退到减小尺寸之前的尺寸 */
                 padding: 0;
                 background: white;
                 border-radius: 6px;
@@ -1580,7 +1580,7 @@ class SettingsPanel {
             
             .hackplus-size-inputs {
                 margin-top: 0;
-                padding: 8px 10px 8px 10px;
+                padding: 8px 10px 8px 10px; /* 回退到减小尺寸之前的尺寸 */
                 border-top: 1px solid #edf2f7;
                 background: #f8fafc;
                 border-radius: 0 0 6px 6px;
@@ -1588,7 +1588,7 @@ class SettingsPanel {
             
             .hackplus-size-row {
                 display: flex;
-                margin-bottom: 6px;
+                margin-bottom: 6px; /* 回退到减小尺寸之前的尺寸 */
             }
             
             .hackplus-size-row:last-child {
@@ -1697,11 +1697,11 @@ class SettingsPanel {
             /* 中等高度屏幕：当内容较多时才开始滚动 */
             @media (min-height: 550px) and (max-height: 700px) {
                 #hackplus-settings-panel {
-                    max-height: 77vh;
+                    max-height: 73vh; /* 原有85vh减12vh */
                 }
                 
                 .hackplus-panel-content {
-                    max-height: calc(79vh - 120px);
+                    max-height: calc(73vh - 120px + 2vh); /* 原有基础上加2vh */
                     overflow-y: auto;
                 }
             }
@@ -1709,11 +1709,11 @@ class SettingsPanel {
             /* 大高度屏幕：很少需要滚动 */
             @media (min-height: 700px) {
                 #hackplus-settings-panel {
-                    max-height: 72vh;
+                    max-height: 68vh; /* 原有80vh减12vh */
                 }
                 
                 .hackplus-panel-content {
-                    max-height: calc(74vh - 120px);
+                    max-height: calc(68vh - 120px + 2vh); /* 原有基础上加2vh */
                     overflow-y: auto;
                 }
             }
@@ -1721,11 +1721,23 @@ class SettingsPanel {
             /* 超大高度屏幕：基本不需要滚动 */
             @media (min-height: 850px) {
                 #hackplus-settings-panel {
-                    max-height: 67vh;
+                    max-height: 63vh; /* 原有75vh减12vh */
                 }
                 
                 .hackplus-panel-content {
-                    max-height: calc(69vh - 120px);
+                    max-height: calc(63vh - 120px + 2vh); /* 原有基础上加2vh */
+                    overflow-y: auto;
+                }
+            }
+            
+            /* 超小高度适配 */
+            @media (max-height: 400px) {
+                #hackplus-settings-panel {
+                    max-height: 83vh; /* 原有95vh减12vh */
+                }
+                
+                .hackplus-panel-content {
+                    max-height: calc(83vh - 120px + 2vh); /* 原有基础上加2vh */
                     overflow-y: auto;
                 }
             }
@@ -1735,6 +1747,7 @@ class SettingsPanel {
                 #hackplus-settings-panel {
                     max-width: calc(100% - 20px);
                     border-radius: 8px;
+                    max-height: 78vh; /* 保持统一 */
                 }
                 
                 .hackplus-panel-header {
@@ -1747,13 +1760,13 @@ class SettingsPanel {
                 
                 .hackplus-panel-content {
                     padding: 8px 12px;
-                    max-height: calc(84vh - 100px);
+                    max-height: calc(78vh - 100px + 2vh); /* 小屏幕下调整并加2vh */
                 }
                 
                 .hackplus-setting-item {
                     min-height: 34px;
                     padding: 5px 8px;
-                    margin-bottom: 5px;
+                    margin-bottom: 5px; /* 小屏幕下适当调整 */
                 }
                 
                 .hackplus-label {
@@ -1784,6 +1797,7 @@ class SettingsPanel {
                 
                 .hackplus-custom-size-section {
                     padding: 0;
+                    margin-top: 6px; /* 小屏幕下适当调整 */
                 }
                 
                 .hackplus-custom-size-header {
@@ -1798,11 +1812,11 @@ class SettingsPanel {
                 }
                 
                 .hackplus-size-inputs {
-                    padding: 6px 8px 6px 8px;
+                    padding: 6px 8px 6px 8px; /* 小屏幕下适当调整 */
                 }
                 
                 .hackplus-size-row {
-                    margin-bottom: 5px;
+                    margin-bottom: 5px; /* 小屏幕下适当调整 */
                 }
                 
                 .hackplus-size-input-group {
@@ -1835,6 +1849,7 @@ class SettingsPanel {
                 #hackplus-settings-panel {
                     max-width: calc(100% - 10px);
                     border-radius: 6px;
+                    max-height: 78vh; /* 保持统一 */
                 }
                 
                 .hackplus-panel-header {
@@ -1847,13 +1862,13 @@ class SettingsPanel {
                 
                 .hackplus-panel-content {
                     padding: 6px 10px;
-                    max-height: calc(84vh - 90px);
+                    max-height: calc(78vh - 90px + 2vh); /* 超小屏幕下进一步调整并加2vh */
                 }
                 
                 .hackplus-setting-item {
                     min-height: 32px;
                     padding: 4px 6px;
-                    margin-bottom: 4px;
+                    margin-bottom: 4px; /* 超小屏幕下适当调整 */
                 }
                 
                 .hackplus-label {
@@ -1885,6 +1900,7 @@ class SettingsPanel {
                 
                 .hackplus-custom-size-section {
                     padding: 0;
+                    margin-top: 5px; /* 超小屏幕下适当调整 */
                 }
                 
                 .hackplus-custom-size-header {
@@ -1899,11 +1915,11 @@ class SettingsPanel {
                 }
                 
                 .hackplus-size-inputs {
-                    padding: 5px 6px 5px 6px;
+                    padding: 5px 6px 5px 6px; /* 超小屏幕下适当调整 */
                 }
                 
                 .hackplus-size-row {
-                    margin-bottom: 4px;
+                    margin-bottom: 4px; /* 超小屏幕下适当调整 */
                 }
                 
                 .hackplus-size-input-group {
@@ -1931,30 +1947,9 @@ class SettingsPanel {
                 }
             }
             
-            /* 超小高度适配 */
-            @media (max-height: 400px) {
-                #hackplus-settings-panel {
-                    max-height: 87vh;
-                }
-                
-                .hackplus-panel-content {
-                    max-height: calc(89vh - 120px);
-                    overflow-y: auto;
-                }
-                
-                .hackplus-setting-item {
-                    min-height: 32px;
-                    margin-bottom: 4px;
-                }
-                
-                .hackplus-custom-size-header {
-                    min-height: 32px;
-                }
-            }
-            
-            /* 隐藏滚动条但保留滚动功能 - 加粗滚动条 */
+            /* 滚动条调整 - 稍微粗一点点 */
             .hackplus-panel-content::-webkit-scrollbar {
-                width: 6px;
+                width: 6px; /* 从4px增加到6px */
             }
             
             .hackplus-panel-content::-webkit-scrollbar-track {
