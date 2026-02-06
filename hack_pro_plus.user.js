@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         莫舞Pro Plus
-// @version      2.7.9
+// @version      2.8.1
 // @author       汝莫舞
 // @description  浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -22,6 +22,42 @@
 // @exclude      *://*.mogu.com*
 // @exclude      *://graph.baidu.com/*similar*
 // ==/UserScript==
+
+// 全局获取主域名的函数
+const getMainDomain = () => {
+    try {
+        const key = "mh_" + Math.random().toString(36).substr(2, 9);
+        const keyR = new RegExp("(^|;)\\s*" + key + "=12345");
+        const expiredTime = new Date(0);
+        const domain = document.domain;
+        const domainList = domain.split('.');
+        const urlItems = [];
+        
+        urlItems.unshift(domainList.pop());
+        while (domainList.length) {
+            urlItems.unshift(domainList.pop());
+            const mainHost = urlItems.join('.');
+            const cookie = key + "=12345;domain=." + mainHost;
+            document.cookie = cookie;
+            
+            if (keyR.test(document.cookie)) {
+                document.cookie = cookie + ";expires=" + expiredTime;
+                return mainHost;
+            }
+        }
+    } catch (e) {
+        // 静默处理错误
+    }
+    
+    const hostname = window.location.hostname;
+    const parts = hostname.split('.');
+    
+    if (parts.length <= 2) {
+        return hostname;
+    }
+    
+    return parts.slice(-2).join('.');
+};
 
 // 在脚本启动时立即注入隐藏样式
 (function injectEarlyStyles() {
@@ -75,45 +111,10 @@
 // 配置管理器
 class ConfigManager {
     constructor(adRemover) {
-        this.domain = this.getMainDomain();
+        this.domain = getMainDomain();  // 使用全局函数
         this.whitelistKey = this.domain;
         this.adRemover = adRemover;
         this.loadWhitelist();
-    }
-
-    getMainDomain() {
-        try {
-            const key = "mh_" + Math.random().toString(36).substr(2, 9);
-            const keyR = new RegExp("(^|;)\\s*" + key + "=12345");
-            const expiredTime = new Date(0);
-            const domain = document.domain;
-            const domainList = domain.split('.');
-            const urlItems = [];
-            
-            urlItems.unshift(domainList.pop());
-            while (domainList.length) {
-                urlItems.unshift(domainList.pop());
-                const mainHost = urlItems.join('.');
-                const cookie = key + "=12345;domain=." + mainHost;
-                document.cookie = cookie;
-                
-                if (keyR.test(document.cookie)) {
-                    document.cookie = cookie + ";expires=" + expiredTime;
-                    return mainHost;
-                }
-            }
-        } catch (e) {
-            // 静默处理错误
-        }
-        
-        const hostname = window.location.hostname;
-        const parts = hostname.split('.');
-        
-        if (parts.length <= 2) {
-            return hostname;
-        }
-        
-        return parts.slice(-2).join('.');
     }
 
     loadWhitelist() {
@@ -1455,7 +1456,7 @@ class SettingsPanel {
                 right: 0;
                 bottom: 0;
                 width: 100%;
-                max-width: 330px; /* 宽度增加10px */
+                max-width: 340px;
                 background: #FFF;
                 border-radius: 12px;
                 box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
@@ -1519,14 +1520,40 @@ class SettingsPanel {
                 flex: 1;
                 min-height: 0;
                 overflow-y: auto;
-                max-height: calc(78vh - 120px + 2vh); /* 原有基础上加2vh */
+                max-height: calc(80vh - 120px); 
+                cursor: default;
+            }
+            
+            /* 添加拖拽滚动样式 */
+            .hackplus-panel-content.dragging {
+                cursor: grabbing !important;
+                user-select: none !important;
+            }
+            
+            /* 当鼠标悬停在可拖拽区域时显示抓手光标 */
+            .hackplus-panel-content:not(.hackplus-panel-content.dragging) {
+                cursor: default;
+            }
+            
+            /* 对非交互元素显示抓取光标 */
+            .hackplus-panel-content:not(.hackplus-panel-content.dragging):hover {
+                cursor: default;
+            }
+            
+            /* 交互元素保持原样 */
+            .hackplus-panel-content input,
+            .hackplus-panel-content button,
+            .hackplus-panel-content label,
+            .hackplus-panel-content .hackplus-switch,
+            .hackplus-panel-content .hackplus-slider {
+                cursor: default !important;
             }
             
             .hackplus-setting-item {
                 display: flex;
                 align-items: center;
                 min-height: 36px;
-                margin-bottom: 6px; /* 回退到减小尺寸之前的尺寸 */
+                margin-bottom: 6px;
                 padding: 6px 10px;
                 background: white;
                 border-radius: 6px;
@@ -1607,7 +1634,7 @@ class SettingsPanel {
             }
             
             .hackplus-custom-size-section {
-                margin-top: 8px; /* 回退到减小尺寸之前的尺寸 */
+                margin-top: 8px; 
                 padding: 0;
                 background: white;
                 border-radius: 6px;
@@ -1660,7 +1687,7 @@ class SettingsPanel {
             
             .hackplus-size-inputs {
                 margin-top: 0;
-                padding: 8px 10px 8px 10px; /* 回退到减小尺寸之前的尺寸 */
+                padding: 8px 10px 8px 10px;
                 border-top: 1px solid #edf2f7;
                 background: #f8fafc;
                 border-radius: 0 0 6px 6px;
@@ -1668,7 +1695,7 @@ class SettingsPanel {
             
             .hackplus-size-row {
                 display: flex;
-                margin-bottom: 6px; /* 回退到减小尺寸之前的尺寸 */
+                margin-bottom: 6px;
             }
             
             .hackplus-size-row:last-child {
@@ -1704,6 +1731,8 @@ class SettingsPanel {
                 font-size: 11px;
                 transition: border-color 0.2s ease;
                 background: white;
+                color:black;
+                cursor: text;
             }
             
             .hackplus-size-input-group input:focus {
@@ -1777,11 +1806,11 @@ class SettingsPanel {
             /* 中等高度屏幕：当内容较多时才开始滚动 */
             @media (min-height: 550px) and (max-height: 700px) {
                 #hackplus-settings-panel {
-                    max-height: 73vh; /* 原有85vh减12vh */
+                    max-height: 73vh;
                 }
                 
                 .hackplus-panel-content {
-                    max-height: calc(73vh - 120px + 2vh); /* 原有基础上加2vh */
+                    max-height: calc(75vh - 120px);
                     overflow-y: auto;
                 }
             }
@@ -1789,11 +1818,11 @@ class SettingsPanel {
             /* 大高度屏幕：很少需要滚动 */
             @media (min-height: 700px) {
                 #hackplus-settings-panel {
-                    max-height: 68vh; /* 原有80vh减12vh */
+                    max-height: 68vh;
                 }
                 
                 .hackplus-panel-content {
-                    max-height: calc(68vh - 120px + 2vh); /* 原有基础上加2vh */
+                    max-height: calc(70vh - 120px);
                     overflow-y: auto;
                 }
             }
@@ -1801,11 +1830,11 @@ class SettingsPanel {
             /* 超大高度屏幕：基本不需要滚动 */
             @media (min-height: 850px) {
                 #hackplus-settings-panel {
-                    max-height: 63vh; /* 原有75vh减12vh */
+                    max-height: 63vh;
                 }
                 
                 .hackplus-panel-content {
-                    max-height: calc(63vh - 120px + 2vh); /* 原有基础上加2vh */
+                    max-height: calc(65vh - 120px);
                     overflow-y: auto;
                 }
             }
@@ -1813,11 +1842,11 @@ class SettingsPanel {
             /* 超小高度适配 */
             @media (max-height: 400px) {
                 #hackplus-settings-panel {
-                    max-height: 83vh; /* 原有95vh减12vh */
+                    max-height: 83vh; 
                 }
                 
                 .hackplus-panel-content {
-                    max-height: calc(83vh - 120px + 2vh); /* 原有基础上加2vh */
+                    max-height: calc(85vh - 120px);
                     overflow-y: auto;
                 }
             }
@@ -1827,7 +1856,7 @@ class SettingsPanel {
                 #hackplus-settings-panel {
                     max-width: calc(100% - 20px);
                     border-radius: 8px;
-                    max-height: 78vh; /* 保持统一 */
+                    max-height: 78vh;
                 }
                 
                 .hackplus-panel-header {
@@ -1840,13 +1869,13 @@ class SettingsPanel {
                 
                 .hackplus-panel-content {
                     padding: 8px 12px;
-                    max-height: calc(78vh - 100px + 2vh); /* 小屏幕下调整并加2vh */
+                    max-height: calc(80vh - 100px); 
                 }
                 
                 .hackplus-setting-item {
                     min-height: 34px;
                     padding: 5px 8px;
-                    margin-bottom: 5px; /* 小屏幕下适当调整 */
+                    margin-bottom: 5px;
                 }
                 
                 .hackplus-label {
@@ -1877,7 +1906,7 @@ class SettingsPanel {
                 
                 .hackplus-custom-size-section {
                     padding: 0;
-                    margin-top: 6px; /* 小屏幕下适当调整 */
+                    margin-top: 6px;
                 }
                 
                 .hackplus-custom-size-header {
@@ -1887,16 +1916,16 @@ class SettingsPanel {
                 
                 .hackplus-reset-btn {
                     width: 22px;
-                    height: 22px;
+                    height = 22px;
                     font-size: 11px;
                 }
                 
                 .hackplus-size-inputs {
-                    padding: 6px 8px 6px 8px; /* 小屏幕下适当调整 */
+                    padding: 6px 8px 6px 8px;
                 }
                 
                 .hackplus-size-row {
-                    margin-bottom: 5px; /* 小屏幕下适当调整 */
+                    margin-bottom: 5px;
                 }
                 
                 .hackplus-size-input-group {
@@ -1929,7 +1958,7 @@ class SettingsPanel {
                 #hackplus-settings-panel {
                     max-width: calc(100% - 10px);
                     border-radius: 6px;
-                    max-height: 78vh; /* 保持统一 */
+                    max-height: 78vh;
                 }
                 
                 .hackplus-panel-header {
@@ -1942,13 +1971,13 @@ class SettingsPanel {
                 
                 .hackplus-panel-content {
                     padding: 6px 10px;
-                    max-height: calc(78vh - 90px + 2vh); /* 超小屏幕下进一步调整并加2vh */
+                    max-height: calc(80vh - 90px);
                 }
                 
                 .hackplus-setting-item {
                     min-height: 32px;
                     padding: 4px 6px;
-                    margin-bottom: 4px; /* 超小屏幕下适当调整 */
+                    margin-bottom: 4px;
                 }
                 
                 .hackplus-label {
@@ -1980,7 +2009,7 @@ class SettingsPanel {
                 
                 .hackplus-custom-size-section {
                     padding: 0;
-                    margin-top: 5px; /* 超小屏幕下适当调整 */
+                    margin-top: 5px;
                 }
                 
                 .hackplus-custom-size-header {
@@ -1995,11 +2024,11 @@ class SettingsPanel {
                 }
                 
                 .hackplus-size-inputs {
-                    padding: 5px 6px 5px 6px; /* 超小屏幕下适当调整 */
+                    padding: 5px 6px 5px 6px;
                 }
                 
                 .hackplus-size-row {
-                    margin-bottom: 4px; /* 超小屏幕下适当调整 */
+                    margin-bottom: 4px;
                 }
                 
                 .hackplus-size-input-group {
@@ -2027,9 +2056,8 @@ class SettingsPanel {
                 }
             }
             
-            /* 滚动条调整 - 稍微粗一点点 */
             .hackplus-panel-content::-webkit-scrollbar {
-                width: 6px; /* 从4px增加到6px */
+                width: 10px; 
             }
             
             .hackplus-panel-content::-webkit-scrollbar-track {
@@ -2038,7 +2066,7 @@ class SettingsPanel {
             
             .hackplus-panel-content::-webkit-scrollbar-thumb {
                 background: #cbd5e0;
-                border-radius: 3px;
+                border-radius: 5px;
             }
             
             .hackplus-panel-content::-webkit-scrollbar-thumb:hover {
@@ -2198,15 +2226,176 @@ class SettingsPanel {
             location.reload();
         });
 
-        panel.addEventListener('click', (e) => {
-            if (e.target === panel) {
-                panel.style.opacity = '0';
-                panel.style.transform = 'translateY(-20px) scale(0.95)';
-                setTimeout(() => {
-                    panel.remove();
-                }, 150);
-            }
-        });
+        // 修正：移除整个面板的点击关闭监听器，只保留关闭按钮的
+        // 这解决了拖拽滚动时面板意外关闭的问题
+        // 原代码：panel.addEventListener('click', (e) => { ... });
+
+        // ================================
+        // 新增：添加内容区域的拖拽滚动功能
+        // ================================
+        const content = panel.querySelector('.hackplus-panel-content');
+        if (content) {
+            let isDragging = false;
+            let startY = 0;
+            let startScrollTop = 0;
+            let hasDragged = false; // 新增：跟踪是否发生了拖拽
+            
+            // 检查是否是交互元素
+            const isInteractiveElement = (target) => {
+                // 检查是否是输入框、按钮、开关等交互元素
+                if (target.tagName === 'INPUT' || 
+                    target.tagName === 'BUTTON' || 
+                    target.tagName === 'SELECT' ||
+                    target.tagName === 'TEXTAREA' ||
+                    target.classList.contains('hackplus-switch') ||
+                    target.classList.contains('hackplus-slider') ||
+                    target.classList.contains('hackplus-reset-btn') ||
+                    target.classList.contains('hackplus-apply-btn') ||
+                    target.classList.contains('hackplus-close-btn')) {
+                    return true;
+                }
+                
+                // 检查是否在开关内部
+                if (target.closest('.hackplus-switch') || 
+                    target.closest('.hackplus-reset-btn') ||
+                    target.closest('.hackplus-apply-btn') ||
+                    target.closest('.hackplus-close-btn')) {
+                    return true;
+                }
+                
+                return false;
+            };
+            
+            // 鼠标按下事件
+            const onMouseDown = (e) => {
+                // 如果是交互元素或文本选择，不触发拖拽滚动
+                if (isInteractiveElement(e.target) || window.getSelection().toString().length > 0) {
+                    return;
+                }
+                
+                isDragging = true;
+                hasDragged = false;
+                startY = e.clientY;
+                startScrollTop = content.scrollTop;
+                content.classList.add('dragging');
+                
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            
+            // 鼠标移动事件
+            const onMouseMove = (e) => {
+                if (!isDragging) return;
+                
+                const deltaY = e.clientY - startY;
+                
+                // 移动超过3像素就认为是拖拽
+                if (Math.abs(deltaY) > 3) {
+                    hasDragged = true;
+                }
+                
+                content.scrollTop = startScrollTop - deltaY;
+                
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            
+            // 鼠标抬起事件
+            const onMouseUp = (e) => {
+                if (!isDragging) return;
+                
+                isDragging = false;
+                content.classList.remove('dragging');
+                
+                // 如果发生了拖拽，阻止后续的点击事件
+                if (hasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // 添加一个小的延迟，确保不会触发点击事件
+                    setTimeout(() => {
+                        hasDragged = false;
+                    }, 100);
+                }
+            };
+            
+            // 绑定事件到内容区域
+            content.addEventListener('mousedown', onMouseDown);
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+            
+            // 触摸屏支持
+            const onTouchStart = (e) => {
+                if (isInteractiveElement(e.target) || window.getSelection().toString().length > 0) {
+                    return;
+                }
+                
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    hasDragged = false;
+                    startY = e.touches[0].clientY;
+                    startScrollTop = content.scrollTop;
+                    content.classList.add('dragging');
+                    
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            };
+            
+            const onTouchMove = (e) => {
+                if (!isDragging || e.touches.length !== 1) return;
+                
+                const deltaY = e.touches[0].clientY - startY;
+                
+                // 移动超过3像素就认为是拖拽
+                if (Math.abs(deltaY) > 3) {
+                    hasDragged = true;
+                }
+                
+                content.scrollTop = startScrollTop - deltaY;
+                
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            
+            const onTouchEnd = (e) => {
+                if (!isDragging) return;
+                
+                isDragging = false;
+                content.classList.remove('dragging');
+                
+                // 如果发生了拖拽，阻止后续的点击事件
+                if (hasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // 添加一个小的延迟，确保不会触发点击事件
+                    setTimeout(() => {
+                        hasDragged = false;
+                    }, 100);
+                }
+            };
+            
+            content.addEventListener('touchstart', onTouchStart);
+            document.addEventListener('touchmove', onTouchMove);
+            document.addEventListener('touchend', onTouchEnd);
+            
+            // 防止拖拽时文本被选择
+            content.addEventListener('selectstart', (e) => {
+                if (isDragging) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // 阻止内容区域的点击事件传播到面板
+            content.addEventListener('click', (e) => {
+                // 如果刚刚发生了拖拽，阻止点击事件
+                if (hasDragged) {
+                    e.stopPropagation();
+                }
+            });
+        }
     }
     
     resetImgCustomSizeInputs(panel) {
