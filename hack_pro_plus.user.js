@@ -1060,7 +1060,8 @@ class UnionAdBlocker {
             'adsbygoogle', 'amazon_ads_iframe', 'taboola', 'outbrain',
             'revcontent', 'mgid', 'adthrive', 'mediavine', 'ezoic',
             'monetag', 'propellerads', 'adsterra', 'popads', 'adblade',
-            'contentad', 'infolinks', 'chitika', 'bidvertiser', 'adengage'
+            'contentad', 'infolinks', 'chitika', 'bidvertiser', 'adengage',
+            'aq360Down'
         ];
         
         // 创建深度广告拦截器
