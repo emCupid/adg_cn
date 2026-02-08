@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         莫舞Pro Plus
-// @version      2.8.1
+// @version      2.8.4
 // @author       汝莫舞
 // @description  浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -1015,35 +1015,158 @@ class AdRemover {
 
 // 联盟广告屏蔽器
 class UnionAdBlocker {
+    static isBlocking = false;
+    static hasLogged = false;
+    
     static block() {
-        const adProperties = [
-            '_SF_', '_global_', '_ssp', 'ssp_global',
-            'AD', 'Ad', 'ad', '___baidu_union_', '___baidu_union_ds_',
+        'use strict';
+        
+        // 防止重复执行
+        if (UnionAdBlocker.isBlocking) {
+            return;
+        }
+        
+        UnionAdBlocker.isBlocking = true;
+        
+        // 扩展的广告属性黑名单
+        const AD_PROPERTIES = [
+            '_SF_', '_global_', '_ssp', 'ssp_global', 'AD', 'Ad', 'ad',
+            'ads', 'advertisement', '___baidu_union_', '___baidu_union_ds_',
             '__delivery_global_', '___delivery___global___counter___',
-            'cproArray', 'arrBaiduAds', 'slotbydup',
-            '_qha_data', 'sinaads', 'sogou_un',
-            'pbjs'  // 添加pbjs
+            'cproArray', 'cpro_baiduid', 'cpro_baidu_cpr', 'arrBaiduAds',
+            'slotbydup', 'bdCproConfig', '_qha_data', 'sinaads', 'sogou_un',
+            'pbjs', 'googletag', 'google_ad', 'baidu_union_packer',
+            'baidu_union_rule', '_bd_union_config', 'baidu_union',
+            'tencentAds', 'aliUnion', 'jdUnion', 'adfox', 'adsystem',
+            'admanager', 'adtag', 'adunit', 'adrequest', 'prebid', 'apntag',
+            'smartadserver', 'amznads', 'amazon_ads', '_ad_', '_ads_',
+            '_union_', 'BaiduUnion', 'SogouUnion', 'TencentUnion',
+            'AlibabaUnion', 'JingdongUnion', 'doubleclick', 'admob',
+            'adcolony', 'vungle', 'unityads', 'chartboost', 'mopub',
+            'flurry', 'applovin',
+            
+            // 从网易163.com文件分析出的关键广告属性
+            'ntesAd', 'adiframe', 'ntm', 'NTESAntAnalysis', 'wljd_arr',
+            'ntes_ad', 'neteaseAd', 'ad12_src', 'ad1200', 'baiduad',
+            'cmIframe_js_ad', 'cmbaidu_js_ad',
+            
+            // 新增的广告属性
+            'adunion', 'AdUnion', 'ad_union', 'ad_union_', 'union_ad', 'unionad', 'UnionAd',
+            'ali_union', 'jd_union', 'pinduoduo_union', 'pdd_union',
+            'suning_union', 'suningUnion', 'vip_union', 'vipUnion',
+            '__tbUnion', '__jdUnion', '__aliUnion', '__pddUnion', '__suningUnion',
+            
+            // 常见广告脚本属性
+            'adsbygoogle', 'amazon_ads_iframe', 'taboola', 'outbrain',
+            'revcontent', 'mgid', 'adthrive', 'mediavine', 'ezoic',
+            'monetag', 'propellerads', 'adsterra', 'popads', 'adblade',
+            'contentad', 'infolinks', 'chitika', 'bidvertiser', 'adengage'
         ];
-
-        adProperties.forEach(prop => {
-            try {
-                const handler = {
-                    get: (target, property) => {
-                        if (property === 'push') {
-                            return () => console.error(`阻止 ${prop} 推送广告`);
-                        }
-                        return undefined;
-                    },
-                    set: () => false,
-                    deleteProperty: () => false
-                };
-                
-                unsafeWindow[prop] = new Proxy({}, handler);
-                Object.freeze(unsafeWindow[prop]);
-            } catch (e) {
-                // 静默处理错误
+        
+        // 创建深度广告拦截器
+        function createDeepAdBlocker() {
+            const handler = {
+                get: () => createDeepAdBlocker(),
+                set: () => false,
+                apply: () => undefined,
+                construct: () => ({}),
+                has: () => false,
+                deleteProperty: () => false,
+                defineProperty: () => false,
+                getOwnPropertyDescriptor: () => undefined,
+                ownKeys: () => [],
+                preventExtensions: () => true,
+                isExtensible: () => false
+            };
+            
+            return new Proxy(() => {}, handler);
+        }
+        
+        // 强力拦截全局广告属性
+        function interceptGlobalProperties() {
+            AD_PROPERTIES.forEach(prop => {
+                try {
+                    // 检查属性是否已经存在
+                    const exists = prop in unsafeWindow;
+                    
+                    Object.defineProperty(unsafeWindow, prop, {
+                        get: () => createDeepAdBlocker(),
+                        set: () => false,
+                        configurable: false,
+                        enumerable: false,
+                        writable: false
+                    });
+                    
+                    // 如果属性已经存在，尝试覆盖它
+                    if (exists) {
+                        unsafeWindow[prop] = createDeepAdBlocker();
+                    }
+                } catch (e) {
+                    try {
+                        let value = createDeepAdBlocker();
+                        Object.defineProperty(unsafeWindow, prop, {
+                            get: () => value,
+                            set: () => false,
+                            configurable: false,
+                            enumerable: true
+                        });
+                    } catch (e2) {
+                        // 静默处理错误
+                    }
+                }
+            });
+            
+            // 拦截动态创建的广告属性
+            const originalDefineProperty = Object.defineProperty;
+            Object.defineProperty = function(obj, prop, descriptor) {
+                if (obj === unsafeWindow || obj === window) {
+                    const propStr = String(prop);
+                    if (AD_PROPERTIES.some(adProp => propStr.includes(adProp) || propStr.toLowerCase().includes('ad'))) {
+                        return false;
+                    }
+                }
+                return originalDefineProperty.call(this, obj, prop, descriptor);
+            };
+        }
+        
+        // 初始化拦截
+        function init() {
+            interceptGlobalProperties();
+            
+            // 监听后续的全局属性设置
+            const originalSet = (obj, prop, value) => {
+                const propStr = String(prop);
+                if ((obj === unsafeWindow || obj === window) && 
+                    AD_PROPERTIES.some(adProp => propStr.includes(adProp) || propStr.toLowerCase().includes('ad'))) {
+                    return false;
+                }
+                obj[prop] = value;
+                return true;
+            };
+            
+            // 覆盖window和unsafeWindow的赋值操作
+            try{
+                unsafeWindow.__proto__ = new Proxy(unsafeWindow.__proto__, {
+                    set: originalSet
+                });
+            } catch(e) {
+                //静默处理错误
             }
-        });
+        }
+        
+        // 在页面加载的不同阶段重新应用拦截
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(init, 0);
+            });
+            
+            window.addEventListener('load', () => {
+                setTimeout(init, 100);
+            });
+        }
+        
+        // 立即执行
+        init();
     }
 }
 
@@ -1094,7 +1217,7 @@ class ScriptWriteProtection {
     }
 
     protect() {
-        if (!this.config.whitelist['Fuck_WRS']) {
+        if (!this.config.isEnabled('Fuck_WRS')) {
             return;
         }
 
@@ -1521,7 +1644,8 @@ class SettingsPanel {
                 min-height: 0;
                 overflow-y: auto;
                 max-height: calc(80vh - 120px); 
-                cursor: default;
+                cursor: grab;
+                user-select: none;
             }
             
             /* 添加拖拽滚动样式 */
@@ -1530,23 +1654,25 @@ class SettingsPanel {
                 user-select: none !important;
             }
             
-            /* 当鼠标悬停在可拖拽区域时显示抓手光标 */
-            .hackplus-panel-content:not(.hackplus-panel-content.dragging) {
-                cursor: default;
-            }
-            
-            /* 对非交互元素显示抓取光标 */
-            .hackplus-panel-content:not(.hackplus-panel-content.dragging):hover {
-                cursor: default;
-            }
-            
-            /* 交互元素保持原样 */
+            /* 交互元素恢复默认光标 */
             .hackplus-panel-content input,
             .hackplus-panel-content button,
             .hackplus-panel-content label,
             .hackplus-panel-content .hackplus-switch,
             .hackplus-panel-content .hackplus-slider {
                 cursor: default !important;
+                user-select: auto !important;
+            }
+            
+            /* 输入框内文本允许选择 */
+            .hackplus-panel-content input[type="number"] {
+                cursor: text !important;
+                user-select: auto !important;
+            }
+            
+            /* 标签文字允许选择 */
+            .hackplus-panel-content .hackplus-label {
+                user-select: none; /* 保持不能选择 */
             }
             
             .hackplus-setting-item {
@@ -1916,7 +2042,7 @@ class SettingsPanel {
                 
                 .hackplus-reset-btn {
                     width: 22px;
-                    height = 22px;
+                    height: 22px;
                     font-size: 11px;
                 }
                 
@@ -2226,50 +2352,49 @@ class SettingsPanel {
             location.reload();
         });
 
-        // 修正：移除整个面板的点击关闭监听器，只保留关闭按钮的
-        // 这解决了拖拽滚动时面板意外关闭的问题
-        // 原代码：panel.addEventListener('click', (e) => { ... });
-
-        // ================================
-        // 新增：添加内容区域的拖拽滚动功能
-        // ================================
         const content = panel.querySelector('.hackplus-panel-content');
         if (content) {
             let isDragging = false;
             let startY = 0;
             let startScrollTop = 0;
-            let hasDragged = false; // 新增：跟踪是否发生了拖拽
+            let hasDragged = false;
             
-            // 检查是否是交互元素
-            const isInteractiveElement = (target) => {
-                // 检查是否是输入框、按钮、开关等交互元素
+            // 检查元素是否可拖动
+            const isDraggableElement = (target) => {
+                // 如果是交互元素，不可拖动
                 if (target.tagName === 'INPUT' || 
                     target.tagName === 'BUTTON' || 
                     target.tagName === 'SELECT' ||
-                    target.tagName === 'TEXTAREA' ||
-                    target.classList.contains('hackplus-switch') ||
+                    target.tagName === 'TEXTAREA') {
+                    return false;
+                }
+                
+                // 如果是开关元素或其子元素，不可拖动
+                if (target.classList.contains('hackplus-switch') || 
                     target.classList.contains('hackplus-slider') ||
                     target.classList.contains('hackplus-reset-btn') ||
                     target.classList.contains('hackplus-apply-btn') ||
-                    target.classList.contains('hackplus-close-btn')) {
-                    return true;
-                }
-                
-                // 检查是否在开关内部
-                if (target.closest('.hackplus-switch') || 
+                    target.classList.contains('hackplus-close-btn') ||
+                    target.closest('.hackplus-switch') || 
                     target.closest('.hackplus-reset-btn') ||
                     target.closest('.hackplus-apply-btn') ||
                     target.closest('.hackplus-close-btn')) {
-                    return true;
+                    return false;
                 }
                 
-                return false;
+                // 标签元素也不可拖动
+                if (target.classList.contains('hackplus-label') ||
+                    target.closest('.hackplus-label')) {
+                    return false;
+                }
+                
+                return true;
             };
             
-            // 鼠标按下事件
-            const onMouseDown = (e) => {
-                // 如果是交互元素或文本选择，不触发拖拽滚动
-                if (isInteractiveElement(e.target) || window.getSelection().toString().length > 0) {
+            // 鼠标按下事件 - 简化版
+            content.addEventListener('mousedown', (e) => {
+                // 检查是否是可拖动元素
+                if (!isDraggableElement(e.target)) {
                     return;
                 }
                 
@@ -2279,108 +2404,131 @@ class SettingsPanel {
                 startScrollTop = content.scrollTop;
                 content.classList.add('dragging');
                 
+                // 阻止默认行为，防止文本选择
                 e.preventDefault();
                 e.stopPropagation();
-            };
+            });
             
             // 鼠标移动事件
-            const onMouseMove = (e) => {
+            const handleMouseMove = (e) => {
                 if (!isDragging) return;
                 
                 const deltaY = e.clientY - startY;
                 
-                // 移动超过3像素就认为是拖拽
-                if (Math.abs(deltaY) > 3) {
+                // 移动超过2像素就认为是拖拽
+                if (Math.abs(deltaY) > 2) {
                     hasDragged = true;
                 }
                 
-                content.scrollTop = startScrollTop - deltaY;
+                // 计算新的滚动位置
+                const newScrollTop = startScrollTop - deltaY;
+                
+                // 确保滚动位置在合理范围内
+                const maxScrollTop = content.scrollHeight - content.clientHeight;
+                content.scrollTop = Math.max(0, Math.min(maxScrollTop, newScrollTop));
                 
                 e.preventDefault();
                 e.stopPropagation();
             };
             
             // 鼠标抬起事件
-            const onMouseUp = (e) => {
+            const handleMouseUp = (e) => {
                 if (!isDragging) return;
                 
                 isDragging = false;
                 content.classList.remove('dragging');
+                
+                // 移除事件监听器
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
                 
                 // 如果发生了拖拽，阻止后续的点击事件
                 if (hasDragged) {
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    // 添加一个小的延迟，确保不会触发点击事件
+                    // 延迟重置标志，防止触发点击
                     setTimeout(() => {
                         hasDragged = false;
-                    }, 100);
+                    }, 50);
                 }
             };
             
-            // 绑定事件到内容区域
-            content.addEventListener('mousedown', onMouseDown);
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
+            // 鼠标离开内容区域时取消拖动
+            content.addEventListener('mouseleave', () => {
+                if (isDragging) {
+                    handleMouseUp(new Event('mouseup'));
+                }
+            });
             
-            // 触摸屏支持
-            const onTouchStart = (e) => {
-                if (isInteractiveElement(e.target) || window.getSelection().toString().length > 0) {
+            // 当鼠标按下时绑定全局事件
+            content.addEventListener('mousedown', (e) => {
+                if (!isDraggableElement(e.target)) return;
+                
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+            });
+            
+            // 触摸事件支持
+            content.addEventListener('touchstart', (e) => {
+                if (!isDraggableElement(e.target) || e.touches.length !== 1) {
                     return;
                 }
                 
-                if (e.touches.length === 1) {
-                    isDragging = true;
-                    hasDragged = false;
-                    startY = e.touches[0].clientY;
-                    startScrollTop = content.scrollTop;
-                    content.classList.add('dragging');
-                    
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-            };
+                isDragging = true;
+                hasDragged = false;
+                startY = e.touches[0].clientY;
+                startScrollTop = content.scrollTop;
+                content.classList.add('dragging');
+                
+                e.preventDefault();
+                e.stopPropagation();
+            });
             
-            const onTouchMove = (e) => {
+            const handleTouchMove = (e) => {
                 if (!isDragging || e.touches.length !== 1) return;
                 
                 const deltaY = e.touches[0].clientY - startY;
                 
-                // 移动超过3像素就认为是拖拽
-                if (Math.abs(deltaY) > 3) {
+                if (Math.abs(deltaY) > 2) {
                     hasDragged = true;
                 }
                 
-                content.scrollTop = startScrollTop - deltaY;
+                const newScrollTop = startScrollTop - deltaY;
+                const maxScrollTop = content.scrollHeight - content.clientHeight;
+                content.scrollTop = Math.max(0, Math.min(maxScrollTop, newScrollTop));
                 
                 e.preventDefault();
                 e.stopPropagation();
             };
             
-            const onTouchEnd = (e) => {
+            const handleTouchEnd = (e) => {
                 if (!isDragging) return;
                 
                 isDragging = false;
                 content.classList.remove('dragging');
                 
-                // 如果发生了拖拽，阻止后续的点击事件
+                document.removeEventListener('touchmove', handleTouchMove);
+                document.removeEventListener('touchend', handleTouchEnd);
+                
                 if (hasDragged) {
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    // 添加一个小的延迟，确保不会触发点击事件
                     setTimeout(() => {
                         hasDragged = false;
-                    }, 100);
+                    }, 50);
                 }
             };
             
-            content.addEventListener('touchstart', onTouchStart);
-            document.addEventListener('touchmove', onTouchMove);
-            document.addEventListener('touchend', onTouchEnd);
+            content.addEventListener('touchstart', (e) => {
+                if (!isDraggableElement(e.target) || e.touches.length !== 1) return;
+                
+                document.addEventListener('touchmove', handleTouchMove);
+                document.addEventListener('touchend', handleTouchEnd);
+            });
             
-            // 防止拖拽时文本被选择
+            // 防止文本选择
             content.addEventListener('selectstart', (e) => {
                 if (isDragging) {
                     e.preventDefault();
@@ -2388,12 +2536,19 @@ class SettingsPanel {
                 }
             });
             
-            // 阻止内容区域的点击事件传播到面板
-            content.addEventListener('click', (e) => {
-                // 如果刚刚发生了拖拽，阻止点击事件
-                if (hasDragged) {
-                    e.stopPropagation();
-                }
+            // 面板关闭时清理事件
+            closeBtn.addEventListener('click', () => {
+                // 清理事件监听器
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+                document.removeEventListener('touchmove', handleTouchMove);
+                document.removeEventListener('touchend', handleTouchEnd);
+                
+                panel.style.opacity = '0';
+                panel.style.transform = 'translateY(-20px) scale(0.95)';
+                setTimeout(() => {
+                    panel.remove();
+                }, 150);
             });
         }
     }
@@ -2440,39 +2595,23 @@ class SettingsPanel {
         const minHeightInput = panel.querySelector('#imgMinHeight');
         const maxHeightInput = panel.querySelector('#imgMaxHeight');
         
-        // 获取值，如果为空则使用默认值
-        let minWidth = parseInt(minWidthInput.value) || this.imgCustomSizeManager.defaultSettings.minWidth;
-        let maxWidth = parseInt(maxWidthInput.value) || this.imgCustomSizeManager.defaultSettings.maxWidth;
-        let minHeight = parseInt(minHeightInput.value) || this.imgCustomSizeManager.defaultSettings.minHeight;
-        let maxHeight = parseInt(maxHeightInput.value) || this.imgCustomSizeManager.defaultSettings.maxHeight;
+        // 简化的验证逻辑
+        let minWidth = Math.max(1, parseInt(minWidthInput.value) || 1);
+        let maxWidth = Math.max(2, parseInt(maxWidthInput.value) || this.imgCustomSizeManager.defaultSettings.maxWidth);
+        let minHeight = Math.max(1, parseInt(minHeightInput.value) || 1);
+        let maxHeight = Math.max(2, parseInt(maxHeightInput.value) || this.imgCustomSizeManager.defaultSettings.maxHeight);
         
-        // 确保最小值为正数
-        minWidth = Math.max(1, minWidth);
-        maxWidth = Math.max(2, maxWidth);
-        minHeight = Math.max(1, minHeight);
-        maxHeight = Math.max(2, maxHeight);
-        
-        // 确保最小值不超过1000
+        // 限制范围
         minWidth = Math.min(1000, minWidth);
-        minHeight = Math.min(1000, minHeight);
-        
-        // 确保最大值不超过3000
         maxWidth = Math.min(3000, maxWidth);
+        minHeight = Math.min(1000, minHeight);
         maxHeight = Math.min(3000, maxHeight);
         
         // 确保最小值小于最大值
-        if (minWidth >= maxWidth) {
-            minWidth = maxWidth - 1;
-        }
-        if (minHeight >= maxHeight) {
-            minHeight = maxHeight - 1;
-        }
+        if (minWidth >= maxWidth) minWidth = maxWidth - 1;
+        if (minHeight >= maxHeight) minHeight = maxHeight - 1;
         
-        // 确保最小值至少为1
-        minWidth = Math.max(1, minWidth);
-        minHeight = Math.max(1, minHeight);
-        
-        // 更新输入框的值
+        // 更新输入框
         minWidthInput.value = minWidth;
         maxWidthInput.value = maxWidth;
         minHeightInput.value = minHeight;
@@ -2485,39 +2624,23 @@ class SettingsPanel {
         const minHeightInput = panel.querySelector('#iframeMinHeight');
         const maxHeightInput = panel.querySelector('#iframeMaxHeight');
         
-        // 获取值，如果为空则使用默认值
-        let minWidth = parseInt(minWidthInput.value) || this.iframeCustomSizeManager.defaultSettings.minWidth;
-        let maxWidth = parseInt(maxWidthInput.value) || this.iframeCustomSizeManager.defaultSettings.maxWidth;
-        let minHeight = parseInt(minHeightInput.value) || this.iframeCustomSizeManager.defaultSettings.minHeight;
-        let maxHeight = parseInt(maxHeightInput.value) || this.iframeCustomSizeManager.defaultSettings.maxHeight;
+        // 简化的验证逻辑
+        let minWidth = Math.max(1, parseInt(minWidthInput.value) || 1);
+        let maxWidth = Math.max(2, parseInt(maxWidthInput.value) || this.iframeCustomSizeManager.defaultSettings.maxWidth);
+        let minHeight = Math.max(1, parseInt(minHeightInput.value) || 1);
+        let maxHeight = Math.max(2, parseInt(maxHeightInput.value) || this.iframeCustomSizeManager.defaultSettings.maxHeight);
         
-        // 确保最小值为正数
-        minWidth = Math.max(1, minWidth);
-        maxWidth = Math.max(2, maxWidth);
-        minHeight = Math.max(1, minHeight);
-        maxHeight = Math.max(2, maxHeight);
-        
-        // 确保最小值不超过1000
+        // 限制范围
         minWidth = Math.min(1000, minWidth);
-        minHeight = Math.min(1000, minHeight);
-        
-        // 确保最大值不超过3000
         maxWidth = Math.min(3000, maxWidth);
+        minHeight = Math.min(1000, minHeight);
         maxHeight = Math.min(3000, maxHeight);
         
         // 确保最小值小于最大值
-        if (minWidth >= maxWidth) {
-            minWidth = maxWidth - 1;
-        }
-        if (minHeight >= maxHeight) {
-            minHeight = maxHeight - 1;
-        }
+        if (minWidth >= maxWidth) minWidth = maxWidth - 1;
+        if (minHeight >= maxHeight) minHeight = maxHeight - 1;
         
-        // 确保最小值至少为1
-        minWidth = Math.max(1, minWidth);
-        minHeight = Math.max(1, minHeight);
-        
-        // 更新输入框的值
+        // 更新输入框
         minWidthInput.value = minWidth;
         maxWidthInput.value = maxWidth;
         minHeightInput.value = minHeight;
@@ -2596,9 +2719,11 @@ class HackPlus {
     }
 
     startUnionBlocking() {
-        if (this.config.isEnabled('unFuck_UNION') && window.location.hostname !== 'baike.baidu.com') {
+        // 只有在联盟广告白名单未启用时才执行拦截
+        if (this.config.isEnabled('unFuck_UNION')) {
             UnionAdBlocker.block();
         }
+        // 白名单时不显示任何消息
     }
 }
 
@@ -2606,6 +2731,33 @@ class HackPlus {
 (function() {
     'use strict';
     
+    // 在文档加载前立即初始化联盟广告拦截
+    // 先创建一个临时配置来检查是否启用了联盟广告拦截
+    const tempDomain = getMainDomain();
+    const tempWhitelistKey = tempDomain;
+    const stored = GM_getValue(tempWhitelistKey, '{}');
+    let tempWhitelist = {};
+    
+    try {
+        tempWhitelist = JSON.parse(stored);
+    } catch {
+        tempWhitelist = {};
+    }
+    
+    // 检查是否启用了联盟广告拦截（白名单中没有unFuck_UNION或值为1表示禁用）
+    const isUnionBlockingEnabled = tempWhitelist['unFuck_UNION'] !== 1;
+    
+    if (isUnionBlockingEnabled) {
+        // 立即执行联盟广告拦截，不等待DOMContentLoaded
+        setTimeout(() => {
+            UnionAdBlocker.block();
+        }, 0);
+        console.log('%c[hackplus_pro_plus联盟广告屏蔽] ⚙︎ 加载成功', 'color: #1abc9c; font-weight: bold; border-left:#1abc9c 5px solid;color:#1abc9c; padding:3px');
+
+    }
+    // 白名单时不显示任何消息
+    
+    // 继续正常的应用初始化
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             new HackPlus();
