@@ -168,6 +168,72 @@ class ConfigManager {
     }
 }
 
+// 联盟广告自定义属性管理器
+class UnionAdCustomPropertiesManager {
+    constructor() {
+        this.settingsKey = 'hackplus_union_ad_custom_properties';
+        this.defaultSettings = {
+            enabled: false,
+            properties: 'baidu_union,ali_union,jd_union,pdd_union,suning_union'
+        };
+        this.loadSettings();
+    }
+    
+    loadSettings() {
+        const stored = GM_getValue(this.settingsKey, '{}');
+        try {
+            const parsed = JSON.parse(stored);
+            // 确保所有字段都有值，如果没有则使用默认值
+            this.settings = {
+                enabled: typeof parsed.enabled === 'boolean' ? parsed.enabled : this.defaultSettings.enabled,
+                properties: parsed.properties || this.defaultSettings.properties
+            };
+        } catch {
+            this.settings = { ...this.defaultSettings };
+        }
+    }
+    
+    saveSettings() {
+        GM_setValue(this.settingsKey, JSON.stringify(this.settings));
+    }
+    
+    isEnabled() {
+        return this.settings.enabled === true;
+    }
+    
+    toggleEnabled() {
+        this.settings.enabled = !this.settings.enabled;
+        this.saveSettings();
+    }
+    
+    updateSettings(newSettings) {
+        this.settings = { ...this.settings, ...newSettings };
+        this.saveSettings();
+    }
+    
+    resetToDefaults() {
+        this.settings = { ...this.defaultSettings };
+        this.saveSettings();
+    }
+    
+    getSettings() {
+        return this.settings;
+    }
+    
+    // 获取解析后的属性数组
+    getPropertiesArray() {
+        if (!this.settings.properties || !this.settings.enabled) {
+            return [];
+        }
+        
+        // 支持中文逗号和英文逗号分割
+        return this.settings.properties
+            .split(/[,，]/)
+            .map(prop => prop.trim())
+            .filter(prop => prop.length > 0);
+    }
+}
+
 // 图片自定义尺寸管理器
 class ImgCustomSizeManager {
     constructor() {
@@ -550,6 +616,19 @@ class FloatIconManager {
         
         // 点击事件
         this.floatIcon.addEventListener('click', (e) => {
+            if (this.hasDragged) {
+                this.hasDragged = false;
+                return;
+            }
+            
+            SettingsPanelManager.togglePanel();
+        });
+
+        // 添加移动端触摸事件
+        this.floatIcon.addEventListener('touchend', (e) => {
+            // 阻止默认行为，避免触发click事件
+            e.preventDefault();
+            
             if (this.hasDragged) {
                 this.hasDragged = false;
                 return;
@@ -1028,8 +1107,17 @@ class UnionAdBlocker {
         
         UnionAdBlocker.isBlocking = true;
         
+        // 获取自定义属性管理器
+        let customProperties = [];
+        try {
+            const customPropsManager = new UnionAdCustomPropertiesManager();
+            customProperties = customPropsManager.getPropertiesArray();
+        } catch (e) {
+            // 静默处理错误
+        }
+        
         // 扩展的广告属性黑名单
-        const AD_PROPERTIES = [
+        let AD_PROPERTIES = [
             '_SF_', '_global_', '_ssp', 'ssp_global', 'AD', 'Ad', 'ad',
             'ads', 'advertisement', '___baidu_union_', '___baidu_union_ds_',
             '__delivery_global_', '___delivery___global___counter___',
@@ -1060,9 +1148,13 @@ class UnionAdBlocker {
             'adsbygoogle', 'amazon_ads_iframe', 'taboola', 'outbrain',
             'revcontent', 'mgid', 'adthrive', 'mediavine', 'ezoic',
             'monetag', 'propellerads', 'adsterra', 'popads', 'adblade',
-            'contentad', 'infolinks', 'chitika', 'bidvertiser', 'adengage',
-            'aq360Down'
+            'contentad', 'infolinks', 'chitika', 'bidvertiser', 'adengage'
         ];
+        
+        // 合并自定义属性
+        if (customProperties.length > 0) {
+            AD_PROPERTIES = [...AD_PROPERTIES, ...customProperties];
+        }
         
         // 创建深度广告拦截器
         function createDeepAdBlocker() {
@@ -1339,6 +1431,9 @@ class SettingsPanel {
         this.imgCustomSizeManager = imgCustomSizeManager;
         this.iframeCustomSizeManager = iframeCustomSizeManager;
         
+        // 新增：联盟广告自定义属性管理器
+        this.unionAdCustomPropsManager = new UnionAdCustomPropertiesManager();
+        
         // 注册到全局管理器
         SettingsPanelManager.setSettingsPanel(this);
         
@@ -1391,6 +1486,9 @@ class SettingsPanel {
         const imgCustomSizeSettings = this.imgCustomSizeManager.getSettings();
         const iframeCustomSizeSettings = this.iframeCustomSizeManager.getSettings();
         
+        // 获取联盟广告自定义属性设置
+        const unionAdCustomPropsSettings = this.unionAdCustomPropsManager.getSettings();
+        
         // 创建面板头部
         const header = createElement('div', { className: 'hackplus-panel-header' });
         
@@ -1419,6 +1517,9 @@ class SettingsPanel {
         
         // 创建iframe自定义尺寸部分
         this.createCustomSizeSection(content, 'iframe', iframeCustomSizeSettings, '移除【框架】大小px（全局）');
+        
+        // 创建联盟广告自定义属性部分
+        this.createUnionAdCustomPropertiesSection(content, unionAdCustomPropsSettings);
         
         // 创建面板底部
         const footer = createElement('div', { className: 'hackplus-panel-footer' });
@@ -1565,6 +1666,58 @@ class SettingsPanel {
         section.appendChild(inputsContainer);
         container.appendChild(section);
     }
+    
+    createUnionAdCustomPropertiesSection(container, settings) {
+        const section = createElement('div', { className: 'hackplus-custom-size-section' });
+        
+        const header = createElement('div', { className: 'hackplus-custom-size-header' });
+        
+        const switchContainer = createElement('label', { className: 'hackplus-switch' });
+        const checkbox = createElement('input', {
+            type: 'checkbox',
+            id: 'UnionAdCustomProperties'
+        });
+        
+        // 使用property设置checked状态
+        checkbox.checked = settings.enabled;
+        
+        const slider = createElement('span', { className: 'hackplus-slider' });
+        
+        switchContainer.appendChild(checkbox);
+        switchContainer.appendChild(slider);
+        
+        const label = createElement('label', {
+            htmlFor: 'UnionAdCustomProperties',
+            className: 'hackplus-label multiline-label'
+        }, '联盟广告/禁用属性黑名单（全局）');
+        
+        const resetBtn = createElement('button', {
+            className: 'hackplus-reset-btn',
+            title: '重置为默认值',
+            'data-type': 'unionad'
+        }, '↺');
+        
+        header.appendChild(switchContainer);
+        header.appendChild(label);
+        header.appendChild(resetBtn);
+        
+        const textareaContainer = createElement('div', { className: 'hackplus-unionad-textarea-container' });
+        
+        const textarea = createElement('textarea', {
+            id: 'UnionAdCustomPropertiesText',
+            rows: '4',
+            placeholder: '输入要禁用的广告属性，用逗号分隔\n例如：my_ad_property1, my_ad_property2'
+        });
+        
+        // 设置文本内容
+        textarea.value = settings.properties || '';
+        
+        textareaContainer.appendChild(textarea);
+        
+        section.appendChild(header);
+        section.appendChild(textareaContainer);
+        container.appendChild(section);
+    }
 
     addPanelStyles() {
         const styles = `
@@ -1660,13 +1813,15 @@ class SettingsPanel {
             .hackplus-panel-content button,
             .hackplus-panel-content label,
             .hackplus-panel-content .hackplus-switch,
-            .hackplus-panel-content .hackplus-slider {
+            .hackplus-panel-content .hackplus-slider,
+            .hackplus-panel-content textarea {
                 cursor: default !important;
                 user-select: auto !important;
             }
             
             /* 输入框内文本允许选择 */
-            .hackplus-panel-content input[type="number"] {
+            .hackplus-panel-content input[type="number"],
+            .hackplus-panel-content textarea {
                 cursor: text !important;
                 user-select: auto !important;
             }
@@ -1758,6 +1913,10 @@ class SettingsPanel {
                 align-items: center;
                 min-height: 18px;
                 padding: 1px 0;
+            }
+
+            .hackplus-label.multiline-label {
+                white-space: pre-line;
             }
             
             .hackplus-custom-size-section {
@@ -1877,6 +2036,43 @@ class SettingsPanel {
             .hackplus-size-input-group input::-webkit-outer-spin-button {
                 opacity: 1;
                 height: 20px;
+            }
+            
+            /* 联盟广告自定义属性文本框样式 */
+            .hackplus-unionad-textarea-container {
+                margin-top: 0;
+                padding: 8px 10px 8px 10px;
+                border-top: 1px solid #edf2f7;
+                background: #f8fafc;
+                border-radius: 0 0 6px 6px;
+            }
+            
+            .hackplus-unionad-textarea-container textarea {
+                width: 100%;
+                padding: 8px 10px;
+                border: 1px solid #e2e8f0;
+                border-radius: 6px;
+                font-size: 11px;
+                font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                line-height: 1.4;
+                resize: vertical;
+                min-height: 80px;
+                max-height: 200px;
+                background: white;
+                color: #2d3748;
+                transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            }
+            
+            .hackplus-unionad-textarea-container textarea:focus {
+                outline: none;
+                border-color: #1abc9c;
+                box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.1);
+            }
+            
+            .hackplus-unionad-textarea-container textarea::placeholder {
+                color: #a0aec0;
+                font-size: 10px;
+                line-height: 1.3;
             }
             
             .hackplus-panel-footer {
@@ -2069,6 +2265,21 @@ class SettingsPanel {
                     padding: 3px 5px;
                 }
                 
+                /* 联盟广告自定义属性文本框适配小屏幕 */
+                .hackplus-unionad-textarea-container {
+                    padding: 6px 8px 6px 8px;
+                }
+                
+                .hackplus-unionad-textarea-container textarea {
+                    font-size: 10px;
+                    padding: 6px 8px;
+                    min-height: 70px;
+                }
+                
+                .hackplus-unionad-textarea-container textarea::placeholder {
+                    font-size: 9px;
+                }
+                
                 .hackplus-panel-footer {
                     padding: 8px 12px;
                 }
@@ -2172,6 +2383,21 @@ class SettingsPanel {
                     padding: 2px 4px;
                 }
                 
+                /* 联盟广告自定义属性文本框适配超小屏幕 */
+                .hackplus-unionad-textarea-container {
+                    padding: 5px 6px 5px 6px;
+                }
+                
+                .hackplus-unionad-textarea-container textarea {
+                    font-size: 9px;
+                    padding: 5px 6px;
+                    min-height: 60px;
+                }
+                
+                .hackplus-unionad-textarea-container textarea::placeholder {
+                    font-size: 8px;
+                }
+                
                 .hackplus-panel-footer {
                     padding: 6px 10px;
                 }
@@ -2215,7 +2441,7 @@ class SettingsPanel {
         });
 
         // 处理常规开关
-        panel.querySelectorAll('input[type="checkbox"]:not(#ImgCustomSize):not(#IframeCustomSize)').forEach(checkbox => {
+        panel.querySelectorAll('input[type="checkbox"]:not(#ImgCustomSize):not(#IframeCustomSize):not(#UnionAdCustomProperties)').forEach(checkbox => {
             checkbox.addEventListener('change', (e) => {
                 const id = e.target.id;
                 
@@ -2249,6 +2475,17 @@ class SettingsPanel {
             });
         }
 
+        // 处理联盟广告自定义属性开关
+        const unionAdCustomPropsCheckbox = panel.querySelector('#UnionAdCustomProperties');
+        if (unionAdCustomPropsCheckbox) {
+            unionAdCustomPropsCheckbox.addEventListener('change', (e) => {
+                this.unionAdCustomPropsManager.toggleEnabled();
+                
+                // 立即保存当前文本框的值
+                this.saveUnionAdCustomPropsSettings(panel);
+            });
+        }
+
         // 处理重置按钮
         const resetBtns = panel.querySelectorAll('.hackplus-reset-btn');
         resetBtns.forEach(resetBtn => {
@@ -2260,6 +2497,8 @@ class SettingsPanel {
                     this.resetImgCustomSizeInputs(panel);
                 } else if (type === 'iframe') {
                     this.resetIframeCustomSizeInputs(panel);
+                } else if (type === 'unionad') {
+                    this.resetUnionAdCustomPropsInputs(panel);
                 }
             });
         });
@@ -2348,8 +2587,27 @@ class SettingsPanel {
             });
         });
 
+        // 处理联盟广告自定义属性文本框
+        const unionAdTextarea = panel.querySelector('#UnionAdCustomPropertiesText');
+        if (unionAdTextarea) {
+            unionAdTextarea.addEventListener('input', (e) => {
+                // 这里可以添加输入时的实时处理，比如限制长度等
+                // 目前不需要特殊处理
+            });
+            
+            unionAdTextarea.addEventListener('blur', (e) => {
+                // 保存设置
+                this.saveUnionAdCustomPropsSettings(panel);
+            });
+        }
+
         const applyBtn = panel.querySelector('.hackplus-apply-btn');
         applyBtn.addEventListener('click', () => {
+            // 保存所有设置
+            this.saveImgCustomSizeSettings(panel);
+            this.saveIframeCustomSizeSettings(panel);
+            this.saveUnionAdCustomPropsSettings(panel);
+            
             location.reload();
         });
 
@@ -2590,6 +2848,20 @@ class SettingsPanel {
         this.saveIframeCustomSizeSettings(panel);
     }
     
+    resetUnionAdCustomPropsInputs(panel) {
+        const defaultSettings = this.unionAdCustomPropsManager.defaultSettings;
+        
+        const textarea = panel.querySelector('#UnionAdCustomPropertiesText');
+        const checkbox = panel.querySelector('#UnionAdCustomProperties');
+        
+        // 重置文本框和开关的值
+        textarea.value = defaultSettings.properties;
+        checkbox.checked = defaultSettings.enabled;
+        
+        // 保存设置
+        this.saveUnionAdCustomPropsSettings(panel);
+    }
+    
     validateImgSizeInputs(panel) {
         const minWidthInput = panel.querySelector('#imgMinWidth');
         const maxWidthInput = panel.querySelector('#imgMaxWidth');
@@ -2683,6 +2955,18 @@ class SettingsPanel {
         
         this.iframeCustomSizeManager.updateSettings(settings);
     }
+    
+    saveUnionAdCustomPropsSettings(panel) {
+        const textarea = panel.querySelector('#UnionAdCustomPropertiesText');
+        const checkbox = panel.querySelector('#UnionAdCustomProperties');
+        
+        const settings = {
+            enabled: checkbox.checked,
+            properties: textarea.value || this.unionAdCustomPropsManager.defaultSettings.properties
+        };
+        
+        this.unionAdCustomPropsManager.updateSettings(settings);
+    }
 }
 
 // 主应用类
@@ -2698,6 +2982,9 @@ class HackPlus {
         
         // 将config传递给adRemover
         this.adRemover.config = this.config;
+        
+        // 新增：联盟广告自定义属性管理器
+        this.unionAdCustomPropsManager = new UnionAdCustomPropertiesManager();
         
         this.settingsPanel = new SettingsPanel(this.config, this.floatIconManager, this.imgCustomSizeManager, this.iframeCustomSizeManager);
         this.restrictionRemover = new RestrictionRemover(this.config);
