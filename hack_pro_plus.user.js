@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         莫舞Pro Plus
-// @version      2.8.4
+// @version      2.8.6
 // @author       汝莫舞
 // @description  浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -12,6 +12,7 @@
 // @grant        GM_listValues
 // @grant        GM_deleteValue
 // @grant        GM_addStyle
+// @grant        GM_registerMenuCommand
 // @run-at       document-start
 // @exclude      *://*.taobao.com*
 // @exclude      *://*.tmall.com*
@@ -2999,6 +3000,19 @@ class HackPlus {
         this.restrictionRemover.removeRestrictions();
         this.scriptProtection.protect();
         this.floatIconManager.init();
+        
+        // 注册Tampermonkey菜单
+        this.registerTampermonkeyMenu();
+    }
+    
+    // 新增：注册Tampermonkey菜单命令
+    registerTampermonkeyMenu() {
+        if (typeof GM_registerMenuCommand !== 'undefined') {
+            // 注册"打开设置面板"菜单项
+            GM_registerMenuCommand('打开莫舞Pro Plus设置', () => {
+                SettingsPanelManager.togglePanel();
+            });
+        }
     }
 
     startAdRemoval() {
