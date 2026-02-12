@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         莫舞Pro Plus
-// @version      2.8.9
+// @version      2.9.0
 // @author       汝莫舞
 // @description  浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -504,7 +504,13 @@ class ElementHider {
         this.temporaryHighlight = null;
         this.hiddenSelectors = new Set();
         this.wasManagerOpen = false;
-        
+
+        // 层级切换相关属性
+        this.baseElement = null;          // 当前鼠标下最具体元素（层级链起点）
+        this.parentChain = [];            // 从 baseElement 到 body 的直接子元素的父链（已过滤排除元素，索引0为最内层）
+        this.chainIndex = 0;             // 当前高亮在父链中的索引
+        this.currentHoveredElement = null; // 当前实际高亮的元素（跟随 chainIndex）
+
         // 排除列表：这些元素不能被选择
         this.EXCLUDED_SELECTORS = [
             '#hackplus-float-icon',
@@ -520,12 +526,12 @@ class ElementHider {
             '#hackplus-element-hider-style',
             '#hackplus-cursor-style'
         ];
-        
+
         this.loadHiddenSelectors();
         this.setupKeyboardShortcuts();
         this.addResponsiveStyles();
     }
-    
+
     // 添加响应式样式
     addResponsiveStyles() {
         const style = document.createElement('style');
@@ -542,7 +548,6 @@ class ElementHider {
                     transform: none !important;
                     max-height: 85vh !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item {
                     padding: 6px !important;
                     font-size: 12px !important;
@@ -553,7 +558,6 @@ class ElementHider {
                     white-space: normal !important;
                     line-height: 1.4 !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item > div:first-child {
                     width: calc(100% - 70px) !important;
                     margin-right: 8px !important;
@@ -562,7 +566,6 @@ class ElementHider {
                     text-overflow: ellipsis !important;
                     white-space: nowrap !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item button {
                     margin-top: 0 !important;
                     align-self: auto !important;
@@ -572,29 +575,24 @@ class ElementHider {
                     max-width: 60px !important;
                     flex-shrink: 0 !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-list {
                     height: 150px !important;
                     max-height: 50vh !important;
                     padding: 8px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-buttons-container {
                     flex-direction: row !important;
                     gap: 10px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hotkey-container {
                     display: none !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-action-buttons {
                     display: flex !important;
                     gap: 6px !important;
                     justify-content: flex-end !important;
                     width: 100% !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-action-buttons button {
                     flex: 1 !important;
                     min-width: 0 !important;
@@ -603,7 +601,6 @@ class ElementHider {
                     height: auto !important;
                     min-height: 32px !important;
                 }
-                
                 #hackplus-confirm-overlay {
                     width: 140px !important;
                     flex-direction: row !important;
@@ -614,7 +611,6 @@ class ElementHider {
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
                     border: 1px solid #1abc9c !important;
                 }
-                
                 #hackplus-confirm-overlay button {
                     padding: 6px 10px !important;
                     font-size: 12px !important;
@@ -622,7 +618,6 @@ class ElementHider {
                     min-width: 60px !important;
                     text-align: center !important;
                 }
-                
                 .hackplus-element-tag {
                     font-size: 11px !important;
                     padding: 3px 8px !important;
@@ -631,80 +626,65 @@ class ElementHider {
                     overflow: hidden !important;
                     text-overflow: ellipsis !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-list p {
                     font-size: 13px !important;
                     padding: 30px 15px !important;
                 }
-                
                 #hackplus-element-hider-manager h3 {
                     font-size: 15px !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-count {
                     font-size: 13px !important;
                 }
             }
-            
             @media (max-width: 480px) {
                 #hackplus-element-hider-manager {
                     width: calc(100% - 50px) !important;
                     padding: 12px !important;
                     border-radius: 8px !important;
                 }
-                
                 #hackplus-element-hider-manager h3 {
                     font-size: 14px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-close-btn {
                     width: 24px !important;
                     height: 24px !important;
                     font-size: 16px !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-count {
                     font-size: 12px !important;
                     margin-bottom: 10px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hotkey-container {
                     display: none !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-action-buttons button {
                     font-size: 11px !important;
                     padding: 5px 8px !important;
                     min-height: 30px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item {
                     font-size: 11px !important;
                     padding: 6px 8px !important;
                     margin: 5px 0 !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item > div:first-child {
                     width: calc(100% - 60px) !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item button {
                     font-size: 11px !important;
                     padding: 4px 8px !important;
                     min-height: 26px !important;
                     max-width: 55px !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-list {
                     padding: 6px !important;
                 }
-                
                 #hackplus-confirm-overlay {
                     width: 130px !important;
                     padding: 5px !important;
                     gap: 4px !important;
                 }
-                
                 #hackplus-confirm-overlay button {
                     padding: 5px 8px !important;
                     font-size: 11px !important;
@@ -712,58 +692,47 @@ class ElementHider {
                     min-width: 55px !important;
                 }
             }
-            
             @media (max-width: 360px) {
                 #hackplus-element-hider-manager {
                     width: calc(100% - 50px) !important;
                     padding: 10px !important;
                 }
-                
                 #hackplus-element-hider-manager h3 {
                     font-size: 13px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item {
                     font-size: 11px !important;
                     padding: 5px 6px !important;
                     line-height: 1.5 !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item > div:first-child {
                     width: calc(100% - 55px) !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item button {
                     font-size: 10px !important;
                     padding: 3px 6px !important;
                     min-height: 24px !important;
                     max-width: 50px !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-list {
                     height: 130px !important;
                     padding: 5px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hotkey-container {
                     display: none !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-action-buttons {
                     gap: 4px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-action-buttons button {
                     font-size: 10px !important;
                     padding: 4px 6px !important;
                     min-height: 28px !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-list p {
                     font-size: 12px !important;
                     padding: 25px 10px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item > div:first-child span {
                     display: inline-block;
                     max-width: 100%;
@@ -771,13 +740,11 @@ class ElementHider {
                     word-wrap: break-word;
                     hyphens: auto;
                 }
-                
                 #hackplus-confirm-overlay {
                     width: 120px !important;
                     padding: 4px !important;
                     gap: 3px !important;
                 }
-                
                 #hackplus-confirm-overlay button {
                     padding: 4px 6px !important;
                     font-size: 10px !important;
@@ -785,39 +752,32 @@ class ElementHider {
                     min-width: 50px !important;
                 }
             }
-            
             @media (max-height: 500px) and (orientation: landscape) {
                 #hackplus-element-hider-manager {
                     max-height: 70vh !important;
                     top: 5px !important;
                     max-width: 90% !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-list {
                     height: 100px !important;
                     max-height: 40vh !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hide-item {
                     font-size: 11px !important;
                     padding: 4px 6px !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-hotkey-container {
                     display: none !important;
                 }
-                
                 #hackplus-element-hider-manager .hackplus-action-buttons button {
                     font-size: 10px !important;
                     padding: 4px 6px !important;
                 }
             }
-            
             @media (max-height: 400px) {
                 #hackplus-element-hider-manager {
                     max-height: 80vh !important;
                 }
-                
                 #hackplus-element-hider-manager #hackplus-hide-list {
                     height: 80px !important;
                     max-height: 30vh !important;
@@ -826,13 +786,12 @@ class ElementHider {
         `;
         document.head.appendChild(style);
     }
-    
+
     // 加载已保存的隐藏选择器
     loadHiddenSelectors() {
         try {
             const stored = GM_getValue('hackplus_extra_hidden_selectors', '{}');
             const parsed = JSON.parse(stored);
-            
             if (parsed[this.domain] && Array.isArray(parsed[this.domain])) {
                 parsed[this.domain].forEach(selector => {
                     if (selector && selector.trim()) {
@@ -849,39 +808,32 @@ class ElementHider {
             this.hiddenSelectors = new Set();
         }
     }
-    
+
     // 保存隐藏选择器
     saveHiddenSelectors() {
         try {
             const stored = GM_getValue('hackplus_extra_hidden_selectors', '{}');
             let parsed = {};
-            
             try {
                 parsed = JSON.parse(stored);
             } catch {
                 parsed = {};
             }
-            
             const selectorsArray = Array.from(this.hiddenSelectors);
-            
-            // 如果当前域名有隐藏选择器，更新；否则删除该域名
             if (selectorsArray.length > 0) {
                 parsed[this.domain] = selectorsArray;
             } else {
-                // 如果数组为空，删除该域名
                 if (parsed.hasOwnProperty(this.domain)) {
                     delete parsed[this.domain];
                 }
             }
-            
             GM_setValue('hackplus_extra_hidden_selectors', JSON.stringify(parsed));
-            
             this.applyHiddenStyles();
         } catch (error) {
             console.error('%c[hackplus_pro_plus额外隐藏] ❌︎ 保存隐藏选择器失败', 'color: #f44336; font-weight: bold; border-left:#f44336 5px solid;color:#f44336; padding:3px');
         }
     }
-    
+
     // 应用隐藏样式
     applyHiddenStyles() {
         if (this.hiddenSelectors.size === 0) {
@@ -890,7 +842,6 @@ class ElementHider {
             this.updateHideManagerList();
             return;
         }
-        
         const validSelectors = Array.from(this.hiddenSelectors).filter(selector => {
             for (const excluded of this.EXCLUDED_SELECTORS) {
                 if (selector === excluded || selector.includes(excluded.replace(' *', ''))) {
@@ -899,17 +850,14 @@ class ElementHider {
             }
             return true;
         });
-        
         if (validSelectors.length === 0) {
             const oldStyle = document.getElementById('hackplus-element-hider-style');
             if (oldStyle) oldStyle.remove();
             this.updateHideManagerList();
             return;
         }
-        
         const selectorList = validSelectors.join(',\n  ');
         const css = `${selectorList} { display: none !important; }`;
-        
         let styleElement = document.getElementById('hackplus-element-hider-style');
         if (!styleElement) {
             styleElement = document.createElement('style');
@@ -919,35 +867,30 @@ class ElementHider {
         } else {
             styleElement.textContent = css;
         }
-        
         this.updateHideManagerList();
     }
-    
+
     // 截断文本函数
     truncateText(text) {
         const screenWidth = window.innerWidth;
-        let maxLength = 50; // 默认值
-        
+        let maxLength = 50;
         if (screenWidth <= 320) {
             maxLength = 33;
         } else if (screenWidth <= 768) {
             maxLength = 40;
         }
-        
         if (text.length <= maxLength) return text;
         return text.substring(0, maxLength - 5) + '(...)';
     }
-    
+
     // 更新隐藏管理器列表
     updateHideManagerList() {
         const list = document.getElementById('hackplus-hide-list');
         const countText = document.getElementById('hackplus-hide-count');
         if (!list || !countText) return;
-        
         while (list.firstChild) {
             list.removeChild(list.firstChild);
         }
-        
         if (this.hiddenSelectors.size === 0) {
             const emptyMsg = document.createElement('p');
             emptyMsg.textContent = '暂无隐藏元素';
@@ -956,11 +899,9 @@ class ElementHider {
             countText.textContent = '已隐藏 0 个元素';
             return;
         }
-        
         Array.from(this.hiddenSelectors).forEach((selector) => {
             const item = document.createElement('div');
             item.className = 'hackplus-hide-item';
-            
             Object.assign(item.style, {
                 padding: '8px',
                 margin: '4px 0',
@@ -974,7 +915,6 @@ class ElementHider {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             });
-            
             const textContainer = document.createElement('div');
             Object.assign(textContainer.style, {
                 flex: '1',
@@ -985,11 +925,9 @@ class ElementHider {
                 color: '#5d5d5d',
                 marginRight: '8px'
             });
-            
             const selectorText = document.createElement('span');
             selectorText.textContent = this.truncateText(selector, 50);
             selectorText.title = selector;
-            
             const removeBtn = document.createElement('button');
             removeBtn.textContent = '删除';
             Object.assign(removeBtn.style, {
@@ -1003,23 +941,20 @@ class ElementHider {
                 whiteSpace: 'nowrap',
                 flexShrink: '0'
             });
-            
             removeBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // 阻止事件冒泡
-                e.stopImmediatePropagation(); // 阻止事件冒泡
+                e.stopPropagation();
+                e.stopImmediatePropagation();
                 this.hiddenSelectors.delete(selector);
                 this.saveHiddenSelectors();
             });
-            
             textContainer.appendChild(selectorText);
             item.appendChild(textContainer);
             item.appendChild(removeBtn);
             list.appendChild(item);
         });
-        
         countText.textContent = `已隐藏 ${this.hiddenSelectors.size} 个元素`;
     }
-    
+
     // 显示隐藏元素管理界面
     showHideManager() {
         const existingManager = document.getElementById('hackplus-element-hider-manager');
@@ -1027,10 +962,8 @@ class ElementHider {
             existingManager.remove();
             return;
         }
-        
         const manager = document.createElement('div');
         manager.id = 'hackplus-element-hider-manager';
-        
         Object.assign(manager.style, {
             position: 'fixed',
             top: '20px',
@@ -1044,7 +977,6 @@ class ElementHider {
             width: '380px',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif'
         });
-        
         const header = document.createElement('div');
         Object.assign(header.style, {
             display: 'flex',
@@ -1052,7 +984,6 @@ class ElementHider {
             alignItems: 'center',
             marginBottom: '10px'
         });
-        
         const title = document.createElement('h3');
         title.textContent = '隐藏元素管理器';
         Object.assign(title.style, {
@@ -1062,7 +993,6 @@ class ElementHider {
             fontWeight: '600',
             letterSpacing: '0.3px'
         });
-        
         const closeBtn = document.createElement('button');
         closeBtn.textContent = '×';
         Object.assign(closeBtn.style, {
@@ -1082,15 +1012,12 @@ class ElementHider {
             padding: '0',
             margin: '0'
         });
-        
         closeBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // 阻止事件冒泡
+            e.stopPropagation();
             manager.remove();
         });
-        
         header.appendChild(title);
         header.appendChild(closeBtn);
-        
         const countText = document.createElement('p');
         countText.id = 'hackplus-hide-count';
         countText.textContent = '已隐藏 0 个元素';
@@ -1100,7 +1027,6 @@ class ElementHider {
             fontWeight: 'bold',
             fontSize: '13px'
         });
-        
         const list = document.createElement('div');
         list.id = 'hackplus-hide-list';
         Object.assign(list.style, {
@@ -1112,14 +1038,12 @@ class ElementHider {
             padding: '5px',
             background: '#f8fafc'
         });
-        
         const buttonsContainer = document.createElement('div');
         Object.assign(buttonsContainer.style, {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center'
         });
-        
         const hotkeyContainer = document.createElement('div');
         hotkeyContainer.className = 'hackplus-hotkey-container';
         Object.assign(hotkeyContainer.style, {
@@ -1128,29 +1052,24 @@ class ElementHider {
             fontFamily: 'monospace',
             flex: '1'
         });
-        
         const hotkeyLine1 = document.createElement('div');
         hotkeyLine1.textContent = 'Ctrl+Shift+← 开始选择';
         Object.assign(hotkeyLine1.style, {
             lineHeight: '1.4'
         });
-        
         const hotkeyLine2 = document.createElement('div');
         hotkeyLine2.textContent = 'Ctrl+Shift+→ 打开管理器';
         Object.assign(hotkeyLine2.style, {
             lineHeight: '1.4'
         });
-        
         hotkeyContainer.appendChild(hotkeyLine1);
         hotkeyContainer.appendChild(hotkeyLine2);
-        
         const actionButtons = document.createElement('div');
         actionButtons.className = 'hackplus-action-buttons';
         Object.assign(actionButtons.style, {
             display: 'flex',
             justifyContent: 'flex-end'
         });
-        
         const startSelectBtn = document.createElement('button');
         startSelectBtn.textContent = '开始选择';
         Object.assign(startSelectBtn.style, {
@@ -1167,26 +1086,21 @@ class ElementHider {
             boxShadow: '0 2px 4px rgba(26, 188, 156, 0.2)',
             transition: 'all 0.2s ease'
         });
-        
         startSelectBtn.addEventListener('mouseover', () => {
             startSelectBtn.style.transform = 'translateY(-1px)';
             startSelectBtn.style.boxShadow = '0 4px 8px rgba(26, 188, 156, 0.3)';
         });
-        
         startSelectBtn.addEventListener('mouseout', () => {
             startSelectBtn.style.transform = 'translateY(0)';
             startSelectBtn.style.boxShadow = '0 2px 4px rgba(26, 188, 156, 0.2)';
         });
-        
         startSelectBtn.addEventListener('mousedown', () => {
             startSelectBtn.style.transform = 'translateY(0)';
         });
-        
         startSelectBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // 阻止事件冒泡
+            e.stopPropagation();
             this.enterSelectMode();
         });
-        
         const clearBtn = document.createElement('button');
         clearBtn.textContent = '清空列表';
         Object.assign(clearBtn.style, {
@@ -1201,36 +1115,29 @@ class ElementHider {
             whiteSpace: 'nowrap',
             marginLeft: '10px'
         });
-        
         clearBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // 阻止事件冒泡
+            e.stopPropagation();
             if (confirm('确定要清空所有隐藏元素吗？\n确定后自动刷新。')) {
                 this.hiddenSelectors.clear();
                 this.saveHiddenSelectors();
                 location.reload();
             }
         });
-        
         actionButtons.appendChild(startSelectBtn);
         actionButtons.appendChild(clearBtn);
         buttonsContainer.appendChild(hotkeyContainer);
         buttonsContainer.appendChild(actionButtons);
-        
         manager.appendChild(header);
         manager.appendChild(countText);
         manager.appendChild(list);
         manager.appendChild(buttonsContainer);
-        
         document.body.appendChild(manager);
         this.updateHideManagerList();
-        
-        // 移除了外部点击关闭功能，只保留关闭按钮关闭
     }
-    
+
     // 检查元素是否应该被排除
     isElementExcluded(element) {
         if (!element || !element.tagName) return true;
-        
         for (const selector of this.EXCLUDED_SELECTORS) {
             try {
                 if (element.matches && element.matches(selector)) {
@@ -1238,7 +1145,6 @@ class ElementHider {
                 }
             } catch (e) {}
         }
-        
         let parent = element.parentElement;
         while (parent) {
             for (const selector of this.EXCLUDED_SELECTORS) {
@@ -1250,17 +1156,14 @@ class ElementHider {
             }
             parent = parent.parentElement;
         }
-        
         return false;
     }
-    
-    // 检查元素是否可见
+
+    // 检查元素是否可见（仅用于高亮框标签，不用于决定高亮目标）
     isElementVisible(element) {
         if (!element || !element.tagName) return false;
-        
         const rect = element.getBoundingClientRect();
         const style = window.getComputedStyle(element);
-        
         return (
             rect.width > 0 &&
             rect.height > 0 &&
@@ -1273,60 +1176,58 @@ class ElementHider {
             rect.right > 0
         );
     }
-    
-    // 获取最适合高亮的元素
-    getBestHighlightElement(element) {
-        if (!element || !element.tagName) return null;
-        
-        if (this.isElementExcluded(element)) {
-            return null;
-        }
-        
-        if (this.isElementVisible(element)) {
-            return element;
-        }
-        
-        if (element.parentElement) {
-            const siblings = Array.from(element.parentElement.children);
-            for (const sibling of siblings) {
-                if (sibling !== element && this.isElementVisible(sibling) && !this.isElementExcluded(sibling)) {
-                    return sibling;
-                }
-            }
-        }
-        
-        let current = element.parentElement;
-        while (current && current !== document.documentElement && current !== document.body) {
-            if (this.isElementVisible(current) && !this.isElementExcluded(current)) {
-                return current;
-            }
-            current = current.parentElement;
-        }
-        
-        return null;
-    }
-    
-    // 生成CSS选择器
-    generateCssSelector(element) {
+
+    // 生成元素的简洁CSS签名（优先ID，否则tag+class，必要时添加:nth-child）
+    getElementShortSignature(element) {
         if (!element || !element.tagName) return '';
         
+        // 如果有ID，直接返回 #id
+        if (element.id) {
+            return '#' + CSS.escape(element.id);
+        }
+        
+        let signature = element.tagName.toLowerCase();
+        
+        // 添加类名（最多取前两个类，避免过长）
+        if (element.className && typeof element.className === 'string') {
+            const classes = element.className.trim().split(/\s+/).filter(Boolean);
+            if (classes.length > 0) {
+                // 最多取2个类，用点连接
+                const classStr = classes.slice(0, 2).map(c => CSS.escape(c)).join('.');
+                signature += '.' + classStr;
+                if (classes.length > 2) signature += '…';
+            }
+        }
+        
+        // 如果同一父元素下有多个相同标签，添加 :nth-child
+        if (element.parentElement) {
+            const siblings = Array.from(element.parentElement.children)
+                .filter(el => el.tagName === element.tagName);
+            if (siblings.length > 1) {
+                const index = siblings.indexOf(element) + 1;
+                signature += `:nth-child(${index})`;
+            }
+        }
+        
+        return signature;
+    }
+
+    // 生成完整CSS选择器（备用）
+    generateCssSelector(element) {
+        if (!element || !element.tagName) return '';
         if (element.id) {
             return `#${CSS.escape(element.id)}`;
         }
-        
         const path = [];
         let current = element;
-        
         while (current && current.nodeType === Node.ELEMENT_NODE) {
             let selector = current.tagName.toLowerCase();
-            
             if (current.className && typeof current.className === 'string') {
                 const classes = current.className.trim().split(/\s+/).filter(Boolean);
                 if (classes.length > 0) {
                     selector += '.' + classes.map(c => CSS.escape(c)).join('.');
                 }
             }
-            
             if (current.parentElement) {
                 const siblings = Array.from(current.parentElement.children)
                     .filter(el => el.tagName === current.tagName);
@@ -1335,33 +1236,41 @@ class ElementHider {
                     selector += `:nth-child(${index})`;
                 }
             }
-            
             path.unshift(selector);
-            
             if (current.id || (selector.includes('.') && document.querySelectorAll(selector).length === 1)) {
                 break;
             }
-            
             current = current.parentElement;
         }
-        
         return path.join(' > ');
     }
-    
-    // 创建高亮覆盖层
+
+    // 截断字符串至指定长度，添加省略号
+    truncateString(str, maxLength) {
+        if (str.length <= maxLength) return str;
+        return str.substring(0, maxLength - 3) + '...';
+    }
+
+    // 创建高亮覆盖层（支持宽高为0的元素，显示简洁CSS签名）
     createHighlightOverlay(element, isConfirmed = false) {
         if (!element || element === document.documentElement || element === document.body) {
             return null;
         }
-        
         try {
             const rect = element.getBoundingClientRect();
             const scrollX = window.scrollX || window.pageXOffset;
             const scrollY = window.scrollY || window.pageYOffset;
             
+            let width = rect.width;
+            let height = rect.height;
+            // 宽高为0时显示1x1的最小高亮框
+            if (width <= 0 || height <= 0) {
+                width = 1;
+                height = 1;
+            }
+
             const overlay = document.createElement('div');
             overlay.className = 'hackplus-element-highlight';
-            
             const bgColor = isConfirmed ? 'rgba(26, 91, 188, 0.5)' : 'rgba(26, 188, 156, 0.3)';
             const borderColor = isConfirmed ? 'rgba(26, 91, 188, 0.9)' : 'rgba(26, 188, 156, 0.9)';
             const shadowColor = isConfirmed ? 'rgba(26, 91, 188, 0.7)' : 'rgba(26, 188, 156, 0.7)';
@@ -1372,8 +1281,8 @@ class ElementHider {
                 position: 'absolute',
                 top: `${rect.top + scrollY}px`,
                 left: `${rect.left + scrollX}px`,
-                width: `${rect.width}px`,
-                height: `${rect.height}px`,
+                width: `${width}px`,
+                height: `${height}px`,
                 backgroundColor: bgColor,
                 border: '3px solid ' + borderColor,
                 boxShadow: `0 0 15px ${shadowColor}, inset 0 0 15px ${insetShadowColor}`,
@@ -1382,27 +1291,24 @@ class ElementHider {
                 zIndex: '2147483646',
                 boxSizing: 'border-box'
             });
-            
+
             const tag = document.createElement('div');
             tag.className = 'hackplus-element-tag';
+            
+            // 生成简洁CSS签名，并截断至27字符（留3字符给尺寸和空格）
+            let shortSig = this.getElementShortSignature(element);
+            shortSig = this.truncateString(shortSig, 27);
+            
+            const displayWidth = Math.round(rect.width);
+            const displayHeight = Math.round(rect.height);
+            tag.textContent = `${shortSig} (${displayWidth}×${displayHeight})px${isConfirmed ? ' ✓' : ''}`;
 
-            // 使用已存在的 rect 变量获取元素尺寸
-            const width = Math.round(rect.width);
-            const height = Math.round(rect.height);
-
-            // 显示元素标签名和尺寸
-            tag.textContent = `${element.tagName.toLowerCase()} (${width}×${height})px${isConfirmed ? ' (已选中)' : ''}`;
-
-            // 判断 tag 应该显示在高亮区域的上方还是下方
-            // tag 高度大约 28px，给 5px 的缓冲空间
             const tagHeight = 33;
             const topPosition = rect.top - tagHeight;
-
             if (topPosition + scrollY < 5) {
-                // 上方空间不足，显示在下方
                 Object.assign(tag.style, {
                     position: 'absolute',
-                    top: `${rect.height + 5}px`,
+                    top: `${height + 5}px`,
                     left: '0',
                     background: tagBgColor,
                     color: '#000',
@@ -1416,7 +1322,6 @@ class ElementHider {
                     boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
                 });
             } else {
-                // 上方有足够空间，正常显示在上方
                 Object.assign(tag.style, {
                     position: 'absolute',
                     top: '-28px',
@@ -1433,16 +1338,14 @@ class ElementHider {
                     boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
                 });
             }
-            
             overlay.appendChild(tag);
             document.documentElement.appendChild(overlay);
-            
             return overlay;
         } catch (error) {
             return null;
         }
     }
-    
+
     // 移除高亮
     removeHighlight() {
         if (this.currentHighlight) {
@@ -1454,7 +1357,7 @@ class ElementHider {
             this.currentHighlight = null;
         }
     }
-    
+
     // 移除临时高亮
     removeTemporaryHighlight() {
         if (this.temporaryHighlight) {
@@ -1466,28 +1369,21 @@ class ElementHider {
             this.temporaryHighlight = null;
         }
     }
-    
+
     // 创建确认按钮覆盖层
     createConfirmOverlay(element, selector) {
         this.removeConfirmOverlay();
-        
         if (!element || element === document.documentElement || element === document.body) {
             return null;
         }
-        
         try {
             const rect = element.getBoundingClientRect();
             const scrollX = window.scrollX || window.pageXOffset;
             const scrollY = window.scrollY || window.pageYOffset;
-            
             const isSmallScreen = window.innerWidth <= 768;
-            
             const overlay = document.createElement('div');
             overlay.id = 'hackplus-confirm-overlay';
-            
-            // 根据屏幕大小设置确认按钮的宽度和布局
             let overlayWidth, buttonPadding, fontSize, minWidth;
-            
             if (window.innerWidth <= 360) {
                 overlayWidth = 120;
                 buttonPadding = '4px 6px';
@@ -1509,36 +1405,22 @@ class ElementHider {
                 fontSize = '11px';
                 minWidth = '0';
             }
-            
             if (isSmallScreen) {
-                // 检查高亮框的位置，决定将确认按钮放在上方还是下方
                 const highlighBottom = rect.top + scrollY + rect.height;
                 const highlighTop = rect.top + scrollY;
-                const buttonHeight = 40; // 估计按钮容器高度
-                const spacing = 10; // 与高亮框的间距
-                
+                const buttonHeight = 40;
+                const spacing = 10;
                 let top;
-                let position = 'below'; // 'above' 或 'below'
-                
-                // 检查如果放在下方是否会超出屏幕
                 if (highlighBottom + buttonHeight + spacing > window.innerHeight + scrollY) {
-                    // 放在下方会超出屏幕，尝试放在上方
                     if (highlighTop - buttonHeight - spacing > scrollY) {
-                        // 上方有足够空间
                         top = highlighTop - buttonHeight - spacing;
-                        position = 'above';
                     } else {
-                        // 上下都没有足够空间，放在屏幕中央
                         top = Math.max(scrollY, (window.innerHeight + scrollY - buttonHeight) / 2);
                     }
                 } else {
-                    // 下方有足够空间
                     top = highlighBottom + spacing;
-                    position = 'below';
                 }
-                
                 const left = rect.left + scrollX + rect.width / 2 - overlayWidth / 2;
-                
                 Object.assign(overlay.style, {
                     position: 'absolute',
                     top: `${top}px`,
@@ -1555,9 +1437,7 @@ class ElementHider {
                     border: '1px solid #1abc9c'
                 });
             } else {
-                // 大屏幕：保持原位置（高亮框右上方）
                 const top = Math.max(rect.top + scrollY - 60, 10);
-                
                 Object.assign(overlay.style, {
                     position: 'absolute',
                     top: `${top}px`,
@@ -1569,10 +1449,8 @@ class ElementHider {
                     gap: '3px'
                 });
             }
-            
             const confirmBtn = document.createElement('button');
             confirmBtn.textContent = '确定';
-            
             Object.assign(confirmBtn.style, {
                 background: '#1abc9c',
                 color: 'white',
@@ -1587,13 +1465,10 @@ class ElementHider {
                 minWidth: minWidth,
                 textAlign: 'center'
             });
-            
             const elementSelector = selector;
-            
             confirmBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 e.stopImmediatePropagation();
-                
                 if (elementSelector) {
                     this.hideElement(elementSelector);
                     this.exitSelectMode();
@@ -1601,10 +1476,8 @@ class ElementHider {
                     this.exitSelectMode();
                 }
             });
-            
             const cancelBtn = document.createElement('button');
             cancelBtn.textContent = '取消';
-            
             Object.assign(cancelBtn.style, {
                 background: '#f44336',
                 color: 'white',
@@ -1619,23 +1492,20 @@ class ElementHider {
                 minWidth: minWidth,
                 textAlign: 'center'
             });
-            
             cancelBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 e.stopImmediatePropagation();
                 this.exitSelectMode();
             });
-            
             overlay.appendChild(confirmBtn);
             overlay.appendChild(cancelBtn);
             document.documentElement.appendChild(overlay);
-            
             return overlay;
         } catch (error) {
             return null;
         }
     }
-    
+
     // 移除确认按钮覆盖层
     removeConfirmOverlay() {
         if (this.confirmOverlay) {
@@ -1648,206 +1518,225 @@ class ElementHider {
         }
         this.currentSelector = null;
     }
-    
+
     // 隐藏元素
     hideElement(selector) {
         if (!selector || selector.trim() === '') {
             return;
         }
-        
         const cleanSelector = selector.trim();
-        
         for (const excluded of this.EXCLUDED_SELECTORS) {
             if (cleanSelector === excluded) {
                 return;
             }
         }
-        
-        let elements;
         try {
-            elements = document.querySelectorAll(cleanSelector);
+            document.querySelectorAll(cleanSelector);
         } catch (error) {
             return;
         }
-        
         this.hiddenSelectors.add(cleanSelector);
         this.saveHiddenSelectors();
     }
-    
-    // 鼠标点击处理
+
+    // 构建父链（从 baseElement 到 body 的直接子元素，过滤排除元素，索引0为最内层）
+    buildParentChain() {
+        this.parentChain = [];
+        if (!this.baseElement) return;
+        let el = this.baseElement;
+        while (el && el !== document.body && el !== document.documentElement) {
+            if (!this.isElementExcluded(el)) {
+                this.parentChain.push(el);
+            }
+            el = el.parentElement;
+        }
+        if (this.parentChain.length === 0 && this.baseElement) {
+            this.parentChain.push(this.baseElement);
+        }
+    }
+
+    // 鼠标移动处理：直接高亮 elementFromPoint 返回的最具体元素
+    handleMouseMove(e) {
+        if (!this.isSelectMode) return;
+        const element = document.elementFromPoint(e.clientX, e.clientY);
+        
+        if (!element || this.isElementExcluded(element)) {
+            this.removeTemporaryHighlight();
+            this.baseElement = null;
+            this.parentChain = [];
+            this.chainIndex = 0;
+            this.currentHoveredElement = null;
+            return;
+        }
+
+        if (element !== this.baseElement) {
+            this.baseElement = element;
+            this.buildParentChain();
+            this.chainIndex = 0;
+            this.currentHoveredElement = this.parentChain[0] || this.baseElement;
+        }
+
+        this.removeTemporaryHighlight();
+        const highlightEl = this.parentChain[this.chainIndex] || this.baseElement;
+        this.currentHoveredElement = highlightEl;
+        this.temporaryHighlight = this.createHighlightOverlay(highlightEl, false);
+
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+    }
+
+    // 点击处理：隐藏当前高亮的元素
     handleClick(e) {
         if (!this.isSelectMode) return;
-        
         const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
-        
         if (!clickedElement || this.isElementExcluded(clickedElement)) {
             return;
         }
-        
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        
         document.removeEventListener('mousemove', this.handleMouseMoveBound, { capture: true });
         document.removeEventListener('click', this.handleClickBound, { capture: true });
-        
         this.removeTemporaryHighlight();
-        
-        this.currentSelectedElement = this.getBestHighlightElement(clickedElement);
-        
+        this.currentSelectedElement = this.currentHoveredElement || this.baseElement;
         if (!this.currentSelectedElement) {
             this.exitSelectMode();
             return;
         }
-        
         this.currentSelector = this.generateCssSelector(this.currentSelectedElement);
-        
         this.currentHighlight = this.createHighlightOverlay(this.currentSelectedElement, true);
         this.confirmOverlay = this.createConfirmOverlay(this.currentSelectedElement, this.currentSelector);
     }
-    
-    // 鼠标移动处理
-    handleMouseMove(e) {
-        if (!this.isSelectMode) return;
-        
-        const element = e.target;
-        
-        if (!element || this.isElementExcluded(element)) {
-            this.removeTemporaryHighlight();
+
+    // 全局键盘快捷键处理
+    handleKeyDown(e) {
+        // 全局快捷键：左右箭头
+        if (e.key === 'ArrowLeft' && e.ctrlKey && e.shiftKey && !e.altKey && !e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (this.isSelectMode) {
+                this.exitSelectMode();
+            } else {
+                this.enterSelectMode();
+            }
             return;
         }
-        
-        this.removeTemporaryHighlight();
-        
-        const bestElement = this.getBestHighlightElement(element);
-        if (bestElement) {
-            this.temporaryHighlight = this.createHighlightOverlay(bestElement, false);
+        if (e.key === 'ArrowRight' && e.ctrlKey && e.shiftKey && !e.altKey && !e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!this.isSelectMode) {
+                this.showHideManager();
+            }
+            return;
         }
-        
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+
+        // 以下快捷键仅在选择模式下生效
+        if (!this.isSelectMode) return;
+
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            e.stopPropagation();
+            this.exitSelectMode();
+            return;
+        }
+
+        // A 键：切换到父链的上一层（向外）
+        if (e.key === 'a' && !e.shiftKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (this.parentChain.length === 0) return;
+            this.chainIndex = (this.chainIndex + 1) % this.parentChain.length;
+            const nextElement = this.parentChain[this.chainIndex];
+            if (nextElement) {
+                this.currentHoveredElement = nextElement;
+                this.removeTemporaryHighlight();
+                this.temporaryHighlight = this.createHighlightOverlay(nextElement, false);
+            }
+            return;
+        }
+
+        // Shift + A：切换到父链的下一层（向内）
+        if (e.key === 'A' || (e.key === 'a' && e.shiftKey)) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (this.parentChain.length === 0) return;
+            this.chainIndex = (this.chainIndex - 1 + this.parentChain.length) % this.parentChain.length;
+            const nextElement = this.parentChain[this.chainIndex];
+            if (nextElement) {
+                this.currentHoveredElement = nextElement;
+                this.removeTemporaryHighlight();
+                this.temporaryHighlight = this.createHighlightOverlay(nextElement, false);
+            }
+            return;
+        }
     }
-    
+
     // 进入选择模式
     enterSelectMode() {
         if (this.isSelectMode) return;
-        
         const manager = document.getElementById('hackplus-element-hider-manager');
         this.wasManagerOpen = !!manager;
-        
-        if (manager) {
-            manager.remove();
-        }
-        
+        if (manager) manager.remove();
         const settingsPanel = document.getElementById('hackplus-settings-panel');
-        if (settingsPanel) {
-            settingsPanel.remove();
-        }
-        
+        if (settingsPanel) settingsPanel.remove();
         this.isSelectMode = true;
-        
         this.handleMouseMoveBound = this.handleMouseMove.bind(this);
         this.handleClickBound = this.handleClick.bind(this);
-        
         document.addEventListener('mousemove', this.handleMouseMoveBound, { capture: true, passive: false });
         document.addEventListener('click', this.handleClickBound, { capture: true, passive: false });
-        
         const style = document.createElement('style');
         style.id = 'hackplus-cursor-style';
         style.textContent = `body * { cursor: crosshair !important; }`;
         document.head.appendChild(style);
     }
-    
+
     // 退出选择模式
     exitSelectMode() {
         if (!this.isSelectMode) return;
-        
         this.isSelectMode = false;
-        
         document.removeEventListener('mousemove', this.handleMouseMoveBound, { capture: true });
         document.removeEventListener('click', this.handleClickBound, { capture: true });
-        
         const cursorStyle = document.getElementById('hackplus-cursor-style');
         if (cursorStyle) cursorStyle.remove();
-        
         this.removeHighlight();
         this.removeTemporaryHighlight();
         this.removeConfirmOverlay();
-        
         const existingHighlights = document.querySelectorAll('.hackplus-element-highlight');
         existingHighlights.forEach(el => {
-            try {
-                if (el.parentNode) {
-                    el.parentNode.removeChild(el);
-                }
-            } catch (error) {}
+            try { if (el.parentNode) el.parentNode.removeChild(el); } catch (error) {}
         });
-        
         const existingTags = document.querySelectorAll('.hackplus-element-tag');
         existingTags.forEach(el => {
-            try {
-                if (el.parentNode) {
-                    el.parentNode.removeChild(el);
-                }
-            } catch (error) {}
+            try { if (el.parentNode) el.parentNode.removeChild(el); } catch (error) {}
         });
-        
         const existingConfirm = document.getElementById('hackplus-confirm-overlay');
         if (existingConfirm && existingConfirm.parentNode) {
             existingConfirm.parentNode.removeChild(existingConfirm);
         }
-        
+        this.baseElement = null;
+        this.parentChain = [];
+        this.chainIndex = 0;
+        this.currentHoveredElement = null;
         this.currentSelectedElement = null;
         this.currentSelector = null;
         this.temporaryHighlight = null;
-        
         if (this.wasManagerOpen) {
             setTimeout(() => {
                 this.showHideManager();
             }, 10);
         }
     }
-    
-    // 键盘事件处理
-    handleKeyDown(e) {
-        if (e.key === 'ArrowLeft' && e.ctrlKey && e.shiftKey && !e.altKey && !e.metaKey) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            if (this.isSelectMode) {
-                this.exitSelectMode();
-            } else {
-                this.enterSelectMode();
-            }
-        }
-        
-        if (e.key === 'ArrowRight' && e.ctrlKey && e.shiftKey && !e.altKey && !e.metaKey) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            if (!this.isSelectMode) {
-                this.showHideManager();
-            }
-        }
-        
-        if (e.key === 'Escape' && this.isSelectMode) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.exitSelectMode();
-        }
-    }
-    
-    // 设置键盘快捷键
+
+    // 设置全局键盘监听
     setupKeyboardShortcuts() {
         this.handleKeyDownBound = this.handleKeyDown.bind(this);
         document.addEventListener('keydown', this.handleKeyDownBound, true);
-        
         window.addEventListener('beforeunload', () => {
             if (this.isSelectMode) this.exitSelectMode();
             document.removeEventListener('keydown', this.handleKeyDownBound, true);
         });
     }
-    
+
     // 初始化
     init() {
         if (document.head) {
@@ -1857,7 +1746,6 @@ class ElementHider {
         }
     }
 }
-
 // 全局设置面板管理器
 class SettingsPanelManager {
     static instance = null;
