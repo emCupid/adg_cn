@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         莫舞Pro Plus
-// @version      2.9.3
+// @version      2.9.7
 // @author       汝莫舞
 // @description  浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -65,47 +65,81 @@ const getMainDomain = () => {
 (function injectEarlyStyles() {
     'use strict';
     
-    // 加载图片广告隐藏规则
-    const loadImgHiddenStyles = () => {
-        const stored = sessionStorage.getItem('hackplus_temp_hidden_img');
-        if (stored) {
+    // 检测浏览器是否支持 Constructable Stylesheets
+    const supportsConstructable = (() => {
+        try {
+            return typeof CSSStyleSheet !== 'undefined' && 
+                'replaceSync' in CSSStyleSheet.prototype;
+        } catch {
+            return false;
+        }
+    })();
+
+    // 收集选择器的数组（去重用 Set）
+    const allSelectors = new Set();
+
+    // 同步加载当前域名的广告隐藏数据，并检查是否过期；若过期则立即删除
+    const loadCurrentDomainAdData = () => {
+        try {
+            const stored = GM_getValue('hackplus_ad_hidden_data', '{}');
+            const data = JSON.parse(stored);
+            const now = Date.now();
+            const ONE_DAY = 24 * 60 * 60 * 1000;
+            const currentDomain = getMainDomain();
+
+            const currentEntry = data[currentDomain];
+            if (currentEntry) {
+                if (now - currentEntry.timestamp <= ONE_DAY) {
+                    // 未过期，加载选择器
+                    if (Array.isArray(currentEntry.img) && currentEntry.img.length > 0) {
+                        currentEntry.img.forEach(selector => allSelectors.add(selector));
+                    }
+                    if (Array.isArray(currentEntry.iframe) && currentEntry.iframe.length > 0) {
+                        currentEntry.iframe.forEach(selector => allSelectors.add(selector));
+                    }
+                } else {
+                    // 当前域名数据过期，立即删除
+                    delete data[currentDomain];
+                    GM_setValue('hackplus_ad_hidden_data', JSON.stringify(data));
+                    // 不加载任何选择器
+                }
+            }
+        } catch (e) {
+            // 静默处理错误
+        }
+    };
+
+    // 异步清理其他域名的过期数据（延迟1秒执行）
+    const cleanOtherExpiredAdData = () => {
+        setTimeout(() => {
             try {
-                const hiddenList = JSON.parse(stored);
-                if (hiddenList.length > 0) {
-                    const styles = hiddenList.map(selector => 
-                        `${selector} { display: none !important; }`
-                    ).join('\n');
-                    
-                    // 使用GM_addStyle在文档加载前注入样式
-                    GM_addStyle(styles);
+                const stored = GM_getValue('hackplus_ad_hidden_data', '{}');
+                const data = JSON.parse(stored);
+                const now = Date.now();
+                const ONE_DAY = 24 * 60 * 60 * 1000;
+                const currentDomain = getMainDomain();
+                let hasChanged = false;
+
+                for (const domain in data) {
+                    if (data.hasOwnProperty(domain) && domain !== currentDomain) {
+                        const entry = data[domain];
+                        if (now - entry.timestamp > ONE_DAY) {
+                            delete data[domain];
+                            hasChanged = true;
+                        }
+                    }
+                }
+
+                if (hasChanged) {
+                    GM_setValue('hackplus_ad_hidden_data', JSON.stringify(data));
                 }
             } catch (e) {
                 // 静默处理错误
             }
-        }
+        }, 1000); // 延迟1秒执行
     };
-    
-    // 加载iframe广告隐藏规则
-    const loadIframeHiddenStyles = () => {
-        const stored = sessionStorage.getItem('hackplus_temp_hidden_iframe');
-        if (stored) {
-            try {
-                const hiddenList = JSON.parse(stored);
-                if (hiddenList.length > 0) {
-                    const styles = hiddenList.map(selector => 
-                        `${selector} { display: none !important; }`
-                    ).join('\n');
-                    
-                    // 使用GM_addStyle在文档加载前注入样式
-                    GM_addStyle(styles);
-                }
-            } catch (e) {
-                // 静默处理错误
-            }
-        }
-    };
-    
-    // 加载额外隐藏规则（元素选择器）
+
+    // 加载额外隐藏规则（用户通过管理器添加的）
     const loadExtraHiddenStyles = () => {
         try {
             const stored = GM_getValue('hackplus_extra_hidden_selectors', '{}');
@@ -113,29 +147,46 @@ const getMainDomain = () => {
             const domain = getMainDomain();
             
             if (parsed[domain] && Array.isArray(parsed[domain]) && parsed[domain].length > 0) {
-                const styles = parsed[domain].map(selector => 
-                    `${selector} { display: none !important; }`
-                ).join('\n');
-                
-                if (styles) {
-                    GM_addStyle(styles);
-                }
+                parsed[domain].forEach(selector => allSelectors.add(selector));
             }
         } catch (e) {
             // 静默处理错误
         }
     };
     
-    // 立即执行
-    loadImgHiddenStyles();
-    loadIframeHiddenStyles();
+    // 立即执行同步加载
+    loadCurrentDomainAdData();
     loadExtraHiddenStyles();
+
+    // 如果收集到了选择器，生成统一的 CSS 规则
+    if (allSelectors.size > 0) {
+        const selectorList = Array.from(allSelectors).join(',');
+        const css = `.hackplus-hidden-by-selector, ${selectorList} { display: none !important; position: absolute !important; transform: scale(0) !important; content-visibility: hidden !important; }`;
+
+        if (supportsConstructable) {
+            try {
+                const sheet = new CSSStyleSheet();
+                sheet.replaceSync(css);
+                document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+            } catch (e) {
+                // 如果 Constructable 失败，回退到 GM_addStyle
+                GM_addStyle(css);
+            }
+        } else {
+            GM_addStyle(css);
+        }
+    }
+
+    // 仅在顶层框架中启动异步清理，避免重复执行
+    if (window === window.top) {
+        cleanOtherExpiredAdData();
+    }
 })();
 
 // 配置管理器
 class ConfigManager {
     constructor(adRemover) {
-        this.domain = getMainDomain();  // 使用全局函数
+        this.domain = getMainDomain();
         this.whitelistKey = this.domain;
         this.adRemover = adRemover;
         this.loadWhitelist();
@@ -173,11 +224,11 @@ class ConfigManager {
         }
         this.saveWhitelist();
         
-        // 当切换图片或iframe广告白名单时，清空对应的sessionStorage
+        // 当切换图片或iframe广告白名单时，清除当前域名的广告隐藏数据
         if (feature === 'unFuck_ADV_IMG' && this.adRemover) {
-            sessionStorage.removeItem('hackplus_temp_hidden_img');
+            this.adRemover.clearDomainAdHiddenData();
         } else if (feature === 'unFuck_ADV_IFRAME' && this.adRemover) {
-            sessionStorage.removeItem('hackplus_temp_hidden_iframe');
+            this.adRemover.clearDomainAdHiddenData();
         }
     }
     
@@ -186,7 +237,6 @@ class ConfigManager {
                Object.values(this.whitelist).some(value => value === 1);
     }
     
-    //检查白名单中是否有特定功能
     hasFeature(feature) {
         return this.whitelist[feature] === 1;
     }
@@ -532,6 +582,9 @@ class ElementHider {
             '#hackplus-cursor-style'
         ];
 
+        // 新增：缓存元素自身最短选择器
+        this._selfSelectorCache = new Map();
+
         this.loadHiddenSelectors();
         this.setupKeyboardShortcuts();
         this.addResponsiveStyles();
@@ -869,39 +922,44 @@ class ElementHider {
         }
     }
 
-    // 应用隐藏样式
+    // 应用隐藏样式：直接操作元素，不使用 style 标签
     applyHiddenStyles() {
-        if (this.hiddenSelectors.size === 0) {
-            const oldStyle = document.getElementById('hackplus-element-hider-style');
-            if (oldStyle) oldStyle.remove();
-            this.updateHideManagerList();
-            return;
-        }
-        const validSelectors = Array.from(this.hiddenSelectors).filter(selector => {
-            for (const excluded of this.EXCLUDED_SELECTORS) {
-                if (selector === excluded || selector.includes(excluded.replace(' *', ''))) {
-                    return false;
-                }
+        // 移除之前通过脚本隐藏的所有元素的隐藏类和内联样式
+        const previouslyHidden = document.querySelectorAll('.hackplus-hidden-by-selector');
+        previouslyHidden.forEach(el => {
+            el.classList.remove('hackplus-hidden-by-selector');
+            if (el.style.display === 'none') {
+                el.style.display = '';
             }
-            return true;
         });
-        if (validSelectors.length === 0) {
-            const oldStyle = document.getElementById('hackplus-element-hider-style');
-            if (oldStyle) oldStyle.remove();
+
+        // 移除可能存在的旧 style 标签（安全清理）
+        const oldStyle = document.getElementById('hackplus-element-hider-style');
+        if (oldStyle) oldStyle.remove();
+
+        // 如果没有隐藏选择器，直接更新 UI 并返回
+        if (this.hiddenSelectors.size === 0) {
             this.updateHideManagerList();
             return;
         }
-        const selectorList = validSelectors.join(',\n  ');
-        const css = `${selectorList} { display: none !important; }`;
-        let styleElement = document.getElementById('hackplus-element-hider-style');
-        if (!styleElement) {
-            styleElement = document.createElement('style');
-            styleElement.id = 'hackplus-element-hider-style';
-            styleElement.textContent = css;
-            document.head.appendChild(styleElement);
-        } else {
-            styleElement.textContent = css;
-        }
+
+        // 遍历所有隐藏选择器，对每个匹配的元素应用隐藏
+        this.hiddenSelectors.forEach(selector => {
+            try {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => {
+                    // 避免重复应用
+                    if (!el.classList.contains('hackplus-hidden-by-selector')) {
+                        el.style.setProperty('display', 'none', 'important');
+                        el.classList.add('hackplus-hidden-by-selector');
+                    }
+                });
+            } catch (e) {
+                // 忽略无效选择器
+            }
+        });
+
+        // 更新 UI 列表
         this.updateHideManagerList();
     }
 
@@ -1019,7 +1077,7 @@ class ElementHider {
                     boxSizing: 'border-box'
                 });
 
-                textContainer.innerHTML = '';
+                textContainer.replaceChildren(); 
                 textContainer.appendChild(input);
                 input.focus();
                 input.select();
@@ -1249,7 +1307,8 @@ class ElementHider {
             margin: '0 0 10px 0',
             color: '#666',
             fontWeight: 'bold',
-            fontSize: '13px'
+            fontSize: '13px',
+            textAlign: 'center'
         });
 
         const list = document.createElement('div');
@@ -1564,34 +1623,7 @@ class ElementHider {
     // 生成完整CSS选择器
     generateCssSelector(element) {
         if (!element || !element.tagName) return '';
-        if (element.id) {
-            return `#${CSS.escape(element.id)}`;
-        }
-        const path = [];
-        let current = element;
-        while (current && current.nodeType === Node.ELEMENT_NODE) {
-            let selector = current.tagName.toLowerCase();
-            if (current.className && typeof current.className === 'string') {
-                const classes = current.className.trim().split(/\s+/).filter(Boolean);
-                if (classes.length > 0) {
-                    selector += '.' + classes.map(c => CSS.escape(c)).join('.');
-                }
-            }
-            if (current.parentElement) {
-                const siblings = Array.from(current.parentElement.children)
-                    .filter(el => el.tagName === current.tagName);
-                if (siblings.length > 1) {
-                    const index = siblings.indexOf(current) + 1;
-                    selector += `:nth-child(${index})`;
-                }
-            }
-            path.unshift(selector);
-            if (current.id || (selector.includes('.') && document.querySelectorAll(selector).length === 1)) {
-                break;
-            }
-            current = current.parentElement;
-        }
-        return path.join(' > ');
+        return this._buildShortestUniqueSelector(element);
     }
 
     // 截断字符串至指定长度，添加省略号
@@ -2124,7 +2156,7 @@ class ElementHider {
         try {
             const elements = document.querySelectorAll(cleanSelector);
             elements.forEach(el => {
-                el.style.display = 'none';
+                el.style.setProperty('display', 'none', 'important');
                 el.classList.add('hackplus-hidden-by-selector');
             });
         } catch (e) {
@@ -2204,13 +2236,159 @@ class ElementHider {
         });
     }
 
-    // 初始化
-    init() {
-        if (document.head) {
-            this.applyHiddenStyles();
-        } else {
-            setTimeout(() => this.init(), 10);
+    // 初始化（此类暂时不需要）
+    //init() {
+    //    if (document.head) {
+    //        this.applyHiddenStyles();
+    //    } else {
+    //        setTimeout(() => this.init(), 10);
+    //    }
+    //}
+
+    // 判断类名是否为动态类（如 container__xyz 或 header_abcde）
+    _isDynamicClass(className) {
+        const DYNAMIC_CLASS_PATTERN = /^(.*?)(__|_)[a-zA-Z0-9]{5,}$/;
+        return DYNAMIC_CLASS_PATTERN.test(className);
+    }
+
+    // 获取元素自身的最短唯一选择器（不含祖先）
+    _getShortestSelfSelector(element) {
+        if (!element || !element.tagName) return null;
+        if (element.id) return `#${CSS.escape(element.id)}`;
+
+        const tag = element.tagName.toLowerCase();
+        const classes = element.className && typeof element.className === 'string'
+            ? element.className.trim().split(/\s+/).filter(Boolean)
+            : [];
+
+        // 分离静态类和动态类
+        const staticClasses = classes.filter(cls => !this._isDynamicClass(cls));
+        const dynamicClasses = classes.filter(cls => this._isDynamicClass(cls));
+
+        // 提取第一个动态类前缀，生成属性选择器
+        let attrSelector = null;
+        if (dynamicClasses.length > 0) {
+            const dynClass = dynamicClasses[0];
+            const match = dynClass.match(/^(.*?)(__|_)[a-zA-Z0-9]+$/);
+            if (match) {
+                const prefix = match[1] + match[2];
+                attrSelector = `${tag}[class^="${CSS.escape(prefix)}"]`;
+            }
         }
+
+        // 生成静态类组合（按长度递增）
+        function* generateCombinations(arr) {
+            const n = arr.length;
+            yield [];
+            for (let k = 1; k <= n; k++) {
+                const indices = Array(k).fill(0).map((_, i) => i);
+                while (indices[0] <= n - k) {
+                    yield indices.map(i => arr[i]);
+                    let i = k - 1;
+                    while (i >= 0 && indices[i] === n - k + i) i--;
+                    if (i < 0) break;
+                    indices[i]++;
+                    for (let j = i + 1; j < k; j++) indices[j] = indices[j - 1] + 1;
+                }
+            }
+        }
+
+        const isUnique = (sel) => {
+            try { return document.querySelectorAll(sel).length === 1; } catch (e) { return false; }
+        };
+
+        // 尝试属性选择器
+        if (attrSelector && isUnique(attrSelector)) return attrSelector;
+
+        // 尝试纯标签
+        if (isUnique(tag)) return tag;
+
+        // 尝试静态类组合
+        const maxCombinations = 100;
+        let tried = 0;
+        for (const comb of generateCombinations(staticClasses)) {
+            if (tried++ > maxCombinations) break;
+            const classPart = comb.map(c => CSS.escape(c)).join('.');
+            const sel = classPart ? `${tag}.${classPart}` : tag;
+            if (isUnique(sel)) return sel;
+        }
+
+        // 准备 :nth-child
+        let nthIndex = 1;
+        if (element.parentElement) {
+            const siblings = Array.from(element.parentElement.children)
+                .filter(el => el.tagName === element.tagName);
+            nthIndex = siblings.indexOf(element) + 1;
+        }
+        const nthPart = `:nth-child(${nthIndex})`;
+
+        // 尝试属性选择器 + :nth-child
+        if (attrSelector) {
+            const attrNth = `${attrSelector}${nthPart}`;
+            if (isUnique(attrNth)) return attrNth;
+        }
+
+        // 尝试纯标签 + :nth-child
+        const tagNth = `${tag}${nthPart}`;
+        if (isUnique(tagNth)) return tagNth;
+
+        // 尝试静态类组合 + :nth-child
+        tried = 0;
+        for (const comb of generateCombinations(staticClasses)) {
+            if (tried++ > maxCombinations) break;
+            const classPart = comb.map(c => CSS.escape(c)).join('.');
+            const sel = classPart ? `${tag}.${classPart}${nthPart}` : `${tag}${nthPart}`;
+            if (isUnique(sel)) return sel;
+        }
+
+        return null; // 保底由调用者处理
+    }
+
+    // 递归构建包含祖先的最短唯一选择器
+    _buildShortestUniqueSelector(element, cache = new Map()) {
+        if (!element || element === document.documentElement || element === document.body) {
+            return element.tagName.toLowerCase();
+        }
+
+        let selfSel = this._selfSelectorCache.get(element);
+        if (selfSel === undefined) {
+            selfSel = this._getShortestSelfSelector(element);
+            this._selfSelectorCache.set(element, selfSel);
+        }
+
+        if (!selfSel) { // 保底
+            const tag = element.tagName.toLowerCase();
+            let nthIndex = 1;
+            if (element.parentElement) {
+                const siblings = Array.from(element.parentElement.children)
+                    .filter(el => el.tagName === element.tagName);
+                nthIndex = siblings.indexOf(element) + 1;
+            }
+            selfSel = `${tag}:nth-child(${nthIndex})`;
+        }
+
+        try {
+            if (document.querySelectorAll(selfSel).length === 1) return selfSel;
+        } catch (e) {}
+
+        const parent = element.parentElement;
+        if (!parent) return selfSel;
+
+        const parentSel = this._buildShortestUniqueSelector(parent, cache);
+        const combined = `${parentSel} > ${selfSel}`;
+        try {
+            if (document.querySelectorAll(combined).length === 1) return combined;
+        } catch (e) {}
+
+        if (parent.parentElement) {
+            const grandParentSel = this._buildShortestUniqueSelector(parent.parentElement, cache);
+            const combined2 = `${grandParentSel} > ${parentSel} > ${selfSel}`;
+            try {
+                if (document.querySelectorAll(combined2).length === 1) return combined2;
+            } catch (e) {}
+        }
+
+        return combined;
     }
 }
 
@@ -2516,67 +2694,85 @@ class AdRemover {
         this.iframeCustomSizeManager = iframeCustomSizeManager;
         this.observer = null;
         
-        // 修复：分别存储图片和iframe广告的临时隐藏数据
         this.tempHiddenImg = new Set();
         this.tempHiddenIframe = new Set();
         
-        // 不再创建style标签，因为样式已经在文档加载前通过GM_addStyle注入了
-        // 只加载临时隐藏数据到内存中
-        this.loadTempHidden('img');
-        this.loadTempHidden('iframe');
+        this.loadAdHiddenData();
     }
 
-    loadTempHidden(adType) {
-        const key = adType === 'img' ? 'hackplus_temp_hidden_img' : 'hackplus_temp_hidden_iframe';
-        const stored = sessionStorage.getItem(key);
-        if (stored) {
-            try {
-                const hiddenList = JSON.parse(stored);
-                hiddenList.forEach(selector => {
-                    if (adType === 'img') {
-                        this.tempHiddenImg.add(selector);
-                    } else {
-                        this.tempHiddenIframe.add(selector);
-                    }
-                });
-            } catch (e) {
-                // 静默处理错误
+    // 从 GM 存储加载当前域名的广告隐藏数据
+    loadAdHiddenData() {
+        try {
+            const domain = getMainDomain();
+            const stored = GM_getValue('hackplus_ad_hidden_data', '{}');
+            const data = JSON.parse(stored);
+            const entry = data[domain];
+            if (entry) {
+                if (Array.isArray(entry.img)) {
+                    entry.img.forEach(sel => this.tempHiddenImg.add(sel));
+                }
+                if (Array.isArray(entry.iframe)) {
+                    entry.iframe.forEach(sel => this.tempHiddenIframe.add(sel));
+                }
+                // 不需要检查时间戳，因为 injectEarlyStyles 已负责过期清理
             }
+        } catch (e) {
+            // 静默处理
         }
+    }
+
+    // 保存当前域名的广告隐藏数据到 GM 存储
+    saveAdHiddenData() {
+        try {
+            const domain = getMainDomain();
+            const stored = GM_getValue('hackplus_ad_hidden_data', '{}');
+            const data = JSON.parse(stored);
+            data[domain] = {
+                img: Array.from(this.tempHiddenImg),
+                iframe: Array.from(this.tempHiddenIframe),
+                timestamp: Date.now()
+            };
+            GM_setValue('hackplus_ad_hidden_data', JSON.stringify(data));
+        } catch (e) {
+            // 静默处理
+        }
+    }
+
+    // 清除当前域名的广告隐藏数据（用于白名单切换）
+    clearDomainAdHiddenData() {
+        try {
+            const domain = getMainDomain();
+            const stored = GM_getValue('hackplus_ad_hidden_data', '{}');
+            const data = JSON.parse(stored);
+            if (data.hasOwnProperty(domain)) {
+                delete data[domain];
+                GM_setValue('hackplus_ad_hidden_data', JSON.stringify(data));
+            }
+        } catch (e) {
+            // 静默处理
+        }
+        this.tempHiddenImg.clear();
+        this.tempHiddenIframe.clear();
     }
 
     addTempHidden(element, adType) {
         // 根据广告类型检查对应的白名单是否开启
         if (adType === 'img') {
-            // 如果是图片广告，检查图片广告白名单
-            if (!this.config.isEnabled('unFuck_ADV_IMG')) {
-                return;
-            }
+            if (!this.config.isEnabled('unFuck_ADV_IMG')) return;
         } else if (adType === 'iframe') {
-            // 如果是iframe广告，检查iframe广告白名单
-            if (!this.config.isEnabled('unFuck_ADV_IFRAME')) {
-                return;
-            }
+            if (!this.config.isEnabled('unFuck_ADV_IFRAME')) return;
         } else {
-            // 未知广告类型，不处理
             return;
         }
         
         const selector = this.getElementSelector(element);
-        if (!selector) {
-            return;
-        }
+        if (!selector) return;
         
-        const key = adType === 'img' ? 'hackplus_temp_hidden_img' : 'hackplus_temp_hidden_iframe';
         const tempHidden = adType === 'img' ? this.tempHiddenImg : this.tempHiddenIframe;
         
         if (!tempHidden.has(selector)) {
             tempHidden.add(selector);
-            
-            // 保存到sessionStorage
-            sessionStorage.setItem(key, JSON.stringify(Array.from(tempHidden)));
-            
-            // 不再需要更新style标签，因为下次页面加载时会通过injectEarlyStyles注入
+            this.saveAdHiddenData(); // 保存并更新时间戳
         }
     }
 
@@ -2588,6 +2784,11 @@ class AdRemover {
     }
 
     removeAd(element, options) {
+        // 如果元素当前 display 为 none，则视为已隐藏，跳过处理
+        if (window.getComputedStyle(element).display === 'none') {
+            return;
+        }
+
         const {
             minWidth = 0,
             maxWidth = Infinity,
@@ -2595,9 +2796,20 @@ class AdRemover {
             maxHeight = Infinity,
             removeFunction = 1,
             color = '#E20',
-            adType = 'img'  // 添加广告类型参数，默认为img
+            adType = 'img'
         } = options;
 
+        //如果元素已被标记隐藏，则跳过
+        //const selector = this.getElementSelector(element);
+        //if (selector) {
+        //    if (adType === 'img' && this.tempHiddenImg.has(selector)) {
+        //        return;
+        //    }
+        //    if (adType === 'iframe' && this.tempHiddenIframe.has(selector)) {
+        //        return;
+        //    }
+        //}
+        
         const width = element.offsetWidth || element.naturalWidth || 0;
         const height = element.offsetHeight || element.naturalHeight || 0;
 
@@ -4452,7 +4664,7 @@ class HackPlus {
         this.restrictionRemover.removeRestrictions();
         this.scriptProtection.protect();
         this.floatIconManager.init();
-        this.elementHider.init();
+        //暂时不需要ElementHider的初始化  this.elementHider.init();
         this.registerTampermonkeyMenu();
 
         const elementHider = this.elementHider;
@@ -4567,4 +4779,14 @@ class HackPlus {
     } else {
         new HackPlus();
     }
+
+    // 暴露调试函数：清空所有广告隐藏数据
+    unsafeWindow.hackplus_clear_ad_hidden_data = function() {
+        try {
+            GM_setValue('hackplus_ad_hidden_data', '{}');
+            console.log('广告隐藏数据已清空');
+        } catch (e) {
+            console.error('清空失败', e);
+        }
+    };
 })();
