@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         莫舞Pro Plus
-// @version      2.9.7
+// @version      2.9.7.1
 // @author       汝莫舞
 // @description  浏览器增强功能及辅助移除广告【Ctrl+↑脚本设置】
 // @homepageURL  https://github.com/emCupid/adg_cn
@@ -548,6 +548,7 @@ class ElementHider {
         this.config = config;
         this.domain = getMainDomain();
         this.isSelectMode = false;
+        this.elementSelected = false;          // 新增：是否已选中元素
         this.currentHighlight = null;
         this.currentSelector = null;
         this.confirmOverlay = null;
@@ -566,6 +567,10 @@ class ElementHider {
         this.selectedParentChain = [];
         this.selectedChainIndex = 0;
 
+        // iframe 覆盖层相关
+        this.iframeOverlays = [];
+        this.updateOverlayPositionsBound = this.updateIframeOverlayPositions.bind(this);
+
         // 排除列表
         this.EXCLUDED_SELECTORS = [
             '#hackplus-float-icon',
@@ -579,7 +584,8 @@ class ElementHider {
             '#hackplus-confirm-overlay',
             '#hackplus-confirm-overlay *',
             '#hackplus-element-hider-style',
-            '#hackplus-cursor-style'
+            '#hackplus-cursor-style',
+            '.hackplus-iframe-overlay'
         ];
 
         // 新增：缓存元素自身最短选择器
@@ -1784,7 +1790,7 @@ class ElementHider {
 
     // 鼠标移动处理
     handleMouseMove(e) {
-        if (!this.isSelectMode) return;
+        if (!this.isSelectMode || this.elementSelected) return; // 已选中元素不处理
         const element = document.elementFromPoint(e.clientX, e.clientY);
         
         if (!element || this.isElementExcluded(element)) {
@@ -1814,22 +1820,36 @@ class ElementHider {
 
     // 点击处理：隐藏当前高亮的元素
     handleClick(e) {
-        if (!this.isSelectMode) return;
+        // 如果点击的是确认覆盖层或其按钮，则放行，让按钮事件正常触发
+        if (e.target.closest('#hackplus-confirm-overlay')) {
+            return;
+        }
+
+        // 如果点击的是 iframe 覆盖层，则放行，让覆盖层的监听器处理
+        if (e.target.classList && e.target.classList.contains('hackplus-iframe-overlay')) {
+            return;
+        }
+
+        // 始终阻止事件，防止页面跳转或点击生效
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        if (!this.isSelectMode || this.elementSelected) return;
+
         const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
         if (!clickedElement || this.isElementExcluded(clickedElement)) {
             return;
         }
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        document.removeEventListener('mousemove', this.handleMouseMoveBound, { capture: true });
-        document.removeEventListener('click', this.handleClickBound, { capture: true });
+
         this.removeTemporaryHighlight();
         this.currentSelectedElement = this.currentHoveredElement || this.baseElement;
         if (!this.currentSelectedElement) {
             this.exitSelectMode();
             return;
         }
+
+        this.elementSelected = true; // 标记已选中
 
         // 生成固定父链并初始化索引（用于后续循环切换）
         this.selectedParentChain = this.buildParentChainForElement(this.currentSelectedElement);
@@ -2167,6 +2187,100 @@ class ElementHider {
         this.saveHiddenSelectors();
     }
 
+    // iframe 覆盖层处理
+    createIframeOverlays() {
+        // 移除旧覆盖层
+        this.removeIframeOverlays();
+
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            // 跳过已被排除的元素
+            if (this.isElementExcluded(iframe)) return;
+
+            const overlay = document.createElement('div');
+            overlay.className = 'hackplus-iframe-overlay';
+            overlay.style.cssText = `
+                position: fixed;
+                z-index: 2147483646;
+                background: transparent;
+                pointer-events: auto;
+                cursor: crosshair;
+            `;
+            overlay.dataset.forIframe = Array.from(iframes).indexOf(iframe); // 简单标识
+
+            // 绑定事件
+            overlay.addEventListener('mousemove', (e) => {
+                e.stopPropagation();
+                this.handleIframeOverlayMove(iframe, e);
+            });
+            overlay.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.handleIframeOverlayClick(iframe, e);
+            }, { capture: true });
+
+            document.documentElement.appendChild(overlay);
+            this.iframeOverlays.push({ overlay, iframe });
+        });
+
+        // 初始化位置并监听滚动/调整大小
+        this.updateIframeOverlayPositions();
+        window.addEventListener('scroll', this.updateOverlayPositionsBound, { passive: true });
+        window.addEventListener('resize', this.updateOverlayPositionsBound, { passive: true });
+    }
+
+    updateIframeOverlayPositions() {
+        this.iframeOverlays.forEach(item => {
+            const { overlay, iframe } = item;
+            const rect = iframe.getBoundingClientRect();
+            overlay.style.top = rect.top + 'px';
+            overlay.style.left = rect.left + 'px';
+            overlay.style.width = rect.width + 'px';
+            overlay.style.height = rect.height + 'px';
+        });
+    }
+
+    removeIframeOverlays() {
+        this.iframeOverlays.forEach(item => item.overlay.remove());
+        this.iframeOverlays = [];
+        window.removeEventListener('scroll', this.updateOverlayPositionsBound);
+        window.removeEventListener('resize', this.updateOverlayPositionsBound);
+    }
+
+    handleIframeOverlayMove(iframe, e) {
+        if (!this.isSelectMode || this.elementSelected) return; // 已选中元素不处理
+
+        // 更新当前悬停元素为 iframe 本身
+        if (iframe !== this.baseElement) {
+            this.baseElement = iframe;
+            this.buildParentChain();
+            this.chainIndex = 0;
+            this.currentHoveredElement = iframe;
+        }
+
+        this.removeTemporaryHighlight();
+        this.temporaryHighlight = this.createHighlightOverlay(iframe, false);
+    }
+
+    handleIframeOverlayClick(iframe, e) {
+        // 始终阻止事件
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!this.isSelectMode || this.elementSelected) return;
+
+        this.removeTemporaryHighlight();
+
+        this.currentSelectedElement = iframe;
+        this.selectedParentChain = this.buildParentChainForElement(iframe);
+        this.selectedChainIndex = 0;
+        this.currentSelector = this.generateCssSelector(iframe);
+        this.currentHighlight = this.createHighlightOverlay(iframe, true);
+        this.confirmOverlay = this.createConfirmOverlay(iframe, this.currentSelector);
+
+        this.elementSelected = true; // 标记已选中
+    }
+
     // 进入选择模式
     enterSelectMode() {
         if (this.isSelectMode) return;
@@ -2176,6 +2290,7 @@ class ElementHider {
         const settingsPanel = document.getElementById('hackplus-settings-panel');
         if (settingsPanel) settingsPanel.remove();
         this.isSelectMode = true;
+        this.elementSelected = false; // 重置选中标记
         this.handleMouseMoveBound = this.handleMouseMove.bind(this);
         this.handleClickBound = this.handleClick.bind(this);
         document.addEventListener('mousemove', this.handleMouseMoveBound, { capture: true, passive: false });
@@ -2184,12 +2299,16 @@ class ElementHider {
         style.id = 'hackplus-cursor-style';
         style.textContent = `body * { cursor: crosshair !important; }`;
         document.head.appendChild(style);
+
+        // 创建 iframe 覆盖层
+        this.createIframeOverlays();
     }
 
     // 退出选择模式
     exitSelectMode() {
         if (!this.isSelectMode) return;
         this.isSelectMode = false;
+        this.elementSelected = false; // 重置选中标记
         document.removeEventListener('mousemove', this.handleMouseMoveBound, { capture: true });
         document.removeEventListener('click', this.handleClickBound, { capture: true });
         const cursorStyle = document.getElementById('hackplus-cursor-style');
@@ -2224,6 +2343,9 @@ class ElementHider {
                 this.showHideManager();
             }, 10);
         }
+
+        // 移除 iframe 覆盖层
+        this.removeIframeOverlays();
     }
 
     // 设置全局键盘监听
@@ -2235,15 +2357,6 @@ class ElementHider {
             document.removeEventListener('keydown', this.handleKeyDownBound, true);
         });
     }
-
-    // 初始化（此类暂时不需要）
-    //init() {
-    //    if (document.head) {
-    //        this.applyHiddenStyles();
-    //    } else {
-    //        setTimeout(() => this.init(), 10);
-    //    }
-    //}
 
     // 判断类名是否为动态类（如 container__xyz 或 header_abcde）
     _isDynamicClass(className) {
